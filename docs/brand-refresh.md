@@ -2,9 +2,15 @@
 
 The supplied logo and palette replace the earlier sage/cream identity. This is the owner's explicitly requested branding change.
 
-## Live release — 23 October 2026
+## Footer correction — 23 October 2026
 
-[strideeco.vercel.app](https://strideeco.vercel.app/) now resolves to READY production deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW`, source `d1b6ad60d47c463303acc674f95f5d38fb826191`, branch `feature/brand-refresh`. The staged build passed its browser checks before promotion; the same checks passed again on the public domain at **02:02 MYT** (`2026-10-22T18:02:16.239Z`). Deployment metadata independently confirms the source SHA. [Draft PR #3](https://github.com/adamhaqeem12345-alt/strideeco/pull/3) records the feature source; main is unchanged.
+The live site now serves application source `f8c439115d32067e08bd69e5745543efe80fdabb`, READY deployment `dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX`. The fixed sidebar previously clipped its final line at 1366×768 and hid the About link and slogan at 768×700. Removing excess spacing keeps every footer item visible at both sizes; independent sidebar scrolling preserves access at 1366×500.
+
+Vercel's production build and TypeScript checks passed. Staged and public-domain browser checks passed without injected styles: the three sidebar sizes above, plus Plan, Activity, Rewards and Profile footers at 390×844 and 320×568. Footer items are fully visible and reachable; mobile footers stay above fixed navigation, with no horizontal overflow, browser errors or account writes. See [sidebar-footer-verification.json](sidebar-footer-verification.json). The broader branding results below apply to the initial branding release.
+
+## Initial branding release — 23 October 2026
+
+The initial branding release at [strideeco.vercel.app](https://strideeco.vercel.app/) was READY production deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW`, source `d1b6ad60d47c463303acc674f95f5d38fb826191`, branch `feature/brand-refresh`. The staged build passed its browser checks before promotion; the same checks passed again on the public domain at **02:02 MYT** (`2026-10-22T18:02:16.239Z`). Deployment metadata independently confirmed the source SHA. [Draft PR #3](https://github.com/adamhaqeem12345-alt/strideeco/pull/3) records the feature source; main is unchanged.
 
 The hosted checks covered 320, 390, 768 and 1440 pixel layouts, proportional logos, exact SHA-256 matches for all four logo/icon assets, machine filtering from six mock stops to two refills, account forms, expected primary/text colors and anonymous API 401 protection. Browser errors were empty. These were anonymous read-only checks with no signup, sign-in, test fixture or account-data mutation. See [brand-hosted-verification.json](brand-hosted-verification.json).
 

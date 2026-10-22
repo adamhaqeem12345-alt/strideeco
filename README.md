@@ -4,7 +4,9 @@ Plan a walk through Elmina, compare explicitly labelled building-shadow scenario
 
 ## Brand refresh
 
-The owner-requested aqua, teal, green, yellow, coral and sky refresh is live at [strideeco.vercel.app](https://strideeco.vercel.app/). READY production deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW` serves source `d1b6ad60d47c463303acc674f95f5d38fb826191` from `feature/brand-refresh`. The supplied SVG wordmark appears in navigation/account pages, with its smiling water drop as the favicon. Darker text and controls keep the bright palette readable.
+The latest footer correction is live at [strideeco.vercel.app](https://strideeco.vercel.app/): READY deployment `dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX`, application source `f8c439115d32067e08bd69e5745543efe80fdabb`. Reduced sidebar spacing keeps the complete footer visible on shorter laptop/tablet windows; independent sidebar scrolling makes it reachable in very short windows. Staged and live browser checks passed for those cases and all four mobile views. See [sidebar-footer-verification.json](docs/sidebar-footer-verification.json).
+
+The initial owner-requested aqua, teal, green, yellow, coral and sky refresh was published as deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW`, source `d1b6ad60d47c463303acc674f95f5d38fb826191` from `feature/brand-refresh`. The supplied SVG wordmark appears in navigation/account pages, with its smiling water drop as the favicon. Darker text and controls keep the bright palette readable.
 
 Staged and live anonymous browser checks passed at 320, 390, 768 and 1440 pixels, including proportional logos, exact logo/icon SHA-256 matches, machine-type filtering, account forms and API 401 protection, with no page errors or account writes. Local checks separately passed the production build, TypeScript, 26 domain/ownership tests, contrast/focus checks and independent voucher QR decoding. Hosted account persistence remains deferred with the remote database. See [brand-refresh.md](docs/brand-refresh.md) and [the live verification report](docs/brand-hosted-verification.json).
 

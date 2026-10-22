@@ -2,7 +2,11 @@
 
 Updated 2026-10-23. Implementation, local testing, hosted authentication and remote persistence are separate states. Dated snapshots below apply to their recorded releases.
 
-## Current branding release
+## Current footer correction
+
+The sidebar footer fix is live at [strideeco.vercel.app](https://strideeco.vercel.app), READY deployment `dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX`, source `f8c439115d32067e08bd69e5745543efe80fdabb`. Vercel's build and TypeScript checks passed. Both staged and live checks, without injected styles, confirm every sidebar footer item is visible at 1366×768 and 768×700, reachable by independent sidebar scrolling at 1366×500, and mobile page footers remain unobscured across all four views at 390×844 and 320×568. No browser errors or account writes occurred. See `sidebar-footer-verification.json`. This is a CSS-only correction; the broader tests below retain their recorded source scope.
+
+## Initial branding release
 
 The owner-requested logo and palette refresh is live at [strideeco.vercel.app](https://strideeco.vercel.app), READY production deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW`, source `d1b6ad60d47c463303acc674f95f5d38fb826191` on `feature/brand-refresh`. The public alias and deployment metadata were verified after promotion. The local `work/next-brand-aqua-release` build, TypeScript and all 26 domain/ownership/machine/voucher/migration tests pass.
 
