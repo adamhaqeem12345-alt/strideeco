@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "completedAt": "2026-10-22T15:56:12.560Z",
+  "verified": [
+    "GitHub sign-in option visible on local desktop and mobile",
+    "Development mode notice visible",
+    "No mobile horizontal overflow"
+  ],
+  "limits": [
+    "Read-only sign-in page check",
+    "No GitHub OAuth round trip attempted"
+  ]
+}

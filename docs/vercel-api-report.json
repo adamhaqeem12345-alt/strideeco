@@ -1,16 +1,19 @@
 {
-  "passed": true,
+  "startedAt": "2026-10-22T15:46:42.643Z",
+  "target": "http://localhost:5187",
   "checks": [
-    "production Next.js pages render; anonymous and spoofed identities rejected; cross-origin mutation rejected",
+    "Clerk SDK verifies ephemeral RSA sessions; anonymous, forged, expired and future tokens rejected; spoofed identity/auth headers and cross-origin writes rejected",
     "route persistence, account isolation and explicitly public route sharing",
     "labelled demo activity credits once through the libSQL adapter",
     "reservation idempotency, overspend protection, failed dispense release and single confirmation deduction",
     "expired reservation release and implausible GPS rejection without credit"
   ],
   "limits": [
-    "Signed test sessions, not a live GitHub OAuth round trip",
+    "Ephemeral locally signed tokens verified by Clerk SDK, not a live Clerk sign-up or OAuth round trip",
     "Local libSQL file, not a remote production database",
-    "No physical GPS or live vending hardware",
-    "Browser rerun unavailable: browser download failed"
-  ]
+    "No physical GPS or live vending hardware"
+  ],
+  "passed": true,
+  "status": "passed",
+  "completedAt": "2026-10-22T15:46:43.625Z"
 }

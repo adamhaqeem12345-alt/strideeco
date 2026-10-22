@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from '@clerk/nextjs';
-import { shadcn } from '@clerk/ui/themes';
+import { ui } from '@clerk/ui';
 import { authConfigured } from '../lib/auth-config';
 import "./globals.css";
 
@@ -20,12 +20,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{authConfigured() ? <ClerkProvider
+      <body className="antialiased">{authConfigured() ? <ClerkProvider ui={ui}
         publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         signInUrl="/sign-in" signUpUrl="/sign-up"
         signInFallbackRedirectUrl="/" signUpFallbackRedirectUrl="/"
         afterSignOutUrl="/"
-        appearance={{ theme: shadcn }}
+        appearance={{
+          cssLayerName: 'clerk',
+          variables: {
+            colorPrimary: '#23634d', colorPrimaryForeground: '#ffffff',
+            colorForeground: '#253b32', colorMutedForeground: '#7d867e',
+            colorBackground: '#ffffff', colorMuted: '#f8f9f5',
+            colorInput: '#ffffff', colorInputForeground: '#253b32',
+            colorBorder: '#e7e9e1', colorNeutral: '#253b32', colorRing: '#23634d',
+            fontFamily: '"Segoe UI", Arial, sans-serif',
+          },
+          elements: {
+            formFieldInput: { '&[data-variant="default"]': { border: '1px solid #e7e9e1' } },
+          },
+        }}
       >{children}</ClerkProvider> : children}</body>
     </html>
   );

@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "status": "passed",
+  "startedAt": "2026-10-22T15:49:57.851Z",
+  "completedAt": "2026-10-22T15:50:19.637Z",
+  "verified": [
+    "real development Clerk UI sign-up",
+    "visible primary button and input outline",
+    "visible Development mode notice on signup and signin",
+    "development test email OTP verification",
+    "UserButton account menu",
+    "profile SignOutButton and anonymous API rejection",
+    "private saved routes cleared after sign-out",
+    "real development Clerk UI sign-in (password)",
+    "saved routes persist after signing in again"
+  ],
+  "fixture": "Temporary +clerk_test account; cleanup managed by runner",
+  "limits": [
+    "Clerk development instance with official bot-bypass testing token",
+    "Test email OTP, no real email delivery or GitHub OAuth",
+    "Isolated local database, no remote production persistence"
+  ],
+  "browserErrors": [],
+  "cleanupConfirmed": true
+}

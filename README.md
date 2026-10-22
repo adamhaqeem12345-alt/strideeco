@@ -1,35 +1,60 @@
 # StrideEco
 
-Plan a walk through Elmina, compare explicitly labelled building-shadow scenarios, record an activity and try a drinking-water reward. Responsive planning, route saving/sharing, wallet and water redemption work on phone and desktop layouts.
+Plan a walk through Elmina, compare explicitly labelled building-shadow scenarios, record an activity and try a simulated drinking-water reward. The PACE interface supports planning, saving, sharing, wallet access and water redemption on phone and desktop layouts; account features also need configured authentication and an application database.
+
+## Integration status
+
+The local source implements Clerk sign-in/sign-up, account controls, sign-out and server-side account ownership. Fifteen domain/identity tests, TypeScript and the final webpack build pass. The same `work/next-clerk-pinned-ui` application artifact passes the isolated Clerk API suite, signed-out desktop/mobile browser checks, real development-instance UI sign-up/sign-in/sign-out, and the authenticated desktop/mobile PACE journey. Browser test users were removed and their cleanup verified. These tests use isolated local databases; the normal laptop development database separately has all three migrations.
+
+Vercel CLI login and the local project link are verified. Its production environment settings contain the existing Clerk **development** publishable/secret keys, configured privately, but those settings have not been deployed. Production still serves the earlier Auth.js commit `7aa02383a79c46d06729530369737896be021b63`. No remote database, database variables or remote migrations are configured; the user chose to leave this setup pending. See `docs/verification.md` for evidence and limits.
+
+Reuse the existing **StrideEco** Clerk application `app_3L3PLlwOzzZZaMzKCu3yv7KjSLe` and development instance `ins_3L3PLmdtUHei2quxSicUcO1ninw`. A fresh `clerk doctor --json` check confirms the saved login, correct application/instance link and local development keys; its remaining warning is that production is not configured. Do not create a replacement application or repeat login unless a safe status check proves the saved session unusable. This checkout uses `CLERK_CONFIG_DIR=C:/Users/User/Documents/Codex/2026-10-07/new-chat-2/work/clerk-cli`.
+
+The development instance's `force_organization_selection` is verified `false`, allowing personal accounts to finish signup without choosing an organization. GitHub sign-in is enabled using Clerk's shared development credentials. Returning legacy users should choose GitHub on their first Clerk sign-in so its verified numeric provider ID can identify their existing records. The real GitHub OAuth round trip has not been exercised. Clerk UI styles use the existing StrideEco palette and an explicit CSS reset; this does not introduce a new brand direction.
 
 ## Deploy to Vercel
 
-Import this repository's **main** branch into Vercel. Use the repository root, **Next.js**, the default `.next` output and the included `vercel.json`. The standard commands are `npm ci` and `npm run build`. No Cloudflare account or Sites runtime is required by the active app.
+The existing Vercel project imports GitHub **main**. The local migration branch is `integrate/clerk-auth`, preserving the real remote ancestry; it is not yet pushed or deployed. A preview may use development keys scoped to that branch. Without a remote database, it can demonstrate sign-in but hosted account-data APIs and full PACE persistence remain unavailable. Do not merge it into production until the target database and Clerk environment are ready. Use the repository root, **Next.js**, the default `.next` output and the included `vercel.json`. The standard commands are `npm ci` and `npm run build`. `.vercelignore` excludes tests, work files, environment files and local databases from deployment uploads. No Cloudflare account or Sites runtime is required by the active app.
 
-**The public route planner deploys without credentials.** Persistent account features require these server-only environment variables:
+**The public route planner deploys without credentials.** Persistent account features require these environment variables:
 
 | Variable | Purpose |
 | --- | --- |
-| `AUTH_SECRET` | A private random value of at least 32 characters for Auth.js sessions |
-| `AUTH_GITHUB_ID` | GitHub OAuth application client ID |
-| `AUTH_GITHUB_SECRET` | GitHub OAuth application client secret |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Public Clerk key for the selected instance; present at build time |
+| `CLERK_SECRET_KEY` | Server-only Clerk secret for the same instance |
 | `TURSO_DATABASE_URL` | URL of a persistent remote **libSQL** database |
-| `TURSO_AUTH_TOKEN` | Database access token |
+| `TURSO_AUTH_TOKEN` | Server-only database access token |
 
-Create a GitHub OAuth application with callback `https://YOUR-PRODUCTION-DOMAIN/api/auth/callback/github`. This is for StrideEco user sign-in; it is separate from Vercel's GitHub repository connection. Only profile access is requested. Register a separate OAuth app for local testing with callback `http://localhost:5173/api/auth/callback/github`.
+Clerk owns the sign-in flow at `/sign-in` and `/sign-up`; StrideEco no longer uses the Auth.js callback or `AUTH_*` settings. Keep secrets out of `NEXT_PUBLIC_*` variables and Git. Use separate application data for preview/testing rather than a production database.
 
-Optionally set `AUTH_URL` to the canonical production origin. Use separate credentials and a separate database for preview deployments. Do not prefix secrets with `NEXT_PUBLIC_` or commit `.env.local`.
+A deployment on `*.vercel.app` can use the existing Clerk **development** instance for a clearly labelled development/demo environment. Clerk production authentication requires an owned domain with editable DNS, a production instance of this same Clerk application, matching production keys, completed DNS/certificate setup, and production OAuth credentials for enabled social providers. No production instance or domain is configured here. Do not register a domain, enable a paid feature or replace the existing app to remove this boundary. See [Clerk on Vercel](https://clerk.com/docs/guides/development/deployment/vercel) and [Clerk production setup](https://clerk.com/docs/guides/development/deployment/production).
 
-Apply the database migrations once from a trusted local terminal using the target deployment's database environment variables:
+### Minimal remote persistence
+
+**Setup is intentionally pending at the user's request.** When resumed, use one dedicated **free** [Turso Cloud Vercel Marketplace resource](https://vercel.com/marketplace/tursocloud) connected only to the existing `strideeco` project (`prj_FvTRxoEPeOR71PGe4KGLslAaiWVN`, team `team_dkd2AminqynD5q6GdLALg75T`). Vercel CLI authentication and the project link already work. The server still reports no installed Turso integration, and native acceptance reports: "Term acceptance cannot be performed by an AI agent. Run this command directly in your terminal." Resume with this human-run interactive command:
+
+```powershell
+npx vercel --scope adam-haqeems-projects integration accept-terms tursocloud
+```
+
+After acceptance is confirmed server-side, verify the `starter` plan remains free, then provision and connect only the dedicated resource:
+
+```powershell
+npx vercel --scope adam-haqeems-projects integration add tursocloud --name strideeco-demo --plan starter --metadata region=iad1 --environment production --environment development --no-env-pull
+```
+
+Leave paid options and overages disabled; do not reuse another project's database or repeat provisioning after a resource has already been created. The integration supplies `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`. Verify their names without printing values and transfer target credentials privately for migration. Clerk stores identities; it does not store StrideEco routes, activities, wallets or redemptions.
+
+After configuring the target database environment securely, apply the migrations from a trusted terminal:
 
 ```sh
 npm ci
 npm run db:migrate
 ```
 
-The migration runner records checksums and safely skips files already applied. Migrations are intentionally separate from builds. After configuring the environment, redeploy in Vercel. Before those settings are ready, sign-in explains that account features are unavailable while the planner remains usable.
+The runner applies `0000_condemned_firestar.sql`, `0001_wallet_accounting.sql` and `0002_clerk_identities.sql`, records checksums and skips unchanged applied files. Never edit an applied migration. Migrations are separate from builds. Verify all three recorded migrations before deploying and rerun the application journey against the remote database after deployment.
 
-Vercel local files are not used for account persistence. The application rejects `file:` database URLs when running on Vercel. This repository does not provision a database or create paid services automatically.
+Vercel local files are not account persistence: the application rejects `file:` database URLs there. Configure real instance keys in the correct Vercel environments and redeploy after changes. Never upload the isolated harness's synthetic key-shaped placeholders, `CLERK_JWT_KEY` or `STRIDEECO_TEST_PRIVATE_KEY` to Vercel. This repository does not provision a database or create paid services automatically.
 
 ## Run locally
 
@@ -40,7 +65,20 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:5173. For account features, copy `.env.example` to `.env.local`, set the Auth.js/GitHub settings and a database URL, then run `npm run db:migrate`. For a local SQLite-compatible test database use `TURSO_DATABASE_URL=file:.data/strideeco.db` and leave `TURSO_AUTH_TOKEN` empty. The migration runner creates the directory. The Windows launcher is `Start_StrideEco.cmd`.
+Open http://localhost:5173. Use `localhost` consistently for Clerk-enabled loopback URLs and server binding; mixing `127.0.0.1` with Next.js's normalized `localhost` caused a proxy rewrite loop in the old verification harness. Preserve `.env.local` with the selected Clerk application's development keys and `TURSO_DATABASE_URL=file:.data/clerk-development.db`; all three migrations have been applied to this laptop-only database. For a fresh checkout, copy `.env.example`, configure the same-instance development keys privately, set a database URL and run `npm run db:migrate`. An isolated local database uses a `file:` URL with an empty `TURSO_AUTH_TOKEN`; the migration runner creates the directory. This demonstrates local persistence only. The Windows launcher is `Start_StrideEco.cmd`.
+
+On this Windows checkout, the default Turbopack build hit a denied junction operation and the existing `.next` output also hit a permission error. The successful checkpoint workaround used webpack and a separate output directory without deleting the old build:
+
+```powershell
+$env:STRIDEECO_BUILD_DIR = 'work/next-clerk-pinned-ui'
+node node_modules/next/dist/bin/next build --webpack
+```
+
+Keep the same `STRIDEECO_BUILD_DIR` when starting that production build or running its verification harness. The default output remains `.next` when unset. These local filesystem errors do not establish that the Vercel build fails.
+
+## Account ownership
+
+`auth_identities` maps each Clerk user to a stable application ID, with uniqueness constraints on both columns. Returning GitHub users retain their original `github:<numeric provider ID>` only when Clerk's server-side identity reports a **verified** GitHub external account with that immutable numeric ID. Email, username, client input and editable metadata are never ownership evidence. New users receive `clerk:user_...` IDs. Conflicting or ambiguous legacy claims fail without moving or combining balances; existing wallets, routes, activities and point events remain under their original IDs.
 
 ## PACE journey
 
@@ -69,20 +107,34 @@ npm test
 npm run build
 ```
 
-The six domain tests cover connected graph routes, destination endpoints, shade-scenario bounds, duplicate credits, reservation accounting and monthly limits. With Playwright and its Chromium browser installed, `node scripts/verify-local.mjs` runs the browser/API/database journey against a temporary database and local production server after a build. Set `STRIDEECO_PLAYWRIGHT` to an existing Playwright module path if needed. The harness uses signed test sessions; it does not add a production authentication bypass.
+`npm test` runs six routing/accounting tests and nine identity-ownership tests. The latter cover legacy data preservation, rejected unverified/editable claims, canonical numeric provider IDs, stable existing mappings, concurrent duplicate/competing claims, duplicate ownership, ambiguous legacy matches and mismatched server identities.
 
-See `docs/verification.md` for the scope and remaining checks. Live GitHub OAuth, remote database access, physical handset GPS and actual vending hardware require their respective configured environments.
+After a build, `node scripts/verify-local.mjs` runs the isolated API/database harness with a temporary database and ephemeral RSA-signed sessions verified by Clerk's SDK. The corrected harness passes against `work/next-clerk-pinned-ui`, including token/header rejection, account isolation, sharing, replay-safe credits and reservation accounting; `outputs/vercel-api-report.json` records this run. It exercises session verification and data rules, not a real Clerk sign-in round trip. No production bypass endpoint is provided.
 
-Without a browser installation, `node scripts/verify-local.mjs --api-only` checks the production-server API and libSQL accounting using an isolated temporary database and signed test sessions. Run `npm test` first to prepare the test graph bundle.
+For the real development Clerk browser journey, use the dedicated runner with the existing `.env.local` development keys and the built output:
+
+```powershell
+$env:STRIDEECO_BUILD_DIR = 'work/next-clerk-pinned-ui'
+$env:STRIDEECO_PLAYWRIGHT = 'C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'
+$env:STRIDEECO_BROWSER_EXECUTABLE = 'C:/Program Files/Google/Chrome/Application/chrome.exe'
+node scripts/verify-clerk.mjs
+```
+
+The runner refuses production keys, starts a separate server at `http://localhost:5175` (override with `STRIDEECO_CLERK_TEST_PORT`) and migrates a fresh temporary local database. It generates one timestamped `strideeco-e2e+clerk_test_...@example.com` fixture and a random password in process memory. `tests/browser-auth.cjs` creates that development user through the visible signup form, uses Clerk's official bot-bypass testing token and test OTP, checks UI sign-out/sign-in and saved-route recovery, then `tests/browser-flow.cjs` uses the same account through Clerk's official testing helper for desktop/mobile PACE checks. This tests real development sessions, not production auth, real email delivery or GitHub OAuth.
+
+In `finally`, the runner queries only the exact generated email and deletes that one Clerk development user if uniquely matched, then stops its server. Ambiguous identity or unconfirmed cleanup fails the run. Existing users are not selected or deleted; temporary local database files remain local. Reports are `outputs/clerk-browser-auth-report.json` and `outputs/e2e-report.json`. Do not run the child browser tests with a guessed user's email or upload their fixture variables to Vercel.
+
+See `docs/verification.md` for current results. Remote persistence, a complete live Clerk browser round trip, physical handset GPS and actual vending hardware each require their own evidence.
 
 ## Source branches and main code
 
-- **main:** Vercel-compatible Next.js app, Auth.js sessions and libSQL persistence.
+- **Local migration source:** Vercel-compatible Next.js app, Clerk sessions and libSQL persistence; deployment status is recorded above.
 - **sites-local:** preserved Cloudflare/Sites baseline from the earlier local prototype; its original setup instructions apply only on that branch.
 - `components/stride-app.tsx`: responsive PACE screens.
 - `components/route-map.tsx`, `lib/geo.ts`: map interactions, sourced graph routing and shadow scenarios.
-- `auth.ts`, `app/api/auth/`: signed sessions and GitHub OAuth.
+- `auth.ts`, `proxy.ts`, `components/auth-page.tsx`: Clerk session verification and sign-in/sign-up UI.
+- `lib/account-identity.ts`, `drizzle/0002_clerk_identities.sql`: stable mapping to existing application ownership.
 - `lib/database.ts`, `app/api/pilot/route.ts`: authenticated account operations and parameterised SQLite statements.
-- `drizzle/`: original schema and atomic points-accounting triggers, unchanged by the hosting port.
+- `drizzle/`: schema, atomic points-accounting triggers and the additive Clerk identity mapping.
 
 Legacy Sites tooling remains in the source for reference, but the active Next.js build does not import its Cloudflare worker or header-based sign-in implementation.

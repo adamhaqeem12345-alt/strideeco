@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "status": "passed",
+  "startedAt": "2026-10-22T15:53:17.645Z",
+  "completedAt": "2026-10-22T15:54:10.599Z",
+  "verified": [
+    "anonymous API protection",
+    "spoofed identity headers rejected",
+    "Clerk development-session identity",
+    "desktop route save",
+    "desktop share-button flow and anonymous shared-route opening",
+    "explicit shade scenario",
+    "single simulated activity credit on replay",
+    "shared wallet and saved routes across browser contexts",
+    "mobile route planning, saving and share-button flow",
+    "mobile and desktop water reservation",
+    "same code accessible across sessions",
+    "failure release",
+    "single deduction on repeated confirmation",
+    "implausible GPS jump rejected without credit"
+  ],
+  "limits": [
+    "PACE sessions use Clerk official Backend API sign-in test helper with a real temporary development user",
+    "UI signup, signin and signout are independently covered by browser-auth.cjs",
+    "Sharing intercepts navigator.share without sending a message",
+    "Isolated local database, no remote production persistence",
+    "Demo activity and simulated water dispensing, no physical GPS or vending hardware"
+  ],
+  "browserErrors": [],
+  "cleanupConfirmed": true,
+  "buildDirectory": "work/next-clerk-final-verified"
+}

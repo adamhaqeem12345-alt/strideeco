@@ -46,6 +46,26 @@ test('unverified providers and editable identifiers cannot claim a legacy wallet
   assert.equal((await db.execute("SELECT points FROM wallets WHERE user_id='github:123'")).rows[0].points, 120);
 });
 
+test('only canonical numeric GitHub provider IDs match legacy ownership', async t => {
+  const db = await fixture(t); await seedLegacy(db, '123');
+  for (const [index, providerUserId] of ['', '0', '0123', '-123', '123.0', '1.23e2', '123 ', 'github:123'].entries()) {
+    const user = `user_invalid_${index}`;
+    assert.equal(await resolveAccountIdentity(db, user, identity(user, [github(providerUserId)])), `clerk:${user}`);
+  }
+  const user = 'user_oauth_github';
+  assert.equal(await resolveAccountIdentity(db, user, identity(user, [{ ...github('123'), provider: 'oauth_github' }])), 'github:123');
+  assert.equal((await db.execute("SELECT points FROM wallets WHERE user_id='github:123'")).rows[0].points, 120);
+});
+
+test('a mapped application identity stays stable when external accounts change', async t => {
+  const db = await fixture(t); await seedLegacy(db, '123');
+  const user = 'user_stable';
+  assert.equal(await resolveAccountIdentity(db, user, identity(user)), `clerk:${user}`);
+  assert.equal(await resolveAccountIdentity(db, user, identity(user, [github('123')])), `clerk:${user}`);
+  assert.equal((await db.execute("SELECT COUNT(*) AS n FROM auth_identities WHERE app_user_id='github:123'")).rows[0].n, 0);
+  assert.equal((await db.execute("SELECT points FROM wallets WHERE user_id='github:123'")).rows[0].points, 120);
+});
+
 test('repeated concurrent requests map one Clerk user only once', async t => {
   const db = await fixture(t);
   const results = await Promise.all(Array.from({ length: 5 }, () => resolveAccountIdentity(db, 'user_race', identity('user_race'))));
@@ -58,6 +78,20 @@ test('another Clerk account cannot claim an already linked legacy wallet', async
   await resolveAccountIdentity(db, 'user_owner', identity('user_owner', [github('123')]));
   await assert.rejects(resolveAccountIdentity(db, 'user_other', identity('user_other', [github('123')])), AccountIdentityConflict);
   assert.equal((await db.execute('SELECT COUNT(*) AS n FROM auth_identities')).rows[0].n, 1);
+});
+
+test('concurrent competing claims preserve one legacy owner without moving records', async t => {
+  const db = await fixture(t); await seedLegacy(db, '123');
+  const results = await Promise.allSettled(['user_first', 'user_second'].map(user =>
+    resolveAccountIdentity(db, user, identity(user, [github('123')]))));
+  const resolved = results.filter(result => result.status === 'fulfilled');
+  const rejected = results.filter(result => result.status === 'rejected');
+  assert.equal(resolved.length, 1);
+  assert.equal(resolved[0].value, 'github:123');
+  assert.equal(rejected.length, 1);
+  assert.ok(rejected[0].reason instanceof AccountIdentityConflict);
+  assert.equal((await db.execute('SELECT COUNT(*) AS n FROM auth_identities')).rows[0].n, 1);
+  assert.equal((await db.execute("SELECT points FROM wallets WHERE user_id='github:123'")).rows[0].points, 120);
 });
 
 test('ambiguous legacy accounts fail without combining points or moving records', async t => {

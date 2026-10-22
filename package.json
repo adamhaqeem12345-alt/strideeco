@@ -9,9 +9,9 @@
     "test": "node scripts/test-domain.mjs",
     "check": "tsc --noEmit",
     "install:ci": "node scripts/install-ci.mjs",
-    "dev": "next dev --port 5173",
+    "dev": "next dev --hostname localhost --port 5173",
     "build": "next build",
-    "start": "next start --port 5173",
+    "start": "next start --hostname localhost --port 5173",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "node scripts/migrate.mjs"

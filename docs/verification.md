@@ -1,35 +1,55 @@
 # Verification record
 
-2026-10-22. Two separate verification records are retained below.
+Updated 2026-10-22. Implementation, local testing, hosted authentication and remote persistence are separate states. Historical results below do not establish that the current Clerk migration passes.
 
-## Vercel-compatible main branch
+## Current Clerk migration
 
-- Standard Next.js production build and TypeScript checks passed.
-- All six routing/accounting domain tests passed.
-- Both SQL migrations applied to an isolated libSQL database; a second run safely skipped them using stored checksums.
-- The actual local production server passed the API/database journey: anonymous access denied, forged Sites identity headers ignored, cross-origin writes denied, signed Auth.js test sessions accepted, saved routes persisted and isolated by account, explicitly shared routes readable anonymously, demo credit idempotent, water reservation idempotent, overspending denied, failure/expiry releases and a single confirmation deduction.
-- Implausible GPS jumps received no credit. See `vercel-api-report.json`.
-- No GitHub OAuth round trip or remote database connection was performed; these require deployment credentials. Test identity was generated only inside the isolated harness; no production bypass endpoint was added.
-- A fresh browser rerun in this environment was unavailable because Chromium's download failed. The earlier responsive browser evidence below applies to the preserved Sites baseline and its unchanged PACE components, not to a deployed Vercel site.
-- No repository was created or deployment published during this preparation. GitHub repository creation is unavailable through the connected tools, and browser sign-in was not completed.
+| State | Evidence and limit |
+| --- | --- |
+| Code implemented | Local source has Clerk provider/proxy integration, sign-in/sign-up pages, account controls, sign-out, server-side identity lookup and a unique Clerk-to-application ownership mapping. This describes implementation, not a successful browser round trip. |
+| Clerk account authenticated | A fresh `clerk doctor --json` check confirms the saved login with `CLERK_CONFIG_DIR=C:/Users/User/Documents/Codex/2026-10-07/new-chat-2/work/clerk-cli`. No repeated login was needed. |
+| Existing application linked | Doctor confirms the correct StrideEco application `app_3L3PLlwOzzZZaMzKCu3yv7KjSLe`, development instance `ins_3L3PLmdtUHei2quxSicUcO1ninw`. The remaining warning is production not configured. No replacement app was created. |
+| Keys configured locally | Doctor confirms the application's development publishable/secret keys in `.env.local`. Values were not printed or committed. |
+| Local checks | Fifteen domain/identity tests, strict TypeScript and the final separate-directory webpack build pass. The same `work/next-clerk-pinned-ui` artifact passes the synthetic API suite and signed-out desktop/mobile public browser checks, including the final account-screen styling. |
+| Browser sign-in and PACE | Independently passed against the same final artifact: real Clerk development UI signup with test email verification, account menu, profile sign-out with API rejection/private UI reset, password sign-in and restored saved routes; plus the desktop/mobile PACE journey. The PACE suite uses Clerk's official sign-in helper with a real temporary development user. Exact fixture cleanup is confirmed. See `clerk-browser-auth-report.json` and `pace-report.json` in this folder. |
+| API/database journey | The corrected isolated Clerk SDK API suite passes against `work/next-clerk-pinned-ui`. It applies all three migrations, verifies safe rerun, token/header rejection, account isolation, public sharing, replay-safe credits, reservation accounting, expiry release and implausible GPS rejection. See `outputs/vercel-api-report.json`; its sessions and file database are synthetic/local, not a live Clerk sign-in or remote database. |
+| Laptop development data | `.env.local` now selects `file:.data/clerk-development.db`, with all three migrations applied. The server at `http://localhost:5173` returns 200 for `/sign-in` and 401 for an anonymous `/api/pilot` request. A loaded form is not completed sign-in. |
+| Vercel access and environment | CLI login and `.vercel/project.json` link to the correct project/team are verified. Existing Clerk development publishable/secret keys were configured in Vercel production environment settings privately through stdin. They have not been deployed; this is not production Clerk authentication. |
+| Application deployed | Live Vercel inspection still shows READY deployment `dpl_AZrSjxfcK2VtoMLyR77fpypMqTXq`, commit `7aa02383a79c46d06729530369737896be021b63`, the earlier Auth.js source. The local Clerk changes are not verified on the live site. |
+| Persistent account data | No remote database, `TURSO_DATABASE_URL`/`TURSO_AUTH_TOKEN` variables or remote migrations are configured. The user chose to leave database setup pending. Local data does not establish hosted cross-device persistence. |
+
+The existing development instance was verified with `force_organization_selection=false`, allowing personal-account signup to complete. The narrow `connection_oauth_github` configuration was enabled; public frontend settings confirm GitHub is enabled and authenticatable using shared development credentials. This enables the provider needed for legacy ownership matching; a real GitHub OAuth round trip remains untested. Returning legacy users should choose GitHub on their first Clerk sign-in. Clerk UI styles now use the existing StrideEco palette and CSS reset; input visibility is included in the browser auth test. No new branding is selected.
+
+The current fifteen tests comprise six routing/shade/accounting tests and nine account-ownership tests. Ownership checks cover retaining original GitHub wallets/routes/point events, rejecting unverified/editable claims, canonical numeric provider IDs, stable existing mappings, concurrent duplicate and competing requests, preventing a second Clerk account claiming the same wallet, rejecting ambiguous legacy accounts and rejecting a mismatched server identity.
+
+The previous API timeout was caused by mixing `127.0.0.1` and `localhost`: Next.js normalized a proxy URL to `localhost`, so Clerk treated the rewrite as external and re-entered the proxy. The harness now binds and requests `localhost` consistently. Use `localhost` for the real local browser session too.
+
+Existing account data remains under its original application IDs. Mapping uses only Clerk's verified GitHub external identity and immutable numeric provider ID; email, username, client input and editable metadata do not establish ownership. Uniqueness conflicts fail without merging balances.
+
+## Reproduction and remaining checks
+
+- Run `npm run check`, `npm test` and a production build after code changes. The current verified Windows artifact uses `STRIDEECO_BUILD_DIR=work/next-clerk-pinned-ui` with `next build --webpack`; preserve that variable when starting the resulting build. The separate directory avoids the old output's permission problem without deleting it. Vercel uses the default `.next` unless configured otherwise.
+- Run `node scripts/verify-local.mjs` against the final build. Its temporary local database and ephemeral RSA-signed sessions exercise Clerk SDK verification and application rules, not a real Clerk login. Never upload its synthetic key-shaped placeholders, `CLERK_JWT_KEY` or `STRIDEECO_TEST_PRIVATE_KEY` to Vercel.
+- Run `node scripts/verify-clerk.mjs` with real development keys in `.env.local`, `STRIDEECO_BUILD_DIR` pointing to that development-key build, and installed browser tooling through `STRIDEECO_PLAYWRIGHT` / optional `STRIDEECO_BROWSER_EXECUTABLE`. The default isolated server is `http://localhost:5175`; `STRIDEECO_CLERK_TEST_PORT` overrides it. The full PowerShell example and fixture lifecycle are in `README.md`.
+- The runner refuses production keys, migrates a fresh temporary local database and generates one labelled `strideeco-e2e+clerk_test_...@example.com` development fixture with an in-memory random password. The visible UI signup test creates that account and checks sign-out/sign-in using Clerk's official testing token/OTP; the PACE test reuses the same account through the official helper. In `finally`, only the exact generated email is queried/deleted if uniquely matched, and the server stops. Existing users are untouched. Ambiguous identity or unconfirmed cleanup fails the run. Temporary database files remain local. This is not real email delivery, GitHub OAuth or production authentication.
+- Complete desktop/mobile PACE checks: planning, saving, sharing, wallet access, labelled demo credit, water reservation, failure release and one deduction on repeated confirmation. Verify another account cannot access or change those records.
+- Database setup is intentionally paused at the user's request. When resumed, the human must run `npx vercel --scope adam-haqeems-projects integration accept-terms tursocloud` interactively. CLI login/project access already work, but the server still reports no Turso installation, and the native CLI refuses agent-run acceptance. After acceptance is recorded, verify the `starter` plan is still free and create/connect the dedicated `strideeco-demo` resource using the scoped command in `README.md`. It supplies `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`; do not enable paid options/overages or reuse another project's database.
+- Apply `0000_condemned_firestar.sql`, `0001_wallet_accounting.sql` and `0002_clerk_identities.sql` using `npm run db:migrate` with securely configured target variables. Verify their stored checksums and safe rerun. Do not edit applied migrations or use `file:` persistence on Vercel.
+- Local branch `integrate/clerk-auth` exists and preserves GitHub's existing ancestry; push and preview deployment are not yet verified. A preview may use development keys scoped to that branch. `.vercelignore` excludes tests, work files, environment files and local databases. Verify push/deployment results before recording success. Keep production on its original commit until the remote database and target Clerk environment are ready. A development-key preview on `*.vercel.app` must remain labelled development/demo authentication; hosted account-data APIs/full PACE persistence are unavailable without the remote database. [Clerk production authentication](https://clerk.com/docs/guides/development/deployment/vercel) requires an owned domain with DNS control, a production instance of the same application, matching production keys and completed provider/DNS setup. No domain purchase or replacement application is authorized.
+
+## Historical Auth.js baseline
+
+The pre-Clerk local production server previously passed an API/database journey with signed Auth.js sessions, two checksummed migrations, account isolation, anonymous shared routes, replay-safe demo credit, reservation accounting, overspending denial, failure/expiry releases, a single confirmation deduction and rejection of implausible GPS jumps. Those historical results do not establish that Clerk works. The current Clerk API result is recorded separately above. The old baseline's browser rerun was unavailable at the time because Chromium download failed.
+
+The GitHub repository and READY Vercel deployment now exist. Older statements that no repository or deployment existed applied only to their original preparation session.
 
 ## Earlier Sites local baseline
 
-## Passed
-
-- TypeScript strict typecheck.
-- Production build completed successfully for the app and API route.
-- Six domain tests: connected sourced routes; point-to-point routing; bounded daytime shade scenarios; duplicate-credit protection; reservation/confirmation/failure/expiry accounting; monthly allocation enforcement.
-- Chromium rendered the desktop (1440 px) and phone (390 px) layouts with no page errors or horizontal overflow.
-- End-to-end browser/API/database journey: anonymous API protection; desktop route saving; explicit height scenario; labelled simulated activity and single credit on replay; saved routes and balances shared across independent signed-in browser contexts; mobile planning and saving; mobile and desktop water reservation; same pending code visible on either; failure release; single deduction on repeated confirmation.
+The preserved Sites/Cloudflare baseline previously passed TypeScript, a production build and six domain tests. Chromium rendered desktop (1440 px) and phone (390 px) viewports without page errors or horizontal overflow. Its local browser/API/database checks covered route saving, explicit shade scenarios, replay-safe labelled demo credit, shared balances/routes across mock-signed-in contexts, phone planning/saving, reservation visibility, failure release and a single confirmation deduction. These results used the earlier mock sign-in and do not verify Clerk or hosted cross-device access.
 
 ## Practical limits
 
-- Phone verification used a mobile browser viewport, not a physical handset run.
-- The prototype records foreground browser geolocation. Background/screen-off tracking is not promised. GPS plausibility checks do not prove that a device location is authentic.
-- Water dispensing is an operator simulator. No physical machine, location, stock or partnership is represented as confirmed.
-- Account synchronisation was verified locally using the starter's mock sign-in. Hosted sign-in and remote device access need a future deployment.
-- All map features come from the attributed OSM snapshot. Building heights and canopy are missing; the shade scenario uses an explicit assumed height, convex shadow envelopes and a 120 m projection cap. It excludes trees, clouds and roof overhangs. Below 5 degrees solar elevation, estimates are unavailable.
-- Demonstration walks are labelled and excluded from real participation evidence. Configurable illustrative rules: 50 m per point, 60 points per simulated bottle, four rewards per calendar month.
-
-No GitHub repository was created or published during this local baseline build.
+- Mobile viewport testing is not a physical handset GPS test. Tracking uses foreground browser geolocation; background/screen-off tracking is not promised. Plausibility checks do not prove authentic coordinates.
+- All drinking-water dispensing is simulated. No machine, stock, funding, operator partnership or physical vending connection is confirmed.
+- Map features come from the attributed OSM snapshot. Building heights and canopy are missing. The optional shade scenario uses an explicit assumed height, convex shadows and a 120 m projection cap; it excludes trees, clouds and roof overhangs. Estimates are unavailable below 5 degrees solar elevation.
+- Demo walks are labelled and excluded from real participation evidence. The illustrative rules remain 50 m per point, 60 points per simulated bottle and four rewards per calendar month.
