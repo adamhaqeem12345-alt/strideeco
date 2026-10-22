@@ -1,0 +1,836 @@
+{
+  "target": "https://strideeco.vercel.app",
+  "candidate": false,
+  "status": "passed",
+  "passed": true,
+  "startedAt": "2026-10-22T18:38:07.678Z",
+  "checks": [
+    {
+      "check": "1366x768 sidebar footer",
+      "initial": {
+        "viewport": {
+          "width": 1366,
+          "height": 768
+        },
+        "documentScrollY": 0,
+        "sidebar": {
+          "left": 0,
+          "top": 0,
+          "right": 244,
+          "bottom": 768,
+          "width": 244,
+          "height": 768,
+          "scrollTop": 0,
+          "scrollHeight": 768,
+          "clientHeight": 768,
+          "overflowY": "auto"
+        },
+        "footer": {
+          "left": 18,
+          "top": 635.5,
+          "right": 226,
+          "bottom": 744,
+          "width": 208,
+          "height": 108.5
+        },
+        "children": [
+          {
+            "tag": "SPAN",
+            "text": "Elmina pilot concept",
+            "rect": {
+              "left": 18,
+              "top": 659.5,
+              "right": 226,
+              "bottom": 676.5,
+              "width": 208,
+              "height": 17
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "BUTTON",
+            "text": "About this prototype",
+            "rect": {
+              "left": 18,
+              "top": 694.5,
+              "right": 134.703125,
+              "bottom": 710.5,
+              "width": 116.703125,
+              "height": 16
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "P",
+            "text": "Small steps. Shared possibilities.",
+            "rect": {
+              "left": 18,
+              "top": 730.5,
+              "right": 226,
+              "bottom": 744,
+              "width": 208,
+              "height": 13.5
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          }
+        ]
+      },
+      "final": {
+        "viewport": {
+          "width": 1366,
+          "height": 768
+        },
+        "documentScrollY": 0,
+        "sidebar": {
+          "left": 0,
+          "top": 0,
+          "right": 244,
+          "bottom": 768,
+          "width": 244,
+          "height": 768,
+          "scrollTop": 0,
+          "scrollHeight": 768,
+          "clientHeight": 768,
+          "overflowY": "auto"
+        },
+        "footer": {
+          "left": 18,
+          "top": 635.5,
+          "right": 226,
+          "bottom": 744,
+          "width": 208,
+          "height": 108.5
+        },
+        "children": [
+          {
+            "tag": "SPAN",
+            "text": "Elmina pilot concept",
+            "rect": {
+              "left": 18,
+              "top": 659.5,
+              "right": 226,
+              "bottom": 676.5,
+              "width": 208,
+              "height": 17
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "BUTTON",
+            "text": "About this prototype",
+            "rect": {
+              "left": 18,
+              "top": 694.5,
+              "right": 134.703125,
+              "bottom": 710.5,
+              "width": 116.703125,
+              "height": 16
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "P",
+            "text": "Small steps. Shared possibilities.",
+            "rect": {
+              "left": 18,
+              "top": 730.5,
+              "right": 226,
+              "bottom": 744,
+              "width": 208,
+              "height": 13.5
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          }
+        ]
+      }
+    },
+    {
+      "check": "768x700 sidebar footer",
+      "initial": {
+        "viewport": {
+          "width": 768,
+          "height": 700
+        },
+        "documentScrollY": 0,
+        "sidebar": {
+          "left": 0,
+          "top": 0,
+          "right": 210,
+          "bottom": 700,
+          "width": 210,
+          "height": 700,
+          "scrollTop": 0,
+          "scrollHeight": 713,
+          "clientHeight": 700,
+          "overflowY": "auto"
+        },
+        "footer": {
+          "left": 13,
+          "top": 582.375,
+          "right": 197,
+          "bottom": 690.875,
+          "width": 184,
+          "height": 108.5
+        },
+        "children": [
+          {
+            "tag": "SPAN",
+            "text": "Elmina pilot concept",
+            "rect": {
+              "left": 13,
+              "top": 606.375,
+              "right": 197,
+              "bottom": 623.375,
+              "width": 184,
+              "height": 17
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "BUTTON",
+            "text": "About this prototype",
+            "rect": {
+              "left": 13,
+              "top": 641.375,
+              "right": 129.703125,
+              "bottom": 657.375,
+              "width": 116.703125,
+              "height": 16
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "P",
+            "text": "Small steps. Shared possibilities.",
+            "rect": {
+              "left": 13,
+              "top": 677.375,
+              "right": 197,
+              "bottom": 690.875,
+              "width": 184,
+              "height": 13.5
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          }
+        ]
+      },
+      "final": {
+        "viewport": {
+          "width": 768,
+          "height": 700
+        },
+        "documentScrollY": 0,
+        "sidebar": {
+          "left": 0,
+          "top": 0,
+          "right": 210,
+          "bottom": 700,
+          "width": 210,
+          "height": 700,
+          "scrollTop": 0,
+          "scrollHeight": 713,
+          "clientHeight": 700,
+          "overflowY": "auto"
+        },
+        "footer": {
+          "left": 13,
+          "top": 582.375,
+          "right": 197,
+          "bottom": 690.875,
+          "width": 184,
+          "height": 108.5
+        },
+        "children": [
+          {
+            "tag": "SPAN",
+            "text": "Elmina pilot concept",
+            "rect": {
+              "left": 13,
+              "top": 606.375,
+              "right": 197,
+              "bottom": 623.375,
+              "width": 184,
+              "height": 17
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "BUTTON",
+            "text": "About this prototype",
+            "rect": {
+              "left": 13,
+              "top": 641.375,
+              "right": 129.703125,
+              "bottom": 657.375,
+              "width": 116.703125,
+              "height": 16
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "P",
+            "text": "Small steps. Shared possibilities.",
+            "rect": {
+              "left": 13,
+              "top": 677.375,
+              "right": 197,
+              "bottom": 690.875,
+              "width": 184,
+              "height": 13.5
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          }
+        ]
+      }
+    },
+    {
+      "check": "1366x500 sidebar footer",
+      "initial": {
+        "viewport": {
+          "width": 1366,
+          "height": 500
+        },
+        "documentScrollY": 0,
+        "sidebar": {
+          "left": 0,
+          "top": 0,
+          "right": 244,
+          "bottom": 500,
+          "width": 244,
+          "height": 500,
+          "scrollTop": 0,
+          "scrollHeight": 728,
+          "clientHeight": 500,
+          "overflowY": "auto"
+        },
+        "footer": {
+          "left": 18,
+          "top": 595.40625,
+          "right": 226,
+          "bottom": 703.90625,
+          "width": 208,
+          "height": 108.5
+        },
+        "children": [
+          {
+            "tag": "SPAN",
+            "text": "Elmina pilot concept",
+            "rect": {
+              "left": 18,
+              "top": 619.40625,
+              "right": 226,
+              "bottom": 636.40625,
+              "width": 208,
+              "height": 17
+            },
+            "fullyInsideViewport": false,
+            "centerHitOwnElement": false
+          },
+          {
+            "tag": "BUTTON",
+            "text": "About this prototype",
+            "rect": {
+              "left": 18,
+              "top": 654.40625,
+              "right": 134.703125,
+              "bottom": 670.40625,
+              "width": 116.703125,
+              "height": 16
+            },
+            "fullyInsideViewport": false,
+            "centerHitOwnElement": false
+          },
+          {
+            "tag": "P",
+            "text": "Small steps. Shared possibilities.",
+            "rect": {
+              "left": 18,
+              "top": 690.40625,
+              "right": 226,
+              "bottom": 703.90625,
+              "width": 208,
+              "height": 13.5
+            },
+            "fullyInsideViewport": false,
+            "centerHitOwnElement": false
+          }
+        ]
+      },
+      "final": {
+        "viewport": {
+          "width": 1366,
+          "height": 500
+        },
+        "documentScrollY": 0,
+        "sidebar": {
+          "left": 0,
+          "top": 0,
+          "right": 244,
+          "bottom": 500,
+          "width": 244,
+          "height": 500,
+          "scrollTop": 228,
+          "scrollHeight": 728,
+          "clientHeight": 500,
+          "overflowY": "auto"
+        },
+        "footer": {
+          "left": 18,
+          "top": 367.40625,
+          "right": 226,
+          "bottom": 475.90625,
+          "width": 208,
+          "height": 108.5
+        },
+        "children": [
+          {
+            "tag": "SPAN",
+            "text": "Elmina pilot concept",
+            "rect": {
+              "left": 18,
+              "top": 391.40625,
+              "right": 226,
+              "bottom": 408.40625,
+              "width": 208,
+              "height": 17
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "BUTTON",
+            "text": "About this prototype",
+            "rect": {
+              "left": 18,
+              "top": 426.40625,
+              "right": 134.703125,
+              "bottom": 442.40625,
+              "width": 116.703125,
+              "height": 16
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          },
+          {
+            "tag": "P",
+            "text": "Small steps. Shared possibilities.",
+            "rect": {
+              "left": 18,
+              "top": 462.40625,
+              "right": 226,
+              "bottom": 475.90625,
+              "width": 208,
+              "height": 13.5
+            },
+            "fullyInsideViewport": true,
+            "centerHitOwnElement": true
+          }
+        ]
+      }
+    },
+    {
+      "check": "390x844 plan page footer",
+      "view": "plan",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "footer": {
+        "top": 694.484375,
+        "bottom": 761.984375,
+        "left": 18,
+        "right": 372,
+        "height": 67.5
+      },
+      "nav": {
+        "top": 772,
+        "bottom": 844,
+        "left": 0,
+        "right": 390,
+        "height": 72
+      },
+      "children": [
+        {
+          "text": "Made for a little more life outside.",
+          "rect": {
+            "top": 712.484375,
+            "bottom": 725.984375,
+            "left": 18,
+            "right": 176.53125,
+            "height": 13.5
+          }
+        },
+        {
+          "text": "Prototype · data & assumptions",
+          "rect": {
+            "top": 735.984375,
+            "bottom": 747.984375,
+            "left": 18,
+            "right": 147.65625,
+            "height": 12
+          }
+        }
+      ],
+      "footerFullyAboveNav": true,
+      "footerChildrenFullyVisible": true
+    },
+    {
+      "check": "390x844 activity page footer",
+      "view": "activity",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "footer": {
+        "top": 694.65625,
+        "bottom": 762.15625,
+        "left": 18,
+        "right": 372,
+        "height": 67.5
+      },
+      "nav": {
+        "top": 772,
+        "bottom": 844,
+        "left": 0,
+        "right": 390,
+        "height": 72
+      },
+      "children": [
+        {
+          "text": "Made for a little more life outside.",
+          "rect": {
+            "top": 712.65625,
+            "bottom": 726.15625,
+            "left": 18,
+            "right": 176.53125,
+            "height": 13.5
+          }
+        },
+        {
+          "text": "Prototype · data & assumptions",
+          "rect": {
+            "top": 736.15625,
+            "bottom": 748.15625,
+            "left": 18,
+            "right": 147.65625,
+            "height": 12
+          }
+        }
+      ],
+      "footerFullyAboveNav": true,
+      "footerChildrenFullyVisible": true
+    },
+    {
+      "check": "390x844 rewards page footer",
+      "view": "rewards",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "footer": {
+        "top": 694.65625,
+        "bottom": 762.15625,
+        "left": 18,
+        "right": 372,
+        "height": 67.5
+      },
+      "nav": {
+        "top": 772,
+        "bottom": 844,
+        "left": 0,
+        "right": 390,
+        "height": 72
+      },
+      "children": [
+        {
+          "text": "Made for a little more life outside.",
+          "rect": {
+            "top": 712.65625,
+            "bottom": 726.15625,
+            "left": 18,
+            "right": 176.53125,
+            "height": 13.5
+          }
+        },
+        {
+          "text": "Prototype · data & assumptions",
+          "rect": {
+            "top": 736.15625,
+            "bottom": 748.15625,
+            "left": 18,
+            "right": 147.65625,
+            "height": 12
+          }
+        }
+      ],
+      "footerFullyAboveNav": true,
+      "footerChildrenFullyVisible": true
+    },
+    {
+      "check": "390x844 profile page footer",
+      "view": "profile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "footer": {
+        "top": 694.421875,
+        "bottom": 761.921875,
+        "left": 18,
+        "right": 372,
+        "height": 67.5
+      },
+      "nav": {
+        "top": 772,
+        "bottom": 844,
+        "left": 0,
+        "right": 390,
+        "height": 72
+      },
+      "children": [
+        {
+          "text": "Made for a little more life outside.",
+          "rect": {
+            "top": 712.421875,
+            "bottom": 725.921875,
+            "left": 18,
+            "right": 176.53125,
+            "height": 13.5
+          }
+        },
+        {
+          "text": "Prototype · data & assumptions",
+          "rect": {
+            "top": 735.921875,
+            "bottom": 747.921875,
+            "left": 18,
+            "right": 147.65625,
+            "height": 12
+          }
+        }
+      ],
+      "footerFullyAboveNav": true,
+      "footerChildrenFullyVisible": true
+    },
+    {
+      "check": "320x568 plan page footer",
+      "view": "plan",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scrollWidth": 320,
+      "footer": {
+        "top": 418.171875,
+        "bottom": 485.671875,
+        "left": 18,
+        "right": 302,
+        "height": 67.5
+      },
+      "nav": {
+        "top": 496,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 72
+      },
+      "children": [
+        {
+          "text": "Made for a little more life outside.",
+          "rect": {
+            "top": 436.171875,
+            "bottom": 449.671875,
+            "left": 18,
+            "right": 176.53125,
+            "height": 13.5
+          }
+        },
+        {
+          "text": "Prototype · data & assumptions",
+          "rect": {
+            "top": 459.671875,
+            "bottom": 471.671875,
+            "left": 18,
+            "right": 147.65625,
+            "height": 12
+          }
+        }
+      ],
+      "footerFullyAboveNav": true,
+      "footerChildrenFullyVisible": true
+    },
+    {
+      "check": "320x568 activity page footer",
+      "view": "activity",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scrollWidth": 320,
+      "footer": {
+        "top": 418.65625,
+        "bottom": 486.15625,
+        "left": 18,
+        "right": 302,
+        "height": 67.5
+      },
+      "nav": {
+        "top": 496,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 72
+      },
+      "children": [
+        {
+          "text": "Made for a little more life outside.",
+          "rect": {
+            "top": 436.65625,
+            "bottom": 450.15625,
+            "left": 18,
+            "right": 176.53125,
+            "height": 13.5
+          }
+        },
+        {
+          "text": "Prototype · data & assumptions",
+          "rect": {
+            "top": 460.15625,
+            "bottom": 472.15625,
+            "left": 18,
+            "right": 147.65625,
+            "height": 12
+          }
+        }
+      ],
+      "footerFullyAboveNav": true,
+      "footerChildrenFullyVisible": true
+    },
+    {
+      "check": "320x568 rewards page footer",
+      "view": "rewards",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scrollWidth": 320,
+      "footer": {
+        "top": 418.53125,
+        "bottom": 486.03125,
+        "left": 18,
+        "right": 302,
+        "height": 67.5
+      },
+      "nav": {
+        "top": 496,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 72
+      },
+      "children": [
+        {
+          "text": "Made for a little more life outside.",
+          "rect": {
+            "top": 436.53125,
+            "bottom": 450.03125,
+            "left": 18,
+            "right": 176.53125,
+            "height": 13.5
+          }
+        },
+        {
+          "text": "Prototype · data & assumptions",
+          "rect": {
+            "top": 460.03125,
+            "bottom": 472.03125,
+            "left": 18,
+            "right": 147.65625,
+            "height": 12
+          }
+        }
+      ],
+      "footerFullyAboveNav": true,
+      "footerChildrenFullyVisible": true
+    },
+    {
+      "check": "320x568 profile page footer",
+      "view": "profile",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scrollWidth": 320,
+      "footer": {
+        "top": 418.421875,
+        "bottom": 485.921875,
+        "left": 18,
+        "right": 302,
+        "height": 67.5
+      },
+      "nav": {
+        "top": 496,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 72
+      },
+      "children": [
+        {
+          "text": "Made for a little more life outside.",
+          "rect": {
+            "top": 436.421875,
+            "bottom": 449.921875,
+            "left": 18,
+            "right": 176.53125,
+            "height": 13.5
+          }
+        },
+        {
+          "text": "Prototype · data & assumptions",
+          "rect": {
+            "top": 459.921875,
+            "bottom": 471.921875,
+            "left": 18,
+            "right": 147.65625,
+            "height": 12
+          }
+        }
+      ],
+      "footerFullyAboveNav": true,
+      "footerChildrenFullyVisible": true
+    }
+  ],
+  "browserErrors": [],
+  "limits": [
+    "Anonymous read-only navigation; no account fixtures or account mutations",
+    "Candidate mode applies temporary CSS in this browser only"
+  ],
+  "completedAt": "2026-10-22T18:38:20.298Z",
+  "sourceCommit": "f8c439115d32067e08bd69e5745543efe80fdabb",
+  "deployment": {
+    "id": "dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX",
+    "readyState": "READY",
+    "publicAlias": "https://strideeco.vercel.app",
+    "promotion": "completed",
+    "metadataSourceVerified": true,
+    "productionBuild": "passed",
+    "typeScript": "passed"
+  }
+}

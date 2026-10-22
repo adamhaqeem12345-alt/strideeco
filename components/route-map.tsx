@@ -7,7 +7,7 @@ import { machineTypes, type Machine, type MachineType } from '../lib/machines';
 const path = (coords: Coordinate[]) => coords.map(p => project(p).join(',')).join(' ');
 const xyPath = (coords: XY[]) => coords.map(p => p.join(',')).join(' ');
 const NO_MACHINES: Machine[] = [];
-const machineColors: Record<MachineType, string> = { 'bottled-ambient': '#23634d', 'bottled-chilled': '#467c89', refill: '#9b8044' };
+const machineColors: Record<MachineType, string> = { 'bottled-ambient': '#81ff7d', 'bottled-chilled': '#42c3fe', refill: '#fe7f82' };
 const machineLetters: Record<MachineType, string> = { 'bottled-ambient': 'A', 'bottled-chilled': 'C', refill: 'R' };
 
 type Props = {
@@ -66,27 +66,27 @@ export default function RouteMap({ routes = [], route, shadows = [], picking, on
     <svg ref={svg} className="map-canvas" viewBox={viewBox} role={machinePins.length ? 'group' : 'img'} aria-label={`Interactive map of OpenStreetMap walking paths around Elmina Central Park and Urban Park${machinePins.length ? ' with illustrative mock water machine locations' : ''}`} onPointerDown={e => {
       if (e.pointerType === 'mouse' && !picking) { drag.current = { x: e.clientX, y: e.clientY, pan, moved: false }; e.currentTarget.setPointerCapture(e.pointerId); }
     }} onPointerMove={e => { if (!drag.current) return; const dx = e.clientX - drag.current.x, dy = e.clientY - drag.current.y; if (Math.hypot(dx, dy) > 3) drag.current.moved = true; const rect = e.currentTarget.getBoundingClientRect(); setPan([drag.current.pan[0] - dx / rect.width * viewWidth, drag.current.pan[1] - dy / rect.height * viewHeight]); }} onPointerUp={e => { if (picking && onPick) onPick(unproject(position(e))); drag.current = null; }} onPointerCancel={() => { drag.current = null; }}>
-      <defs><pattern id="park-grain" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="0.7" fill="#c8d4bc"/><circle cx="19" cy="20" r="0.7" fill="#c8d4bc"/></pattern><pattern id="shadow-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="7" height="7" fill="#355c3a" fillOpacity=".13"/><path d="M0 0V7" stroke="#355c3a" strokeOpacity=".3" strokeWidth="1"/></pattern></defs>
-      <rect x="-20000" y="-20000" width="40000" height="40000" fill="#f2f2e9"/>
-      {context && mapData.features.filter(f => f.tags.leisure === 'park' || f.tags.landuse).map(f => <polygon key={`park-${f.id}`} points={path(f.coordinates)} fill={f.tags.leisure === 'park' ? '#e1ead5' : '#efeee4'} stroke="#d8dfcd" strokeWidth="1"/>)}
+      <defs><pattern id="park-grain" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="0.7" fill="#b5dccc"/><circle cx="19" cy="20" r="0.7" fill="#b5dccc"/></pattern><pattern id="shadow-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="7" height="7" fill="#087c80" fillOpacity=".13"/><path d="M0 0V7" stroke="#087c80" strokeOpacity=".3" strokeWidth="1"/></pattern></defs>
+      <rect x="-20000" y="-20000" width="40000" height="40000" fill="#e7fbf5"/>
+      {context && mapData.features.filter(f => f.tags.leisure === 'park' || f.tags.landuse).map(f => <polygon key={`park-${f.id}`} points={path(f.coordinates)} fill={f.tags.leisure === 'park' ? '#d8f6ca' : '#f5fffd'} stroke="#bedfce" strokeWidth="1"/>)}
       {context && mapData.features.filter(f => f.tags.leisure === 'park').map(f => <polygon key={`grain-${f.id}`} points={path(f.coordinates)} fill="url(#park-grain)"/>)}
-      {mapData.features.filter(f => f.tags.natural === 'water').map(f => <polygon key={`water-${f.id}`} points={path(f.coordinates)} fill="#b9d9dc" stroke="#a5cdd1" strokeWidth="2"/>)}
-      {mapData.features.filter(f => f.tags.waterway).map(f => <polyline key={`river-${f.id}`} points={path(f.coordinates)} stroke="#b3d4d8" strokeWidth="9" fill="none"/>)}
-      {context && mapData.features.filter(f => f.tags.highway && !['footway', 'path', 'steps'].includes(f.tags.highway)).map(f => <g key={`road-${f.id}`}><polyline points={path(f.coordinates)} fill="none" stroke="#ddded3" strokeWidth={f.tags.highway.includes('motorway') ? 20 : f.tags.highway.includes('secondary') ? 14 : 9} strokeLinejoin="round"/><polyline points={path(f.coordinates)} fill="none" stroke="#fffef8" strokeWidth={f.tags.highway.includes('motorway') ? 15 : f.tags.highway.includes('secondary') ? 10 : 6} strokeLinejoin="round"/></g>)}
-      {context && mapData.features.filter(f => f.tags.building).map(f => <polygon key={`building-${f.id}`} points={path(f.coordinates)} fill="#deded1" stroke="#f7f7ef" strokeWidth="1"/>)}
+      {mapData.features.filter(f => f.tags.natural === 'water').map(f => <polygon key={`water-${f.id}`} points={path(f.coordinates)} fill="#a6e8ff" stroke="#68c8e9" strokeWidth="2"/>)}
+      {mapData.features.filter(f => f.tags.waterway).map(f => <polyline key={`river-${f.id}`} points={path(f.coordinates)} stroke="#9cdef6" strokeWidth="9" fill="none"/>)}
+      {context && mapData.features.filter(f => f.tags.highway && !['footway', 'path', 'steps'].includes(f.tags.highway)).map(f => <g key={`road-${f.id}`}><polyline points={path(f.coordinates)} fill="none" stroke="#d1e4df" strokeWidth={f.tags.highway.includes('motorway') ? 20 : f.tags.highway.includes('secondary') ? 14 : 9} strokeLinejoin="round"/><polyline points={path(f.coordinates)} fill="none" stroke="#ffffff" strokeWidth={f.tags.highway.includes('motorway') ? 15 : f.tags.highway.includes('secondary') ? 10 : 6} strokeLinejoin="round"/></g>)}
+      {context && mapData.features.filter(f => f.tags.building).map(f => <polygon key={`building-${f.id}`} points={path(f.coordinates)} fill="#d1e2e0" stroke="#ffffff" strokeWidth="1"/>)}
       {shadows.map((p, i) => <polygon key={`shadow-${i}`} points={xyPath(p)} fill="url(#shadow-hatch)"/>)}
-      {walkways.map(f => <polyline key={`walk-${f.id}`} points={path(f.coordinates)} fill="none" stroke="#b6bda7" strokeWidth="2" strokeDasharray="4 3" strokeLinecap="round"/>)}
-      {labels.map(l => <text key={l.name} x={l.xy[0]} y={l.xy[1]} textAnchor="middle" fontSize={14 * scale} fontFamily="Arial, sans-serif" fontWeight="600" letterSpacing={2 * scale} fill="#698259">{l.name}</text>)}
-      {routes.filter(r => r.id !== route?.id).map(r => <polyline key={r.id} points={path(r.coordinates)} fill="none" stroke="#89a9a0" strokeWidth={4 * scale} strokeDasharray={`${7 * scale} ${5 * scale}`} opacity=".65" strokeLinejoin="round"/>)}
-      {route && <><polyline points={path(route.coordinates)} fill="none" stroke="#ffffff" strokeWidth={11 * scale} strokeLinejoin="round" strokeLinecap="round"/><polyline points={path(route.coordinates)} fill="none" stroke="#217455" strokeWidth={6 * scale} strokeLinejoin="round" strokeLinecap="round"/>
-        <g transform={`translate(${project(route.coordinates[0]).join(',')})`}><circle r={13 * scale} fill="#fff"/><circle r={9 * scale} fill="#217455"/><circle r={3 * scale} fill="#fff"/></g>
-        {route.kind === 'Point to point' && <g transform={`translate(${project(route.coordinates.at(-1)!).join(',')})`}><circle r={11 * scale} fill="#fff"/><circle r={7 * scale} fill="#365d86"/></g>}
+      {walkways.map(f => <polyline key={`walk-${f.id}`} points={path(f.coordinates)} fill="none" stroke="#8aaca3" strokeWidth="2" strokeDasharray="4 3" strokeLinecap="round"/>)}
+      {labels.map(l => <text key={l.name} x={l.xy[0]} y={l.xy[1]} textAnchor="middle" fontSize={14 * scale} fontFamily="Arial, sans-serif" fontWeight="600" letterSpacing={2 * scale} fill="#456a70">{l.name}</text>)}
+      {routes.filter(r => r.id !== route?.id).map(r => <polyline key={r.id} points={path(r.coordinates)} fill="none" stroke="#278c98" strokeWidth={4 * scale} strokeDasharray={`${7 * scale} ${5 * scale}`} opacity=".65" strokeLinejoin="round"/>)}
+      {route && <><polyline points={path(route.coordinates)} fill="none" stroke="#ffffff" strokeWidth={11 * scale} strokeLinejoin="round" strokeLinecap="round"/><polyline points={path(route.coordinates)} fill="none" stroke="#055a61" strokeWidth={6 * scale} strokeLinejoin="round" strokeLinecap="round"/>
+        <g transform={`translate(${project(route.coordinates[0]).join(',')})`}><circle r={13 * scale} fill="#fff"/><circle r={9 * scale} fill="#055a61"/><circle r={3 * scale} fill="#fff"/></g>
+        {route.kind === 'Point to point' && <g transform={`translate(${project(route.coordinates.at(-1)!).join(',')})`}><circle r={11 * scale} fill="#fff"/><circle r={7 * scale} fill="#1476a0"/></g>}
       </>}
-      {live.length > 0 && <><polyline points={path(live)} fill="none" stroke="#3583ba" strokeWidth={5 * scale} strokeLinejoin="round"/>{(() => { const p = project(live.at(-1)!); return <g transform={`translate(${p.join(',')})`}><circle r={15 * scale} fill="#3a96cc" opacity=".16"/><circle r={7 * scale} fill="#328dca" stroke="white" strokeWidth={3 * scale}/></g>; })()}</>}
+      {live.length > 0 && <><polyline points={path(live)} fill="none" stroke="#1476a0" strokeWidth={5 * scale} strokeLinejoin="round"/>{(() => { const p = project(live.at(-1)!); return <g transform={`translate(${p.join(',')})`}><circle r={15 * scale} fill="#42c3fe" opacity=".16"/><circle r={7 * scale} fill="#1476a0" stroke="white" strokeWidth={3 * scale}/></g>; })()}</>}
       {referencePoint && <g transform={`translate(${project(referencePoint).join(',')}) scale(${markerScale})`} role="img" aria-label="Selected reference point" pointerEvents="none">
         <title>Selected reference point, not an automatic live location</title>
-        <circle r="12" fill="#467c89" fillOpacity=".18"/><circle r="5" fill="#467c89" stroke="white" strokeWidth="2"/>
-        <text x="15" y="4" fontSize="10" fontFamily="Arial, sans-serif" fill="#253b32" paintOrder="stroke" stroke="white" strokeWidth="3">Reference</text>
+        <circle r="12" fill="#1476a0" fillOpacity=".18"/><circle r="5" fill="#1476a0" stroke="white" strokeWidth="2"/>
+        <text x="15" y="4" fontSize="10" fontFamily="Arial, sans-serif" fill="#0c343c" paintOrder="stroke" stroke="white" strokeWidth="3">Reference</text>
       </g>}
       {machinePins.map(machine => {
         const selected = machine.id === selectedMachineId;
@@ -99,10 +99,10 @@ export default function RouteMap({ routes = [], route, shadows = [], picking, on
           onClick={event => { event.stopPropagation(); onSelectMachine?.(machine); }}
           onKeyDown={event => { if (onSelectMachine && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); event.stopPropagation(); onSelectMachine(machine); } }}>
           <title>{`${machine.name} · ${machine.rewardLabel} · Mock location`}</title>
-          <circle className="machine-pin-halo" r="22" fill="transparent" stroke={selected ? machineColors[machine.type] : 'transparent'} strokeWidth="2" strokeDasharray={selected ? '3 3' : undefined}/>
-          <circle r="16" fill="white" stroke={machineColors[machine.type]} strokeWidth={selected ? 3 : 2}/>
+          <circle className="machine-pin-halo" r="22" fill="transparent" stroke={selected ? '#087c80' : 'transparent'} strokeWidth="2" strokeDasharray={selected ? '3 3' : undefined}/>
+          <circle r="16" fill="white" stroke="#0c343c" strokeWidth={selected ? 3 : 2}/>
           <circle r="12" fill={machineColors[machine.type]}/>
-          <text y="4" textAnchor="middle" fontSize="12" fontFamily="Arial, sans-serif" fontWeight="700" fill="white" pointerEvents="none">{machineLetters[machine.type]}</text>
+          <text y="4" textAnchor="middle" fontSize="12" fontFamily="Arial, sans-serif" fontWeight="700" fill="#0c343c" pointerEvents="none">{machineLetters[machine.type]}</text>
         </g>;
       })}
     </svg>

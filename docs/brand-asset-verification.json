@@ -1,0 +1,47 @@
+{
+  "sourceBytes": 1260799,
+  "assets": [
+    {
+      "file": "public/strideeco-logo.svg",
+      "bytes": 133973,
+      "viewBox": "337.5 319.5 786.75 158.25",
+      "scripts": false,
+      "externalReferences": false
+    },
+    {
+      "file": "public/favicon.svg",
+      "bytes": 11677,
+      "viewBox": "0 0 256 256",
+      "scripts": false,
+      "externalReferences": false
+    },
+    {
+      "file": "public/favicon.png",
+      "bytes": 1611,
+      "width": 32,
+      "height": 32,
+      "transparentPixels": 464,
+      "opaqueBlackPixels": 0,
+      "cornersAlpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "public/apple-touch-icon.png",
+      "bytes": 7417,
+      "width": 180,
+      "height": 180,
+      "transparentPixels": 0,
+      "opaqueBlackPixels": 0,
+      "cornersAlpha": [
+        255,
+        255,
+        255,
+        255
+      ]
+    }
+  ]
+}

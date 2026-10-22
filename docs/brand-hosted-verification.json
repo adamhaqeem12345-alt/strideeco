@@ -1,0 +1,272 @@
+{
+  "target": "https://strideeco.vercel.app",
+  "sourceCommit": "d1b6ad60d47c463303acc674f95f5d38fb826191",
+  "passed": true,
+  "status": "passed",
+  "startedAt": "2026-10-22T18:01:57.944Z",
+  "checks": [
+    {
+      "check": "1440px anonymous account API",
+      "status": 401
+    },
+    {
+      "check": "1440px planner logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "1440px planner fit",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "check": "1440px rewards logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "1440px rewards fit",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "check": "1440px mock map type filter",
+      "allPins": 6,
+      "refillPins": 2,
+      "rewardMatches": true
+    },
+    {
+      "check": "1440px sign-in logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "1440px sign-in fit",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "check": "1440px sign-in form",
+      "primary": "#087c80",
+      "foreground": "#0c343c",
+      "imageCount": 0,
+      "decodedImages": 0,
+      "maskCount": 4,
+      "decodedMasks": 4
+    },
+    {
+      "check": "1440px sign-up logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "1440px sign-up fit",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "check": "1440px sign-up form",
+      "primary": "#087c80",
+      "foreground": "#0c343c",
+      "imageCount": 0,
+      "decodedImages": 0,
+      "maskCount": 4,
+      "decodedMasks": 4
+    },
+    {
+      "check": "390px anonymous account API",
+      "status": 401
+    },
+    {
+      "check": "390px planner logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "390px planner fit",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "check": "390px rewards logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "390px rewards fit",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "check": "390px mock map type filter",
+      "allPins": 6,
+      "refillPins": 2,
+      "rewardMatches": true
+    },
+    {
+      "check": "390px sign-in logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "390px sign-in fit",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "check": "390px sign-in form",
+      "primary": "#087c80",
+      "foreground": "#0c343c",
+      "imageCount": 0,
+      "decodedImages": 0,
+      "maskCount": 4,
+      "decodedMasks": 4
+    },
+    {
+      "check": "390px sign-up logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "390px sign-up fit",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "check": "390px sign-up form",
+      "primary": "#087c80",
+      "foreground": "#0c343c",
+      "imageCount": 0,
+      "decodedImages": 0,
+      "maskCount": 4,
+      "decodedMasks": 4
+    },
+    {
+      "check": "320px anonymous account API",
+      "status": 401
+    },
+    {
+      "check": "320px planner logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "320px planner fit",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "check": "320px rewards logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "320px rewards fit",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "check": "320px mock map type filter",
+      "allPins": 6,
+      "refillPins": 2,
+      "rewardMatches": true
+    },
+    {
+      "check": "768px anonymous account API",
+      "status": 401
+    },
+    {
+      "check": "768px planner logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "768px planner fit",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "check": "768px rewards logo",
+      "visibleLogos": 1,
+      "proportional": true
+    },
+    {
+      "check": "768px rewards fit",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "check": "768px mock map type filter",
+      "allPins": 6,
+      "refillPins": 2,
+      "rewardMatches": true
+    }
+  ],
+  "assets": [
+    {
+      "name": "strideeco-logo.svg",
+      "requestPath": "/strideeco-logo.svg",
+      "mime": "image/svg+xml",
+      "width": 1049,
+      "height": 211,
+      "sha256": "9b51d123282871e68e3828b8b75df19ff3940118f6989379852bdccdb712bcce",
+      "localSha256": "9b51d123282871e68e3828b8b75df19ff3940118f6989379852bdccdb712bcce",
+      "exactMatch": true
+    },
+    {
+      "name": "favicon.svg",
+      "requestPath": "/favicon.svg?v=20261023",
+      "mime": "image/svg+xml",
+      "width": 256,
+      "height": 256,
+      "sha256": "3667d3227195cc8c199848caf1d0dcd1164fd1443b251cd5d2375d9a8526b3c6",
+      "localSha256": "3667d3227195cc8c199848caf1d0dcd1164fd1443b251cd5d2375d9a8526b3c6",
+      "exactMatch": true
+    },
+    {
+      "name": "favicon.png",
+      "requestPath": "/favicon.png?v=20261023",
+      "mime": "image/png",
+      "width": 32,
+      "height": 32,
+      "sha256": "2824a7a754c0df0cf13f9ae4f73d1614ad00872f56591ecee49aa7aab552b105",
+      "localSha256": "2824a7a754c0df0cf13f9ae4f73d1614ad00872f56591ecee49aa7aab552b105",
+      "exactMatch": true
+    },
+    {
+      "name": "apple-touch-icon.png",
+      "requestPath": "/apple-touch-icon.png?v=20261023",
+      "mime": "image/png",
+      "width": 180,
+      "height": 180,
+      "sha256": "88bc472fc06cdb07f19ca86d19fee0c16e55c5e9a5dfc74d45112620cc7dc642",
+      "localSha256": "88bc472fc06cdb07f19ca86d19fee0c16e55c5e9a5dfc74d45112620cc7dc642",
+      "exactMatch": true
+    }
+  ],
+  "browserErrors": [],
+  "limits": [
+    "Read-only anonymous hosted checks: no sign-in, signup, fixture, wallet mutation or physical machine interaction",
+    "Source commit is supplied by the caller and independently verified through deployment metadata by the deployment owner",
+    "Downloaded hosted assets are compared byte-for-byte with the current local public assets",
+    "Machine locations and dispensing remain mock demonstrations"
+  ],
+  "completedAt": "2026-10-22T18:02:16.239Z",
+  "deployment": {
+    "id": "dpl_F7oFLPEiSigYreePiV6xec8DnNKW",
+    "projectId": "prj_FvTRxoEPeOR71PGe4KGLslAaiWVN",
+    "teamId": "team_dkd2AminqynD5q6GdLALg75T",
+    "sourceCommit": "d1b6ad60d47c463303acc674f95f5d38fb826191",
+    "branch": "feature/brand-refresh",
+    "environment": "production",
+    "readyState": "READY",
+    "productionDomain": "https://strideeco.vercel.app",
+    "stagedUrl": "https://strideeco-eapy12tlr-adam-haqeems-projects.vercel.app",
+    "promotion": "completed",
+    "metadataVerification": "Vercel get_deployment for strideeco.vercel.app returned this deployment and source SHA",
+    "previousWaterRelease": {
+      "id": "dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ",
+      "sourceCommit": "41e1f23b2100bb2b4cf7b8a76ba292e709a0709a"
+    }
+  }
+}
