@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { SignIn, SignUp } from '@clerk/nextjs';
 import { authConfigured } from '../lib/auth-config';
+import Brand from './brand';
 
 export default function AuthPage({ mode }: { mode: 'sign-in' | 'sign-up' }) {
   return <main className="auth-page">
-    <p className="eyebrow">STRIDEECO</p>
+    <Link href="/" className="auth-brand" aria-label="StrideEco home"><Brand variant="auth" /></Link>
     <h1>A place for your progress.</h1>
     <p>Keep saved routes, activities and prototype water rewards together across devices.</p>
     {authConfigured() ? mode === 'sign-in'

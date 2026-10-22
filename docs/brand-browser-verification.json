@@ -1,0 +1,437 @@
+{
+  "passed": true,
+  "status": "passed",
+  "startedAt": "2026-10-22T17:50:25.657Z",
+  "checks": [
+    "desktop: public logo, planner, mock machine map, auth forms, text contrast, focus and viewport fit",
+    "mobile: public logo, planner, mock machine map, auth forms, text contrast, focus and viewport fit",
+    "320px: public planner/rewards logo fits navigation and no horizontal overflow",
+    "768px: public planner/rewards logo fits navigation and no horizontal overflow",
+    "1024px: public planner/rewards logo fits navigation and no horizontal overflow",
+    "Supplied logo and SVG/32px PNG/180px Apple icons fetch, decode and match metadata",
+    "desktop: recolored rendered QR independently decoded, voucher contrast, focus and viewport fit",
+    "mobile: recolored rendered QR independently decoded, voucher contrast, focus and viewport fit"
+  ],
+  "contrasts": [
+    {
+      "label": "desktop planner .page-heading h1",
+      "ratio": 12.32
+    },
+    {
+      "label": "desktop planner .page-subtitle",
+      "ratio": 5.46
+    },
+    {
+      "label": "desktop planner .planner-panel .panel-title p",
+      "ratio": 5.92
+    },
+    {
+      "label": "desktop planner .field-label",
+      "ratio": 5.92
+    },
+    {
+      "label": "desktop planner .selected-route-summary h2",
+      "ratio": 13.36
+    },
+    {
+      "label": "desktop planner .route-option.selected .route-option-top strong",
+      "ratio": 12.86
+    },
+    {
+      "label": "desktop planner .location-input select",
+      "ratio": 13.11
+    },
+    {
+      "label": "desktop primary action",
+      "ratio": 4.99
+    },
+    {
+      "label": "desktop rewards .page-heading h1",
+      "ratio": 12.32
+    },
+    {
+      "label": "desktop rewards .reward-feature h2",
+      "ratio": 5
+    },
+    {
+      "label": "desktop rewards .reward-feature p",
+      "ratio": 5
+    },
+    {
+      "label": "desktop rewards .wallet-number",
+      "ratio": 10.31
+    },
+    {
+      "label": "desktop rewards .wallet-footnote",
+      "ratio": 10.31
+    },
+    {
+      "label": "desktop rewards .machine-disclosure",
+      "ratio": 5.92
+    },
+    {
+      "label": "desktop rewards .machine-reference",
+      "ratio": 5.92
+    },
+    {
+      "label": "desktop rewards .machine-card strong",
+      "ratio": 12.72
+    },
+    {
+      "label": "desktop rewards .machine-tools select",
+      "ratio": 13.11
+    },
+    {
+      "label": "desktop sign-in primary action",
+      "ratio": 4.99
+    },
+    {
+      "label": "desktop sign-in input",
+      "ratio": 13.36
+    },
+    {
+      "label": "desktop sign-in heading",
+      "ratio": 13.36
+    },
+    {
+      "label": "desktop sign-up primary action",
+      "ratio": 4.99
+    },
+    {
+      "label": "desktop sign-up input",
+      "ratio": 13.36
+    },
+    {
+      "label": "desktop sign-up heading",
+      "ratio": 13.36
+    },
+    {
+      "label": "mobile planner .page-heading h1",
+      "ratio": 12.32
+    },
+    {
+      "label": "mobile planner .page-subtitle",
+      "ratio": 5.46
+    },
+    {
+      "label": "mobile planner .planner-panel .panel-title p",
+      "ratio": 5.92
+    },
+    {
+      "label": "mobile planner .field-label",
+      "ratio": 5.92
+    },
+    {
+      "label": "mobile planner .selected-route-summary h2",
+      "ratio": 13.36
+    },
+    {
+      "label": "mobile planner .route-option.selected .route-option-top strong",
+      "ratio": 12.86
+    },
+    {
+      "label": "mobile planner .location-input select",
+      "ratio": 13.11
+    },
+    {
+      "label": "mobile primary action",
+      "ratio": 4.99
+    },
+    {
+      "label": "mobile rewards .page-heading h1",
+      "ratio": 12.32
+    },
+    {
+      "label": "mobile rewards .reward-feature h2",
+      "ratio": 5
+    },
+    {
+      "label": "mobile rewards .reward-feature p",
+      "ratio": 5
+    },
+    {
+      "label": "mobile rewards .wallet-number",
+      "ratio": 10.31
+    },
+    {
+      "label": "mobile rewards .wallet-footnote",
+      "ratio": 10.31
+    },
+    {
+      "label": "mobile rewards .machine-disclosure",
+      "ratio": 5.92
+    },
+    {
+      "label": "mobile rewards .machine-reference",
+      "ratio": 5.92
+    },
+    {
+      "label": "mobile rewards .machine-card strong",
+      "ratio": 12.72
+    },
+    {
+      "label": "mobile rewards .machine-tools select",
+      "ratio": 13.11
+    },
+    {
+      "label": "mobile sign-in primary action",
+      "ratio": 4.99
+    },
+    {
+      "label": "mobile sign-in input",
+      "ratio": 13.36
+    },
+    {
+      "label": "mobile sign-in heading",
+      "ratio": 13.36
+    },
+    {
+      "label": "mobile sign-up primary action",
+      "ratio": 4.99
+    },
+    {
+      "label": "mobile sign-up input",
+      "ratio": 13.36
+    },
+    {
+      "label": "mobile sign-up heading",
+      "ratio": 13.36
+    },
+    {
+      "label": "desktop voucher .voucher-modal h2",
+      "ratio": 13.36
+    },
+    {
+      "label": "desktop voucher .voucher-modal > p",
+      "ratio": 5.92
+    },
+    {
+      "label": "desktop voucher .voucher-code",
+      "ratio": 12.32
+    },
+    {
+      "label": "desktop voucher .voucher-field select",
+      "ratio": 13.11
+    },
+    {
+      "label": "desktop voucher .simulator-actions .button.primary",
+      "ratio": 4.99
+    },
+    {
+      "label": "mobile voucher .voucher-modal h2",
+      "ratio": 13.36
+    },
+    {
+      "label": "mobile voucher .voucher-modal > p",
+      "ratio": 5.92
+    },
+    {
+      "label": "mobile voucher .voucher-code",
+      "ratio": 12.32
+    },
+    {
+      "label": "mobile voucher .voucher-field select",
+      "ratio": 13.11
+    },
+    {
+      "label": "mobile voucher .simulator-actions .button.primary",
+      "ratio": 4.99
+    }
+  ],
+  "focusSamples": [
+    {
+      "label": "desktop map zoom",
+      "outline": "solid",
+      "width": 2,
+      "color": "rgb(8, 124, 128)",
+      "shadow": "none",
+      "targetWidth": 31,
+      "targetHeight": 32
+    },
+    {
+      "label": "desktop sign-in input",
+      "outline": "solid",
+      "width": 2,
+      "color": "rgb(5, 90, 97)",
+      "shadow": "rgb(207, 255, 253) 0px 0px 0px 4px",
+      "targetWidth": 372,
+      "targetHeight": 33.984375
+    },
+    {
+      "label": "desktop sign-up input",
+      "outline": "solid",
+      "width": 2,
+      "color": "rgb(5, 90, 97)",
+      "shadow": "rgb(207, 255, 253) 0px 0px 0px 4px",
+      "targetWidth": 372,
+      "targetHeight": 33.984375
+    },
+    {
+      "label": "mobile map zoom",
+      "outline": "solid",
+      "width": 2,
+      "color": "rgb(8, 124, 128)",
+      "shadow": "none",
+      "targetWidth": 31,
+      "targetHeight": 32
+    },
+    {
+      "label": "mobile sign-in input",
+      "outline": "solid",
+      "width": 2,
+      "color": "rgb(5, 90, 97)",
+      "shadow": "rgb(207, 255, 253) 0px 0px 0px 4px",
+      "targetWidth": 266,
+      "targetHeight": 33.984375
+    },
+    {
+      "label": "mobile sign-up input",
+      "outline": "solid",
+      "width": 2,
+      "color": "rgb(5, 90, 97)",
+      "shadow": "rgb(207, 255, 253) 0px 0px 0px 4px",
+      "targetWidth": 266,
+      "targetHeight": 33.984375
+    },
+    {
+      "label": "desktop voucher close",
+      "outline": "solid",
+      "width": 2,
+      "color": "rgb(8, 124, 128)",
+      "shadow": "none",
+      "targetWidth": 30,
+      "targetHeight": 30
+    },
+    {
+      "label": "mobile voucher close",
+      "outline": "solid",
+      "width": 2,
+      "color": "rgb(8, 124, 128)",
+      "shadow": "none",
+      "targetWidth": 30,
+      "targetHeight": 30
+    }
+  ],
+  "viewports": [
+    {
+      "label": "desktop planner",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "label": "desktop water map",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "label": "desktop sign-in",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "label": "desktop sign-up",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "label": "mobile planner",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "label": "mobile water map",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "label": "mobile sign-in",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "label": "mobile sign-up",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "label": "320px planner",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "label": "320px rewards",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "label": "768px planner",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "label": "768px rewards",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "label": "1024px planner",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "label": "1024px rewards",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "label": "desktop voucher",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "label": "mobile voucher",
+      "width": 390,
+      "scrollWidth": 390
+    }
+  ],
+  "assets": [
+    {
+      "filename": "strideeco-logo.svg",
+      "requestPath": "/strideeco-logo.svg",
+      "type": "image/svg+xml",
+      "width": 1049,
+      "height": 211
+    },
+    {
+      "filename": "favicon.svg",
+      "requestPath": "/favicon.svg?v=20261023",
+      "type": "image/svg+xml",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "filename": "favicon.png",
+      "requestPath": "/favicon.png?v=20261023",
+      "type": "image/png",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "filename": "apple-touch-icon.png",
+      "requestPath": "/apple-touch-icon.png?v=20261023",
+      "type": "image/png",
+      "width": 180,
+      "height": 180
+    }
+  ],
+  "browserErrors": [],
+  "limits": [
+    "One temporary Clerk development fixture uses the official sign-in helper; signup, password and OAuth flows are not repeated",
+    "Machine locations, demo activity, dispensing and the local wallet are prototype fixtures",
+    "Contrast samples cover key rendered text and gradient endpoints; this is not an exhaustive accessibility audit",
+    "Favicons are fetched and decoded at their declared sizes; browser tab chrome is not inspected"
+  ],
+  "completedAt": "2026-10-22T17:51:10.253Z",
+  "cleanupConfirmed": true,
+  "buildDirectory": "work/next-brand-aqua-release"
+}

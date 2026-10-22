@@ -32,7 +32,7 @@ export default function WaterVoucher({ voucher, now, busy, onClose, onResolve, n
   }, [voucher.status, pending]);
   useEffect(() => {
     let active = true; setQr(''); setQrError(false);
-    if (pending) import('qrcode').then(({ default: QRCode }) => QRCode.toDataURL(voucherQrPayload(voucher), { errorCorrectionLevel: 'M', margin: 4, width: 320, color: { dark: '#173b2cff', light: '#ffffffff' } })).then(value => { if (active) setQr(value); }).catch(() => { if (active) setQrError(true); });
+    if (pending) import('qrcode').then(({ default: QRCode }) => QRCode.toDataURL(voucherQrPayload(voucher), { errorCorrectionLevel: 'M', margin: 4, width: 320, color: { dark: '#0c343cff', light: '#ffffffff' } })).then(value => { if (active) setQr(value); }).catch(() => { if (active) setQrError(true); });
     return () => { active = false; };
   }, [voucher.id, voucher.token, pending]);
   async function scanQr() {

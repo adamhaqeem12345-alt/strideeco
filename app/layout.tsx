@@ -8,8 +8,12 @@ export const metadata: Metadata = {
   title: "StrideEco — A little movement, a better day",
   description: "Plan a walk through Elmina, explore shade scenarios and try a drinking-water reward.",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: [
+      { url: '/favicon.svg?v=20261023', type: 'image/svg+xml' },
+      { url: '/favicon.png?v=20261023', type: 'image/png', sizes: '32x32' },
+    ],
+    shortcut: '/favicon.png?v=20261023',
+    apple: [{ url: '/apple-touch-icon.png?v=20261023', type: 'image/png', sizes: '180x180' }],
   },
 };
 
@@ -28,15 +32,16 @@ export default function RootLayout({
         appearance={{
           cssLayerName: 'clerk',
           variables: {
-            colorPrimary: '#23634d', colorPrimaryForeground: '#ffffff',
-            colorForeground: '#253b32', colorMutedForeground: '#7d867e',
-            colorBackground: '#ffffff', colorMuted: '#f8f9f5',
-            colorInput: '#ffffff', colorInputForeground: '#253b32',
-            colorBorder: '#e7e9e1', colorNeutral: '#253b32', colorRing: '#23634d',
-            fontFamily: '"Segoe UI", Arial, sans-serif',
+            colorPrimary: '#087c80', colorPrimaryForeground: '#ffffff',
+            colorForeground: '#0c343c', colorMutedForeground: '#456a70',
+            colorBackground: '#ffffff', colorMuted: '#eafffc',
+            colorInput: '#ffffff', colorInputForeground: '#0c343c',
+            colorBorder: '#9adfdc', colorNeutral: '#0c343c', colorRing: '#055a61',
+            fontFamily: '"Trebuchet MS", "Segoe UI", Arial, sans-serif',
           },
           elements: {
-            formFieldInput: { '&[data-variant="default"]': { border: '1px solid #e7e9e1' } },
+            formButtonPrimary: { '&:hover:not(:disabled)': { backgroundColor: '#055a61' } },
+            formFieldInput: { '&[data-variant="default"]': { border: '1px solid #9adfdc' } },
           },
         }}
       >{children}</ClerkProvider> : children}</body>

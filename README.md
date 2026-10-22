@@ -2,6 +2,10 @@
 
 Plan a walk through Elmina, compare explicitly labelled building-shadow scenarios, record an activity and try a simulated drinking-water reward. The PACE interface supports planning, saving, sharing, wallet access and water redemption on phone and desktop layouts; account features also need configured authentication and an application database.
 
+## Brand refresh
+
+The interface now uses the owner-supplied aqua, teal, green, yellow, coral and sky palette, the supplied SVG wordmark in navigation/account pages, and its smiling water drop as the favicon. Darker text and controls keep the bright palette readable. See [brand-refresh.md](docs/brand-refresh.md) for asset and verification details.
+
 ## Water vouchers and machine map
 
 The new water-only flow adds six clearly labelled mock Elmina machine locations, nearest compatible machine suggestions, type filters and machine-bound vouchers. Each voucher has one code and one downloadable QR for the same single use; the authenticated simulator supports both entry methods. See [water-vouchers.md](docs/water-vouchers.md) for accounting, migration and verification details. The map and interface are live at [strideeco.vercel.app](https://strideeco.vercel.app/) in READY deployment `dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ`, source `41e1f23b2100bb2b4cf7b8a76ba292e709a0709a`. Hosted desktop/mobile map/filter checks and real development-instance UI signup/signin/signout pass; test fixture deletion is confirmed. Live earning, shared wallet data and voucher redemption still require the previously deferred dedicated remote database. The full authenticated flow passes locally with all four migrations; normal laptop development is available at `http://localhost:5173`. [Draft PR #2](https://github.com/adamhaqeem12345-alt/strideeco/pull/2) is based on the existing Clerk integration branch; main is unchanged.
