@@ -1,6 +1,6 @@
 # Verification record
 
-Updated 2026-10-22. Implementation, local testing, hosted authentication and remote persistence are separate states. Historical results below do not establish that the current Clerk migration passes.
+Updated 2026-10-23. Implementation, local testing, hosted authentication and remote persistence are separate states. Historical results below do not establish that the current Clerk migration passes.
 
 ## Current Clerk migration
 
@@ -11,7 +11,7 @@ Updated 2026-10-22. Implementation, local testing, hosted authentication and rem
 | Existing application linked | Doctor confirms the correct StrideEco application `app_3L3PLlwOzzZZaMzKCu3yv7KjSLe`, development instance `ins_3L3PLmdtUHei2quxSicUcO1ninw`. The remaining warning is production not configured. No replacement app was created. |
 | Keys configured locally | Doctor confirms the application's development publishable/secret keys in `.env.local`. Values were not printed or committed. |
 | Local checks | Fifteen domain/identity tests, strict TypeScript and the final separate-directory webpack build pass. The same `work/next-clerk-pinned-ui` artifact passes the synthetic API suite and signed-out desktop/mobile public browser checks, including the final account-screen styling. |
-| Browser sign-in and PACE | Independently passed against the same final artifact: real Clerk development UI signup with test email verification, account menu, profile sign-out with API rejection/private UI reset, password sign-in and restored saved routes; plus the desktop/mobile PACE journey. The PACE suite uses Clerk's official sign-in helper with a real temporary development user. Exact fixture cleanup is confirmed. See `clerk-browser-auth-report.json` and `pace-report.json` in this folder. |
+| Browser sign-in and PACE | Passed together in the final combined run against the same artifact: real Clerk development UI signup with test email verification, account menu, profile sign-out with API rejection/private UI reset, password sign-in and restored saved routes; plus the desktop/mobile PACE journey. The PACE suite uses Clerk's official sign-in helper with a real temporary development user. Exact fixture cleanup is confirmed. See `clerk-browser-auth-report.json` and `pace-report.json` in this folder. |
 | API/database journey | The corrected isolated Clerk SDK API suite passes against `work/next-clerk-pinned-ui`. It applies all three migrations, verifies safe rerun, token/header rejection, account isolation, public sharing, replay-safe credits, reservation accounting, expiry release and implausible GPS rejection. See `outputs/vercel-api-report.json`; its sessions and file database are synthetic/local, not a live Clerk sign-in or remote database. |
 | Laptop development data | `.env.local` now selects `file:.data/clerk-development.db`, with all three migrations applied. The server at `http://localhost:5173` returns 200 for `/sign-in` and 401 for an anonymous `/api/pilot` request. A loaded form is not completed sign-in. |
 | Vercel access and environment | CLI login and `.vercel/project.json` link to the correct project/team are verified. Existing Clerk development publishable/secret keys were configured in Vercel production environment settings privately through stdin. They have not been deployed; this is not production Clerk authentication. |

@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-10-22T15:47:34.089Z",
+  "startedAt": "2026-10-22T15:59:43.020Z",
   "target": "http://localhost:5187",
   "checks": [
     "desktop: public route planning, destination routing, explicit shade scenario and no horizontal overflow",
@@ -17,5 +17,5 @@
   ],
   "passed": true,
   "status": "passed",
-  "completedAt": "2026-10-22T15:47:43.896Z"
+  "completedAt": "2026-10-22T15:59:54.721Z"
 }

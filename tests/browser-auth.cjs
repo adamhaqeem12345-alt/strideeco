@@ -26,7 +26,7 @@ let stage = 'development fixture validation';
   try {
     stage = 'anonymous planner and sign-up form';
     await setupClerkTestingToken({ page });
-    await page.goto(base, { waitUntil: 'networkidle' });
+    await page.goto(base, { waitUntil: 'domcontentloaded' });
     assert.equal((await context.request.get(base + '/api/pilot')).status(), 401);
     await page.getByRole('link', { name: 'Sign up', exact: true }).click();
     await page.locator('.cl-signUp-root').waitFor();
@@ -43,7 +43,9 @@ let stage = 'development fixture validation';
     const legal = page.locator('input[name="legalAccepted"]');
     if (await legal.isVisible()) throw new Error('The Clerk signup requires legal acceptance; the browser test cannot accept a new agreement.');
     stage = 'UI sign-up and email verification';
+    const signUpVerificationReady = page.waitForResponse(response => response.url().includes('prepare_verification') && response.status() === 200);
     await page.getByRole('button', { name: 'Continue', exact: true }).click();
+    await signUpVerificationReady;
     await page.getByRole('textbox', { name: 'Enter verification code' }).pressSequentially('424242');
     await page.waitForURL(url => url.pathname === '/' || url.pathname.includes('/tasks/'), { timeout: 45000 });
     if (new URL(page.url()).pathname.includes('/tasks/')) throw new Error('The existing Clerk development instance requires an account setup task before sign-in can finish.');
@@ -83,6 +85,7 @@ let stage = 'development fixture validation';
     const password = page.locator('input[name="password"]');
     let submittedPassword = false;
     if (await password.isVisible()) { await password.fill(process.env.STRIDEECO_TEST_PASSWORD); strategy = 'password'; submittedPassword = true; }
+    const signInVerificationReady = page.waitForResponse(response => response.url().includes('prepare_first_factor') && response.status() === 200).catch(() => null);
     await page.getByRole('button', { name: 'Continue', exact: true }).click();
     if (!submittedPassword) {
       await Promise.race([
@@ -96,7 +99,10 @@ let stage = 'development fixture validation';
     }
     const code = page.getByRole('textbox', { name: 'Enter verification code' });
     await Promise.race([page.waitForURL(url => url.pathname === '/'), code.waitFor()]);
-    if (await code.isVisible()) await code.pressSequentially('424242');
+    if (await code.isVisible()) {
+      assert.ok(await signInVerificationReady, 'Clerk must prepare the sign-in email code before verification.');
+      await code.pressSequentially('424242');
+    }
     await page.waitForURL(url => url.pathname === '/', { timeout: 45000 });
     await page.locator('.avatar').waitFor();
     const persisted = await context.request.get(base + '/api/pilot');
