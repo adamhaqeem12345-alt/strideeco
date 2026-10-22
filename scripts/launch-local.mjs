@@ -5,7 +5,7 @@ import path from 'node:path';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 process.chdir(root);
-if (!existsSync(path.join(root, 'node_modules/vinext'))) {
+if (!existsSync(path.join(root, 'node_modules/next'))) {
   console.error('Run the fresh-download setup commands in README.md before starting.');
   process.exit(1);
 }

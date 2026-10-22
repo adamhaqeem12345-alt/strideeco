@@ -1,0 +1,74 @@
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { encode } from 'next-auth/jwt';
+import { createClient } from '@libsql/client';
+
+if (!process.env.AUTH_SECRET || !process.env.TURSO_DATABASE_URL?.startsWith('file:')) throw new Error('Run through the isolated verify-local harness.');
+const require = createRequire(import.meta.url);
+const geo = require('../work/geo.cjs');
+const base = 'http://127.0.0.1:5173';
+const session = async sub => 'authjs.session-token=' + await encode({ token: { sub }, secret: process.env.AUTH_SECRET, salt: 'authjs.session-token' });
+const cookie = await session('github:strideeco-api-test');
+const other = await session('github:another-test-user');
+const get = (path = '/api/pilot', identity = cookie) => fetch(base + path, { headers: identity ? { cookie: identity } : {} });
+const post = (data, identity = cookie, origin = base) => fetch(base + '/api/pilot', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: origin, ...(identity ? { cookie: identity } : {}) }, body: JSON.stringify(data) });
+const state = async identity => { const r = await get('/api/pilot', identity); assert.equal(r.status, 200); return r.json(); };
+const ok = async data => { const r = await post(data); const body = await r.json(); assert.equal(r.status, 200, JSON.stringify(body)); return body; };
+const checks = [];
+
+const home = await get('/', ''); assert.equal(home.status, 200); assert.match(await home.text(), /Your next little escape/);
+const signin = await get('/signin', ''); assert.equal(signin.status, 200); assert.match(await signin.text(), /Continue with GitHub/);
+assert.equal((await get('/api/pilot', '')).status, 401);
+assert.equal((await post({ action: 'consent', value: true }, '')).status, 401);
+assert.equal((await fetch(base + '/api/pilot', { headers: { 'oai-authenticated-user-id': 'spoofed', 'oai-authenticated-user-email': 'test@example.invalid' } })).status, 401);
+assert.equal((await post({ action: 'consent', value: true }, cookie, 'https://other.invalid')).status, 403);
+checks.push('production Next.js pages render; anonymous and spoofed identities rejected; cross-origin mutation rejected');
+
+const settings = { distance: 3, date: '2026-10-22', time: '17:30', origin: geo.places[0].coordinate, scenario: false, height: 6, preference: 'balanced', mode: 'loop' };
+const route = geo.makeRoutes(settings).sort((a,b) => b.distance - a.distance)[0];
+const saved = await ok({ action: 'save-route', name: 'API test route', nodeIds: route.nodeIds, settings });
+assert.equal(saved.routes.length, 1);
+assert.equal((await state(cookie)).routes[0].id, saved.savedId);
+assert.equal((await state(other)).routes.length, 0);
+await post({ action: 'delete-route', id: saved.savedId }, other);
+assert.equal((await state(cookie)).routes.length, 1);
+await ok({ action: 'share-route', id: saved.savedId });
+const shared = await get('/api/pilot?shared=' + saved.savedId, ''); assert.equal(shared.status, 200);
+assert.equal((await shared.json()).route.name, 'API test route');
+checks.push('route persistence, account isolation and explicitly public route sharing');
+
+const activity = { action: 'activity', source: 'demo', key: 'api-test-activity-0001', nodeIds: route.nodeIds };
+const credited = await ok(activity); assert.ok(credited.wallet.points >= 60);
+assert.equal(credited.activities[0].source, 'demo');
+assert.equal((await ok(activity)).wallet.points, credited.wallet.points);
+checks.push('labelled demo activity credits once through the libSQL adapter');
+
+const held = await ok({ action: 'reserve-water', key: 'api-water-failure-0001' });
+assert.equal(held.wallet.reserved, 60);
+assert.equal((await ok({ action: 'reserve-water', key: 'api-water-failure-0001' })).redemptions[0].token, held.redemptions[0].token);
+assert.equal((await post({ action: 'reserve-water', key: 'api-water-overspend-0001' })).status, 409);
+const released = await ok({ action: 'resolve-water', id: held.redemptions[0].id, token: held.redemptions[0].token, result: 'failed' });
+assert.equal(released.wallet.reserved, 0); assert.equal(released.wallet.points, credited.wallet.points);
+const second = await ok({ action: 'reserve-water', key: 'api-water-success-0001' });
+const code = second.redemptions.find(r => r.id === 'api-water-success-0001');
+const confirmation = { action: 'resolve-water', id: code.id, token: code.token, result: 'dispensed' };
+const confirmed = await ok(confirmation);
+assert.equal(confirmed.wallet.points, credited.wallet.points - 60); assert.equal(confirmed.wallet.reserved, 0);
+assert.equal((await ok(confirmation)).wallet.points, confirmed.wallet.points);
+checks.push('reservation idempotency, overspend protection, failed dispense release and single confirmation deduction');
+
+await ok({ ...activity, key: 'api-test-activity-0002' });
+await ok({ action: 'reserve-water', key: 'api-water-expiry-0001' });
+const db = createClient({ url: process.env.TURSO_DATABASE_URL });
+await db.execute("UPDATE redemptions SET expires_at='2000-01-01T00:00:00Z' WHERE id='api-water-expiry-0001'");
+db.close();
+assert.equal((await state(cookie)).wallet.reserved, 0);
+const before = (await state(cookie)).wallet.points;
+const now = Date.now();
+const invalid = await post({ action: 'activity', source: 'gps', key: 'api-invalid-gps-0001', positions: [{ lon:101.513, lat:3.179, time:now-10000, accuracy:5 }, { lon:102.5, lat:4.1, time:now-9000, accuracy:5 }] });
+assert.equal(invalid.status, 400); assert.equal((await state(cookie)).wallet.points, before);
+checks.push('expired reservation release and implausible GPS rejection without credit');
+await mkdir('outputs', { recursive: true });
+await writeFile('outputs/vercel-api-report.json', JSON.stringify({ passed: true, checks, limits: ['Signed test sessions, not a live GitHub OAuth round trip', 'Local libSQL file, not a remote production database', 'No physical GPS or live vending hardware', 'Browser rerun unavailable: browser download failed'] }, null, 2));
+console.log('PASS: Vercel production-server API, signed sessions and libSQL accounting');

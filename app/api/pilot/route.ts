@@ -1,9 +1,9 @@
-import { env } from 'cloudflare:workers';
-import { getChatGPTUser } from '../../chatgpt-auth';
+import { db } from '../../../lib/database';
+import { getUser } from '../../../auth';
 import { coordinatesFor, length, metres, validWalk } from '../../../lib/geo';
 import { RULES, type RecordedPosition } from '../../../lib/pilot';
 
-function db() { if (!env.DB) throw new Error('Database is unavailable. Apply the local migration before using account features.'); return env.DB; }
+export const runtime = 'nodejs';
 const response = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'private, no-store' } });
 async function initialise(id: string) {
   const now = new Date().toISOString();
@@ -31,7 +31,7 @@ export async function GET(request: Request) {
       const route = await db().prepare('SELECT id, name, node_ids, settings, distance FROM saved_routes WHERE id=? AND shared=1').bind(shared).first();
       return route ? response({ route }) : response({ error: 'This shared route is unavailable.' }, 404);
     }
-    const user = await getChatGPTUser();
+    const user = await getUser();
     if (!user) return response({ error: 'Sign in to save routes and access your wallet.' }, 401);
     await initialise(user.userId);
     return response(await state(user.userId));
@@ -39,11 +39,19 @@ export async function GET(request: Request) {
 }
 export async function POST(request: Request) {
   try {
-    const user = await getChatGPTUser();
+    const user = await getUser();
     if (!user) return response({ error: 'Sign in to continue.' }, 401);
     // Browser writes must originate from this application, not a third-party page.
     const origin = request.headers.get('origin');
-    if (origin && origin !== new URL(request.url).origin) return response({ error: 'Invalid request origin.' }, 403);
+    // Next.js may construct request.url from its internal listening address.
+    // Host represents the browser-facing destination; never use a caller's
+    // x-forwarded-host as an additional allowed origin.
+    const destination = new URL(request.url);
+    const host = request.headers.get('host');
+    if (host) destination.host = host;
+    const protocol = request.headers.get('x-forwarded-proto')?.split(',')[0].trim();
+    if (protocol === 'https' || protocol === 'http') destination.protocol = protocol + ':';
+    if (origin && origin !== destination.origin) return response({ error: 'Invalid request origin.' }, 403);
     const id = user.userId, now = new Date().toISOString();
     await initialise(id);
     const body = await request.json() as Record<string, unknown>;

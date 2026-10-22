@@ -1,6 +1,19 @@
 # Verification record
 
-2026-10-22, local prototype.
+2026-10-22. Two separate verification records are retained below.
+
+## Vercel-compatible main branch
+
+- Standard Next.js production build and TypeScript checks passed.
+- All six routing/accounting domain tests passed.
+- Both SQL migrations applied to an isolated libSQL database; a second run safely skipped them using stored checksums.
+- The actual local production server passed the API/database journey: anonymous access denied, forged Sites identity headers ignored, cross-origin writes denied, signed Auth.js test sessions accepted, saved routes persisted and isolated by account, explicitly shared routes readable anonymously, demo credit idempotent, water reservation idempotent, overspending denied, failure/expiry releases and a single confirmation deduction.
+- Implausible GPS jumps received no credit. See `vercel-api-report.json`.
+- No GitHub OAuth round trip or remote database connection was performed; these require deployment credentials. Test identity was generated only inside the isolated harness; no production bypass endpoint was added.
+- A fresh browser rerun in this environment was unavailable because Chromium's download failed. The earlier responsive browser evidence below applies to the preserved Sites baseline and its unchanged PACE components, not to a deployed Vercel site.
+- No repository was created or deployment published during this preparation. GitHub repository creation is unavailable through the connected tools, and browser sign-in was not completed.
+
+## Earlier Sites local baseline
 
 ## Passed
 

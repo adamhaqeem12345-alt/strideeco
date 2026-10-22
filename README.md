@@ -1,68 +1,88 @@
-# StrideEco prototype
+# StrideEco
 
-A mobile-first, responsive PACE experience: plan a route, record or demonstrate a walk, collect prototype points, and try a drinking-water redemption. Planning, saving, sharing, wallet and redemption work on both phone-sized and desktop layouts.
+Plan a walk through Elmina, compare explicitly labelled building-shadow scenarios, record an activity and try a drinking-water reward. Responsive planning, route saving/sharing, wallet and water redemption work on phone and desktop layouts.
 
-## Open the prepared workspace
+## Deploy to Vercel
 
-Double-click `Start_StrideEco.cmd`, or run `npm run dev`. The launcher opens the local browser after the server is ready. The local URL is normally http://127.0.0.1:5173/.
+Import this repository's **main** branch into Vercel. Use the repository root, **Next.js**, the default `.next` output and the included `vercel.json`. The standard commands are `npm ci` and `npm run build`. No Cloudflare account or Sites runtime is required by the active app.
 
-This workspace already has its dependencies and local database prepared. No GitHub repository has been created.
+**The public route planner deploys without credentials.** Persistent account features require these server-only environment variables:
 
-## Set up a fresh source download
+| Variable | Purpose |
+| --- | --- |
+| `AUTH_SECRET` | A private random value of at least 32 characters for Auth.js sessions |
+| `AUTH_GITHUB_ID` | GitHub OAuth application client ID |
+| `AUTH_GITHUB_SECRET` | GitHub OAuth application client secret |
+| `TURSO_DATABASE_URL` | URL of a persistent remote **libSQL** database |
+| `TURSO_AUTH_TOKEN` | Database access token |
 
-Requires Node.js 22.13+ and npm. Run from the project directory:
+Create a GitHub OAuth application with callback `https://YOUR-PRODUCTION-DOMAIN/api/auth/callback/github`. This is for StrideEco user sign-in; it is separate from Vercel's GitHub repository connection. Only profile access is requested. Register a separate OAuth app for local testing with callback `http://localhost:5173/api/auth/callback/github`.
 
-```powershell
-npm install
-npm run build
-node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_condemned_firestar.sql
-node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0001_wallet_accounting.sql
+Optionally set `AUTH_URL` to the canonical production origin. Use separate credentials and a separate database for preview deployments. Do not prefix secrets with `NEXT_PUBLIC_` or commit `.env.local`.
+
+Apply the database migrations once from a trusted local terminal using the target deployment's database environment variables:
+
+```sh
+npm ci
+npm run db:migrate
+```
+
+The migration runner records checksums and safely skips files already applied. Migrations are intentionally separate from builds. After configuring the environment, redeploy in Vercel. Before those settings are ready, sign-in explains that account features are unavailable while the planner remains usable.
+
+Vercel local files are not used for account persistence. The application rejects `file:` database URLs when running on Vercel. This repository does not provision a database or create paid services automatically.
+
+## Run locally
+
+Requires Node.js 22.13+ and npm:
+
+```sh
+npm ci
 npm run dev
 ```
 
-Apply each migration once, in order, to a fresh database. The source archive intentionally excludes installed dependencies, build output, local accounts, cookies and database files. The provided scripts retain the Sites portable execution profile and are compatible with the supported Sites workflow when a future hosting project is registered.
+Open http://localhost:5173. For account features, copy `.env.example` to `.env.local`, set the Auth.js/GitHub settings and a database URL, then run `npm run db:migrate`. For a local SQLite-compatible test database use `TURSO_DATABASE_URL=file:.data/strideeco.db` and leave `TURSO_AUTH_TOKEN` empty. The migration runner creates the directory. The Windows launcher is `Start_StrideEco.cmd`.
 
-The loopback development sign-in uses the starter's local preview account. It is not production authentication. Hosted sign-in remains owned by the Sites platform. Browser-local storage is not used as the account database.
+## PACE journey
 
-## Review the journey
+1. **Plan:** choose a loop or destination, distance, departure time and start point. Compare, save or share routes on either layout.
+2. **Act:** foreground browser location recording, or a clearly labelled demo walk. Background/screen-off tracking is not promised.
+3. **Collect:** the server validates submitted activity and credits points once. Demo activities are separately labelled and excluded from real participation evidence.
+4. **Exchange:** reserve a water code and simulate successful or failed dispensing. Confirmation deducts points once; failure/expiry releases the reservation.
 
-1. Plan a round trip or choose a destination. Change distance, date, departure time or start location. Select a route, save it or share its link.
-2. Enable the optional building-height scenario to compare modelled building shadows. The assumed height is explicit. Tree shade is unavailable in the public snapshot.
-3. Sign in, choose a longer route if needed, and open My activity. Try the labelled demo walk, or use foreground location recording.
-4. Open Water rewards. Prototype rules currently use 50 m per point and 60 points per bottle. Pending rewards reserve points; confirmation deducts once; failure or expiry releases the reservation.
-5. Open another browser session and sign into the same local preview account. Saved routes, wallet and pending codes come from the same database. A future HTTPS deployment is needed to test separate physical devices.
+Illustrative rules: **50 metres per point · 60 points per bottle · four rewards per calendar month · 15-minute code reservation**. These are prototype assumptions. The monthly cap also lives in the accounting migration, so changing it requires a new migration.
 
-All dispensing is simulated. No machine location, stock, funding agreement or operator integration is claimed as live. Illustrative limits are four water redemptions per calendar month; changing this cap requires a new accounting migration as well as updating displayed rules.
+**All dispensing is simulated.** No physical machine, stock, funding agreement or operator participation is represented as confirmed. GPS plausibility checks do not prove that device coordinates are authentic. No real resident statistics or live heatmap is claimed.
 
-## Data
+## Public data and shade limits
 
-`elmina-osm.xml` is the single public OSM snapshot used by `scripts/prepare-map.py`. `lib/elmina-map.json` is the derived basemap and walking graph. The public provenance record is `public/data/map-provenance.json`.
+`elmina-osm.xml` is the attributed public OpenStreetMap snapshot. `scripts/prepare-map.py` derives `lib/elmina-map.json`; `public/data/map-provenance.json` records its source and retrieval date.
 
-The snapshot contains 88 eligible walkable ways and 582 building footprints, with zero building-height or tree-canopy features. Those omissions are visible in the application. Assumed-height shadows are scenarios, not measured shade coverage, thermal comfort or a temperature forecast.
+The snapshot has **88 eligible walking ways and 582 building footprints**, with no building-height tags or tree-canopy features. Shade is unavailable by default. The optional scenario uses a visibly chosen assumed height, approximate solar position and convex building-shadow envelopes capped at 120 metres. Trees, clouds and roof overhangs are excluded; estimates are unavailable below 5° solar elevation. It is not measured shade, thermal comfort or a temperature forecast.
 
-Map data © OpenStreetMap contributors, under ODbL: https://www.openstreetmap.org/copyright. See `docs/data-sources.md` and `docs/verification.md`.
+Map data © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), under ODbL. See `docs/data-sources.md`.
 
-## Checks
+## Verification
 
-```powershell
+```sh
 npm run check
 npm test
 npm run build
 ```
 
-The six domain tests cover connected routes, destination paths, scenario bounds, duplicate activity credit, reservation accounting and monthly limits. Browser/API/database verification is documented in `docs/verification.md`; screenshots and the test report are in the review bundle.
+The six domain tests cover connected graph routes, destination endpoints, shade-scenario bounds, duplicate credits, reservation accounting and monthly limits. With Playwright and its Chromium browser installed, `node scripts/verify-local.mjs` runs the browser/API/database journey against a temporary database and local production server after a build. Set `STRIDEECO_PLAYWRIGHT` to an existing Playwright module path if needed. The harness uses signed test sessions; it does not add a production authentication bypass.
 
-`tests/browser-flow.cjs` preserves the browser journey. It requires a running local server, Chrome and Playwright tooling. Set `STRIDEECO_PLAYWRIGHT` to an existing Playwright module path if it is not installed in the project; Playwright is not a production dependency.
+See `docs/verification.md` for the scope and remaining checks. Live GitHub OAuth, remote database access, physical handset GPS and actual vending hardware require their respective configured environments.
 
-## Main code
+Without a browser installation, `node scripts/verify-local.mjs --api-only` checks the production-server API and libSQL accounting using an isolated temporary database and signed test sessions. Run `npm test` first to prepare the test graph bundle.
 
-- `lib/geo.ts`: graph routing, distance, solar position and explicit building-height scenarios.
-- `components/stride-app.tsx`: responsive PACE screens and product interactions.
-- `components/route-map.tsx`: interactive basemap drawn from the real snapshot; no tile key needed.
-- `app/api/pilot/route.ts`: authenticated saved routes, activity checks, wallet and redemption endpoints.
-- `db/schema.ts` and `drizzle/`: persistent records and atomic accounting triggers.
-- `docs/`: product scope, data provenance and verification limits.
+## Source branches and main code
 
-## Windows execution note
+- **main:** Vercel-compatible Next.js app, Auth.js sessions and libSQL persistence.
+- **sites-local:** preserved Cloudflare/Sites baseline from the earlier local prototype; its original setup instructions apply only on that branch.
+- `components/stride-app.tsx`: responsive PACE screens.
+- `components/route-map.tsx`, `lib/geo.ts`: map interactions, sourced graph routing and shadow scenarios.
+- `auth.ts`, `app/api/auth/`: signed sessions and GitHub OAuth.
+- `lib/database.ts`, `app/api/pilot/route.ts`: authenticated account operations and parameterised SQLite statements.
+- `drizzle/`: original schema and atomic points-accounting triggers, unchanged by the hosting port.
 
-The managed tool environment's quoted npm shim failed, while invoking npm's JavaScript entrypoint worked. For that environment, equivalent framework commands are `node scripts/run-framework.mjs dev` and `node scripts/run-framework.mjs build`. The final dependency install, typecheck, domain tests and browser journey completed successfully.
+Legacy Sites tooling remains in the source for reference, but the active Next.js build does not import its Cloudflare worker or header-based sign-in implementation.

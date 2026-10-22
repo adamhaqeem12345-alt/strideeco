@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "checks": [
+    "production Next.js pages render; anonymous and spoofed identities rejected; cross-origin mutation rejected",
+    "route persistence, account isolation and explicitly public route sharing",
+    "labelled demo activity credits once through the libSQL adapter",
+    "reservation idempotency, overspend protection, failed dispense release and single confirmation deduction",
+    "expired reservation release and implausible GPS rejection without credit"
+  ],
+  "limits": [
+    "Signed test sessions, not a live GitHub OAuth round trip",
+    "Local libSQL file, not a remote production database",
+    "No physical GPS or live vending hardware",
+    "Browser rerun unavailable: browser download failed"
+  ]
+}

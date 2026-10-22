@@ -28,6 +28,9 @@ yarn-error.log*
 
 # Local environment and keys
 .env*
+!.env.example
+.data/
+.vercel/
 .dev.vars*
 *.pem
 
