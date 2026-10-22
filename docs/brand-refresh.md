@@ -2,6 +2,18 @@
 
 The supplied logo and palette replace the earlier sage/cream identity. This is the owner's explicitly requested branding change.
 
+## Live release — 23 October 2026
+
+[strideeco.vercel.app](https://strideeco.vercel.app/) now resolves to READY production deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW`, source `d1b6ad60d47c463303acc674f95f5d38fb826191`, branch `feature/brand-refresh`. The staged build passed its browser checks before promotion; the same checks passed again on the public domain at **02:02 MYT** (`2026-10-22T18:02:16.239Z`). Deployment metadata independently confirms the source SHA. [Draft PR #3](https://github.com/adamhaqeem12345-alt/strideeco/pull/3) records the feature source; main is unchanged.
+
+The hosted checks covered 320, 390, 768 and 1440 pixel layouts, proportional logos, exact SHA-256 matches for all four logo/icon assets, machine filtering from six mock stops to two refills, account forms, expected primary/text colors and anonymous API 401 protection. Browser errors were empty. These were anonymous read-only checks with no signup, sign-in, test fixture or account-data mutation. See [brand-hosted-verification.json](brand-hosted-verification.json).
+
+The preceding water-voucher release was deployment `dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ`, source `41e1f23b2100bb2b4cf7b8a76ba292e709a0709a`. Its earlier authenticated hosted checks remain historical evidence. The brand release's authenticated QR and wallet checks ran locally with an isolated database.
+
+Remote database setup remains explicitly deferred: hosted earning, saved routes, shared wallet data and voucher consumption are unavailable. The live site retains the existing Clerk development instance and visible Development mode. Machine locations and dispensing remain mock; real GitHub OAuth and physical vending are unverified.
+
+## Palette
+
 | Role | Color |
 | --- | --- |
 | Aqua canvas | `#CFFFFD` |
@@ -19,7 +31,14 @@ The six bright colors were sampled from the owner's reference image. Darker text
 
 ## Supplied artwork
 
-`public/strideeco-logo.svg` preserves the supplied vector letters and textured artwork, with the unused canvas cropped. It is transparent, 1049×211, approximately 134 KB. The original source file is unchanged. A shared Brand component places it in desktop navigation, the mobile header and account pages without distorting its aspect ratio.
+`public/strideeco-logo.svg` preserves the supplied vector letters and textured artwork, with the unused canvas cropped. It is transparent and retains the bottle's white details. The original source file is unchanged. A shared Brand component places it in desktop navigation, the mobile header and account pages without distorting its aspect ratio.
+
+| Asset | Dimensions | Bytes |
+| --- | --- | ---: |
+| `strideeco-logo.svg` | 1049×211 | 133,973 |
+| `favicon.svg` | 256×256 | 11,677 |
+| `favicon.png` | 32×32 | 1,611 |
+| `apple-touch-icon.png` | 180×180 | 7,417 |
 
 The favicon uses the original smiling water-drop detail so the artwork remains recognizable at tab size. The SVG is 256×256, PNG is 32×32, and Apple touch icon is 180×180. The SVG assets contain no scripts, event handlers or external references. Favicon metadata uses a version query to refresh older cached icons.
 
