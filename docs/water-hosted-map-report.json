@@ -1,0 +1,42 @@
+{
+  "target": "https://strideeco.vercel.app",
+  "commit": "41e1f23b2100bb2b4cf7b8a76ba292e709a0709a",
+  "passed": true,
+  "checks": [
+    {
+      "endpoint": "/",
+      "status": 200
+    },
+    {
+      "endpoint": "/sign-in",
+      "status": 200
+    },
+    {
+      "endpoint": "/sign-up",
+      "status": 200
+    },
+    {
+      "endpoint": "/api/pilot",
+      "status": 401
+    },
+    {
+      "viewport": "desktop",
+      "machinePins": 6,
+      "filteredRefillPins": 2,
+      "browserErrors": [],
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "machinePins": 6,
+      "filteredRefillPins": 2,
+      "browserErrors": [],
+      "horizontalOverflow": false
+    }
+  ],
+  "limits": [
+    "Anonymous hosted map/interface checks only; no remote wallet database is configured",
+    "Mock machines and simulated dispensing; development Clerk authentication"
+  ],
+  "completedAt": "2026-10-22T17:11:47.681Z"
+}

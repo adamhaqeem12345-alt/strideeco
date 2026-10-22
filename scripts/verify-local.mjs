@@ -44,7 +44,10 @@ for (const [clerkId, appId] of publicOnly ? [] : [['user_api_runner', 'github:st
   await db.execute({ sql: 'INSERT INTO auth_identities VALUES(?,?,?)', args: [clerkId, appId, new Date().toISOString()] });
 }
 db.close();
-if (!publicOnly) await build({ entryPoints: ['lib/geo.ts'], bundle: true, platform: 'node', format: 'cjs', outfile: 'work/geo.cjs' });
+if (!publicOnly) {
+  await build({ entryPoints: ['lib/geo.ts'], bundle: true, platform: 'node', format: 'cjs', outfile: 'work/geo.cjs' });
+  await build({ entryPoints: ['lib/vouchers.ts'], bundle: true, platform: 'node', format: 'cjs', outfile: 'work/vouchers.cjs' });
+}
 // Next normalizes loopback middleware URLs to localhost. Using 127.0.0.1
 // here makes Clerk's same-origin rewrite look external and re-enter proxy.
 const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '--hostname', 'localhost', '--port', String(port)], { env, stdio: 'inherit' });

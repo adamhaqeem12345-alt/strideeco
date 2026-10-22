@@ -8,6 +8,19 @@ const report = { passed: false, status: 'running', startedAt: new Date().toISOSt
 const writeReport = update => fs.writeFileSync('outputs/clerk-browser-auth-report.json', JSON.stringify({ ...report, ...update }, null, 2));
 writeReport({});
 let stage = 'development fixture validation';
+const errors = [];
+function browserError(error) {
+  let message = String(error.message).split('\n')[0];
+  for (const secret of [process.env.STRIDEECO_TEST_PASSWORD, process.env.CLERK_SECRET_KEY,
+    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY, process.env.CLERK_TESTING_TOKEN].filter(Boolean)) {
+    message = message.split(secret).join('[redacted]');
+  }
+  message = message.replace(/\b(?:pk|sk)_(?:test|live)_[A-Za-z0-9_-]+/g, '[redacted key]')
+    .replace(/\bdvb_[A-Za-z0-9_-]+/g, '[redacted development token]')
+    .replace(/\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g, '[redacted JWT]')
+    .replace(/(https?:\/\/[^\s?]+)\?[^\s]+/g, '$1?[redacted query]');
+  return { name: error.name, message: message.slice(0, 500) };
+}
 
 (async () => {
   const target = /^http:\/\/localhost:(\d+)$/.exec(base);
@@ -20,8 +33,7 @@ let stage = 'development fixture validation';
   const browser = await chromium.launch({ headless: true, ...(process.env.STRIDEECO_BROWSER_EXECUTABLE ? { executablePath: process.env.STRIDEECO_BROWSER_EXECUTABLE } : {}) });
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const page = await context.newPage();
-  const errors = [];
-  page.on('pageerror', error => errors.push(error.message));
+  page.on('pageerror', error => errors.push(browserError(error)));
   fs.mkdirSync('outputs', { recursive: true });
   try {
     stage = 'anonymous planner and sign-up form';
@@ -116,4 +128,4 @@ let stage = 'development fixture validation';
     await page.screenshot({ path: 'outputs/clerk-auth-failure.png', fullPage: true }).catch(() => {});
     throw error;
   } finally { await browser.close(); }
-})().catch(error => { const sourceFrame = error.stack?.match(/tests[\\/]browser-auth\.cjs:\d+:\d+/)?.[0]; writeReport({ status: 'failed', completedAt: new Date().toISOString(), failedCheck: stage, errorType: error.name, sourceFrame }); console.error(`FAIL: ${stage} (${error.name}) ${sourceFrame || ''}. See the failure screenshot.`); process.exitCode = 1; });
+})().catch(error => { const sourceFrame = error.stack?.match(/tests[\\/]browser-auth\.cjs:\d+:\d+/)?.[0]; writeReport({ status: 'failed', completedAt: new Date().toISOString(), failedCheck: stage, errorType: error.name, sourceFrame, browserErrors: errors }); console.error(`FAIL: ${stage} (${error.name}) ${sourceFrame || ''}. See the failure screenshot.`); process.exitCode = 1; });

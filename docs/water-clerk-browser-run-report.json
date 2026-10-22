@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "status": "passed",
+  "mode": "ui-auth-pace-and-vouchers",
+  "suites": [
+    "browser-auth",
+    "browser-flow",
+    "browser-vouchers"
+  ],
+  "completedAt": "2026-10-22T17:01:53.902Z",
+  "cleanupConfirmed": true,
+  "buildDirectory": "work/next-water-vouchers-final",
+  "limits": [
+    "Development Clerk authentication and isolated local persistence only",
+    "All water machine locations and dispensing are mock demonstrations"
+  ]
+}

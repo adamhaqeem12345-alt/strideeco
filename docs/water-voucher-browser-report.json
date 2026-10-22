@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "status": "passed",
+  "startedAt": "2026-10-22T17:01:00.126Z",
+  "completedAt": "2026-10-22T17:01:52.452Z",
+  "browserErrors": [],
+  "markerHits": [
+    {
+      "surface": "desktop-all-types",
+      "hits": [
+        {
+          "id": "mock-central-refill",
+          "hit": "mock-central-refill"
+        },
+        {
+          "id": "mock-central-ambient",
+          "hit": "mock-central-ambient"
+        },
+        {
+          "id": "mock-central-chilled",
+          "hit": "mock-central-chilled"
+        },
+        {
+          "id": "mock-urban-chilled",
+          "hit": "mock-urban-chilled"
+        },
+        {
+          "id": "mock-urban-refill",
+          "hit": "mock-urban-refill"
+        },
+        {
+          "id": "mock-urban-ambient",
+          "hit": "mock-urban-ambient"
+        }
+      ]
+    },
+    {
+      "surface": "mobile-all-types",
+      "hits": [
+        {
+          "id": "mock-central-refill",
+          "hit": "mock-central-refill"
+        },
+        {
+          "id": "mock-central-ambient",
+          "hit": "mock-central-ambient"
+        },
+        {
+          "id": "mock-central-chilled",
+          "hit": "mock-central-chilled"
+        },
+        {
+          "id": "mock-urban-chilled",
+          "hit": "mock-urban-chilled"
+        },
+        {
+          "id": "mock-urban-refill",
+          "hit": "mock-urban-refill"
+        },
+        {
+          "id": "mock-urban-ambient",
+          "hit": "mock-urban-ambient"
+        }
+      ]
+    }
+  ],
+  "verified": [
+    "labelled demo activity funds prototype points",
+    "six mock map pins with three water-only types",
+    "type filter and known-position nearest match",
+    "keyboard, desktop click and mobile touch map selection",
+    "each marker center targets its own machine",
+    "rendered QR screenshot independently decoded with jsQR",
+    "displayed code and downloaded QR bind to the same voucher",
+    "wrong machine rejects both QR and code without consuming",
+    "failed machine releases reserved points",
+    "same voucher and QR across desktop/mobile sessions",
+    "UI QR scan consumes once",
+    "manual formatted code consumes once",
+    "used voucher retains keyboard focus inside its dialog",
+    "opposite-form replay returns409 without another debit",
+    "anonymous consumption rejected",
+    "no mobile horizontal overflow",
+    "fresh mocked GPS session clears prior demo reference classification without submitting an activity"
+  ],
+  "limits": [
+    "Existing Clerk development user via official sign-in helper and isolated local database",
+    "Machine locations, geolocation fixture and dispensing are mock",
+    "Copy callback intercepted to preserve the system clipboard",
+    "Authenticated other-owner and concurrent-consumption coverage is in the separate API suite",
+    "No live machine, stock, operator, remote persistence or physical GPS verified"
+  ],
+  "cleanupConfirmed": true,
+  "buildDirectory": "work/next-water-vouchers-final"
+}

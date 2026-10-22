@@ -1,8 +1,16 @@
 # Verification record
 
-Updated 2026-10-23. Implementation, local testing, hosted authentication and remote persistence are separate states. Historical results below do not establish that the current Clerk migration passes.
+Updated 2026-10-23. Implementation, local testing, hosted authentication and remote persistence are separate states. Dated snapshots below apply to their recorded releases.
 
-## Current Clerk migration
+## Current water voucher extension
+
+The final `work/next-water-vouchers-final` artifact passes TypeScript, production webpack build, production HTTP/API checks, signed-out desktop/mobile browser checks and the combined real Clerk development UI auth + PACE + voucher browser journey. All 26 domain/ownership/machine/voucher/migration tests pass. Temporary Clerk fixture cleanup is confirmed. See [water-vouchers.md](water-vouchers.md) and the `water-*-report.json` records.
+
+Six explicitly mock Elmina water stops support type filtering, nearest selection, keyboard/mouse/touch map interaction and machine-bound one-use code/QR vouchers. Codes and downloaded QR images are independently decoded in browser tests; one successful use invalidates both forms. These passing local journeys do not establish hosted persistence. The normal laptop database now has all four migrations, with existing rows and earlier migration records preserved.
+
+The current public domain is verified on READY production deployment `dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ`, application SHA `41e1f23b2100bb2b4cf7b8a76ba292e709a0709a`. Hosted desktop/mobile map and type-filter checks pass without page errors or horizontal overflow. Hosted development-instance UI signup, test OTP, password signin, account controls and signout also pass, with exact temporary fixture cleanup confirmed. Authenticated account API 503 remains expected because the remote database is absent. See `water-hosted-map-report.json` and `water-hosted-auth-report.json`.
+
+## Previous Clerk authentication release
 
 | State | Evidence and limit |
 | --- | --- |

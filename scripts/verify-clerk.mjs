@@ -12,7 +12,11 @@ import { createClerkClient } from '@clerk/backend';
 nextEnv.loadEnvConfig(process.cwd());
 await mkdir('outputs', { recursive: true });
 const paceOnly = process.argv.includes('--pace-only');
-const childReports = paceOnly ? ['e2e-report.json'] : ['clerk-browser-auth-report.json', 'e2e-report.json'];
+const vouchersOnly = process.argv.includes('--vouchers-only');
+if (paceOnly && vouchersOnly) throw new Error('Choose one isolated browser verification mode.');
+const suites = vouchersOnly ? ['browser-vouchers'] : paceOnly ? ['browser-flow'] : ['browser-auth', 'browser-flow', 'browser-vouchers'];
+const reportNames = { 'browser-auth': 'clerk-browser-auth-report.json', 'browser-flow': 'e2e-report.json', 'browser-vouchers': 'voucher-browser-report.json' };
+const childReports = suites.map(suite => reportNames[suite]);
 for (const name of [...childReports, 'clerk-browser-run-report.json']) {
   await writeFile(path.join('outputs', name), JSON.stringify({ passed: false, status: 'pending', startedAt: new Date().toISOString() }, null, 2));
 }
@@ -79,12 +83,12 @@ try {
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
   if (!ready) throw new Error('The isolated Clerk production server did not become ready.');
-  if (paceOnly) {
+  if (paceOnly || vouchersOnly) {
     const clerk = createClerkClient({ secretKey: env.CLERK_SECRET_KEY });
     await clerk.users.createUser({ emailAddress: [email], password: env.STRIDEECO_TEST_PASSWORD, username: `strideecotest${Date.now()}` });
   }
   let completed = 0;
-  const tests = paceOnly ? ['tests/browser-flow.cjs'] : ['tests/browser-auth.cjs', 'tests/browser-flow.cjs'];
+  const tests = suites.map(suite => `tests/${suite}.cjs`);
   for (const file of tests) {
     const code = await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, [file], { env, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -119,7 +123,7 @@ try {
     else if (report.status === 'pending') Object.assign(final, { passed: false, status: 'skipped' });
     await writeFile(filename, JSON.stringify(final, null, 2));
   }
-  await writeFile('outputs/clerk-browser-run-report.json', JSON.stringify({ passed: testsPassed && cleanupConfirmed, status: testsPassed && cleanupConfirmed ? 'passed' : 'failed', mode: paceOnly ? 'pace-only' : 'ui-auth-and-pace', suites: paceOnly ? ['browser-flow'] : ['browser-auth', 'browser-flow'], completedAt: new Date().toISOString(), cleanupConfirmed, buildDirectory: buildDir, limits: ['Development Clerk authentication and isolated local persistence only'] }, null, 2));
+  await writeFile('outputs/clerk-browser-run-report.json', JSON.stringify({ passed: testsPassed && cleanupConfirmed, status: testsPassed && cleanupConfirmed ? 'passed' : 'failed', mode: vouchersOnly ? 'vouchers-only' : paceOnly ? 'pace-only' : 'ui-auth-pace-and-vouchers', suites, completedAt: new Date().toISOString(), cleanupConfirmed, buildDirectory: buildDir, limits: ['Development Clerk authentication and isolated local persistence only', 'All water machine locations and dispensing are mock demonstrations'] }, null, 2));
   if (!exited) await new Promise(resolve => {
     const timer = setTimeout(() => server.kill('SIGKILL'), 5000);
     server.once('exit', () => { clearTimeout(timer); resolve(); });
