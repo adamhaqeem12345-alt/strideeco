@@ -2,6 +2,10 @@
 
 Plan a walk through Elmina, compare explicitly labelled building-shadow scenarios, record an activity and try a simulated drinking-water reward. The PACE interface supports planning, saving, sharing, wallet access and water redemption on phone and desktop layouts; account features also need configured authentication and an application database.
 
+## Water vouchers and machine map
+
+The new water-only flow adds six clearly labelled mock Elmina machine locations, nearest compatible machine suggestions, type filters and machine-bound vouchers. Each voucher has one code and one downloadable QR for the same single use; the authenticated simulator supports both entry methods. See [water-vouchers.md](docs/water-vouchers.md) for accounting, migration and verification details. These changes still require the dedicated remote database for live points and cross-device vouchers; the existing authentication deployment alone does not provide that persistence.
+
 ## Integration status
 
 The local source implements Clerk sign-in/sign-up, account controls, sign-out and server-side account ownership. Fifteen domain/identity tests, TypeScript and the final webpack build pass. The same `work/next-clerk-pinned-ui` application artifact passes the isolated Clerk API suite, signed-out desktop/mobile browser checks, real development-instance UI sign-up/sign-in/sign-out, and the authenticated desktop/mobile PACE journey. Browser test users were removed and their cleanup verified. These tests use isolated local databases; the normal laptop development database separately has all three migrations.
@@ -56,7 +60,7 @@ npm ci
 npm run db:migrate
 ```
 
-The runner applies `0000_condemned_firestar.sql`, `0001_wallet_accounting.sql` and `0002_clerk_identities.sql`, records checksums and skips unchanged applied files. Never edit an applied migration. Migrations are separate from builds. Verify all three recorded migrations before deploying and rerun the application journey against the remote database after deployment.
+The runner applies `0000_condemned_firestar.sql`, `0001_wallet_accounting.sql`, `0002_clerk_identities.sql` and `0003_machine_water_vouchers.sql`, records checksums and skips unchanged applied files. Never edit an applied migration. Migrations are separate from builds. Verify all four recorded migrations before deploying and rerun the application journey against the remote database after deployment.
 
 Vercel local files are not account persistence: the application rejects `file:` database URLs there. Configure real instance keys in the correct Vercel environments and redeploy after changes. Never upload the isolated harness's synthetic key-shaped placeholders, `CLERK_JWT_KEY` or `STRIDEECO_TEST_PRIVATE_KEY` to Vercel. This repository does not provision a database or create paid services automatically.
 

@@ -2,7 +2,13 @@
 
 Updated 2026-10-23. Implementation, local testing, hosted authentication and remote persistence are separate states. Historical results below do not establish that the current Clerk migration passes.
 
-## Current Clerk migration
+## Current water voucher extension
+
+The final `work/next-water-vouchers-final` artifact passes TypeScript, production webpack build, production HTTP/API checks, signed-out desktop/mobile browser checks and the combined real Clerk development UI auth + PACE + voucher browser journey. All 26 domain/ownership/machine/voucher/migration tests pass. Temporary Clerk fixture cleanup is confirmed. See [water-vouchers.md](water-vouchers.md) and the `water-*-report.json` records.
+
+Six explicitly mock Elmina water stops support type filtering, nearest selection, keyboard/mouse/touch map interaction and machine-bound one-use code/QR vouchers. Codes and downloaded QR images are independently decoded in browser tests; one successful use invalidates both forms. These passing local journeys do not establish hosted persistence. The normal laptop database now has all four migrations, with existing rows and earlier migration records preserved.
+
+## Previous Clerk authentication release
 
 | State | Evidence and limit |
 | --- | --- |
