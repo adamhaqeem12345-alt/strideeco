@@ -16,7 +16,7 @@ Implemented 2026-10-23. This extends the existing PACE wallet; it does not conne
 
 `0003_machine_water_vouchers.sql` is additive. It retains earlier wallets, history, applied migration checksums and accounting triggers. Historical vouchers have nullable machine snapshots; an earlier unbound pending voucher cannot dispense and its reservation expires normally. New vouchers require valid immutable machine fields and a 32-hex-character token.
 
-The existing Vercel authentication release has no remote application database. The user previously deferred setup after Turso required personal terms acceptance. A live, shared wallet and global one-use validation require the dedicated remote database; a local file is explicitly refused on Vercel. Local passing tests do not establish hosted persistence.
+The current Vercel release publishes the mock machine map and voucher interface at [strideeco.vercel.app](https://strideeco.vercel.app/) using source `41e1f23b2100bb2b4cf7b8a76ba292e709a0709a`, deployment `dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ`. Hosted map/filter/layout and Clerk development UI auth checks pass, including exact test fixture cleanup. It has no remote application database. The user previously deferred setup after Turso required personal terms acceptance. A live, shared wallet and global one-use validation require the dedicated remote database; a local file is explicitly refused on Vercel. Local passing tests do not establish hosted persistence.
 
 The required personal step, if setup is resumed, is:
 
