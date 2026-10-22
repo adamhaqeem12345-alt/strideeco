@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1792664800290,
+      "tag": "0000_condemned_firestar",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1792665299146,
+      "tag": "0001_wallet_accounting",
+      "breakpoints": true
+    }
+  ]
+}

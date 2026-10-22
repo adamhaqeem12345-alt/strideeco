@@ -1,0 +1,23 @@
+{
+  "area": "Elmina Valley Central Park and Elmina Urban Park",
+  "source": "https://api.openstreetmap.org/api/0.6/map?bbox=101.508,3.176,101.518,3.183",
+  "retrievedAt": "2026-10-22T10:24:18.681252+00:00",
+  "licence": "ODbL 1.0",
+  "attribution": "\u00a9 OpenStreetMap contributors",
+  "bbox": [
+    101.508,
+    3.176,
+    101.518,
+    3.183
+  ],
+  "osmTimestamp": null,
+  "walkableWays": 88,
+  "buildingFootprints": 582,
+  "buildingHeightTags": 0,
+  "treeCanopyFeatures": 0,
+  "limitations": [
+    "Building heights are absent.",
+    "Tree canopy is absent.",
+    "Public mapping does not confirm present-day access, path condition or safety."
+  ]
+}

@@ -1,0 +1,96 @@
+const { chromium } = require(process.env.STRIDEECO_PLAYWRIGHT || 'playwright');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const base = 'http://127.0.0.1:5173';
+(async () => {
+  const browser = await chromium.launch({ channel: 'chrome', headless: true });
+  try {
+    const desktop = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+    const page = await desktop.newPage(), errors = []; let recordedActivity;
+    page.on('request', r => { if (r.url().endsWith('/api/pilot') && r.method() === 'POST') { const body = r.postDataJSON(); if (body?.action === 'activity') recordedActivity = body; } });
+    page.on('pageerror', e => errors.push(e.message));
+    await page.goto(base, { waitUntil: 'networkidle' });
+    assert.equal((await desktop.request.get(base + '/api/pilot')).status(), 401);
+    await page.getByRole('link', { name: 'Sign in', exact: true }).click();
+    await page.waitForSelector('.avatar', { timeout: 30000 });
+    await page.waitForTimeout(1000);
+    const state = async context => { const r = await context.request.get(base + '/api/pilot'); assert.equal(r.status(), 200, await r.text()); return r.json(); };
+    const before = await state(desktop);
+    await page.getByRole('button', { name: /The scenic alternative/ }).click();
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await page.getByRole('status').filter({ hasText: 'Route saved' }).waitFor();
+    let saved = await state(desktop); assert.equal(saved.routes.length, before.routes.length + 1);
+    // Exercise the actual Share button without opening an OS share target or sending a message.
+    await page.evaluate(() => Object.defineProperty(navigator, 'share', { configurable: true, value: async payload => { window.__strideShared = payload; } }));
+    await page.getByRole('button', { name: 'Save and share route', exact: true }).click();
+    await page.waitForFunction(() => Boolean(window.__strideShared));
+    const sharedUrl = await page.evaluate(() => window.__strideShared.url);
+    saved = await state(desktop);
+    const publicContext = await browser.newContext();
+    const sharedPage = await publicContext.newPage(); await sharedPage.goto(sharedUrl, { waitUntil: 'networkidle' });
+    await sharedPage.getByRole('status').filter({ hasText: 'Shared route opened' }).waitFor();
+    assert.equal(await sharedPage.locator('.selected-route-summary h2').innerText(), saved.routes[0].name);
+    await publicContext.close();
+    await page.getByRole('checkbox', { name: 'Enable assumed-height shade scenario' }).check();
+    await page.getByLabel('Assumed building height').selectOption('9');
+    assert.ok((await page.locator('.route-shade').first().innerText()).includes('scenario'));
+    await page.screenshot({ path: 'outputs/desktop-shade-scenario.png', fullPage: true });
+    await page.getByRole('button', { name: /The scenic alternative/ }).click();
+    await page.locator('.desktop-nav').getByRole('button', { name: 'My activity' }).click();
+    await page.getByRole('button', { name: 'Try a demo walk' }).click();
+    await page.getByRole('heading', { name: 'Look at you go.' }).waitFor({ timeout: 20000 });
+    const credited = await state(desktop); assert.ok(credited.wallet.points > before.wallet.points); assert.ok(credited.activities[0].source === 'demo');
+    assert.ok(recordedActivity);
+    const repeatedActivity = await desktop.request.post(base + '/api/pilot', { data: recordedActivity });
+    assert.equal(repeatedActivity.status(), 200); assert.equal((await repeatedActivity.json()).wallet.points, credited.wallet.points);
+    // A second independent browser session signs into the same local preview account.
+    const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    const phone = await mobile.newPage(); await phone.goto(base + '/signin-with-chatgpt?return_to=/', { waitUntil: 'networkidle' });
+    await phone.waitForSelector('.avatar');
+    const onPhone = await state(mobile); assert.equal(onPhone.wallet.points, credited.wallet.points); assert.equal(onPhone.routes[0].id, saved.routes[0].id);
+    await phone.locator('.mobile-nav').getByRole('button', { name: 'Rewards' }).click();
+    await phone.getByRole('button', { name: 'Redeem drinking water', exact: true }).click();
+    await phone.getByRole('heading', { name: 'Your water code is ready.' }).waitFor();
+    const held = await state(mobile); assert.equal(held.wallet.reserved, before.wallet.reserved + 60); assert.equal(held.wallet.points, credited.wallet.points);
+    await phone.screenshot({ path: 'outputs/mobile-redemption-code.png', fullPage: false });
+    await phone.getByRole('button', { name: 'Simulate machine failure', exact: true }).click();
+    await phone.getByRole('heading', { name: 'Your points are available again.' }).waitFor();
+    const released = await state(mobile); assert.equal(released.wallet.reserved, before.wallet.reserved); assert.equal(released.wallet.points, credited.wallet.points);
+    await phone.getByRole('button', { name: 'Close redemption' }).click();
+    // Initiate the second redemption on desktop, then open that code on the phone.
+    await page.locator('.desktop-nav').getByRole('button', { name: 'Water rewards' }).click();
+    await page.getByRole('button', { name: 'Refresh wallet' }).click();
+    await page.getByRole('button', { name: 'Redeem drinking water', exact: true }).click();
+    await page.getByRole('heading', { name: 'Your water code is ready.' }).waitFor();
+    const desktopCode = await page.locator('.redemption-code').innerText();
+    await page.getByRole('button', { name: 'Close redemption' }).click();
+    await phone.getByRole('button', { name: 'Refresh wallet' }).click();
+    await phone.locator('.redemption-row').filter({ hasText: 'View code' }).first().click();
+    await phone.getByRole('heading', { name: 'Your water code is ready.' }).waitFor();
+    assert.equal(await phone.locator('.redemption-code').innerText(), desktopCode);
+    await phone.getByRole('button', { name: 'Simulate successful dispensing', exact: true }).click();
+    await phone.getByRole('heading', { name: 'A fresh finish.', exact: true }).waitFor();
+    const finished = await state(mobile); assert.equal(finished.wallet.points, credited.wallet.points - 60); assert.equal(finished.wallet.reserved, before.wallet.reserved);
+    const redemption = finished.redemptions.find(r => r.status === 'confirmed');
+    const duplicate = await mobile.request.post(base + '/api/pilot', { data: { action: 'resolve-water', id: redemption.id, token: redemption.token, result: 'dispensed' } });
+    assert.equal(duplicate.status(), 200); assert.equal((await duplicate.json()).wallet.points, finished.wallet.points);
+    assert.equal((await state(desktop)).wallet.points, finished.wallet.points);
+    await phone.getByRole('button', { name: 'Close redemption' }).click();
+    await phone.screenshot({ path: 'outputs/mobile-rewards.png', fullPage: true });
+    await page.getByRole('button', { name: 'Refresh wallet' }).click(); await page.screenshot({ path: 'outputs/desktop-rewards.png', fullPage: true });
+    // Route planning and saving are independently usable from the phone.
+    await phone.locator('.mobile-nav').getByRole('button', { name: 'Plan', exact: true }).click();
+    await phone.getByRole('button', { name: 'To a place', exact: true }).click();
+    await phone.getByLabel('DESTINATION', { exact: true }).selectOption('1309457596');
+    await phone.getByRole('button', { name: 'Save', exact: true }).click();
+    await phone.getByRole('status').filter({ hasText: 'Route saved' }).waitFor();
+    assert.ok((await state(desktop)).routes.some(r => r.name === 'Your direct connection'));
+    const invalidGps = await desktop.request.post(base + '/api/pilot', { data: { action: 'activity', source: 'gps', key: 'invalid-location-jump-' + Date.now(), positions: [{ lon: 101.513, lat: 3.179, time: Date.now() - 10000, accuracy: 5 }, { lon: 102.5, lat: 4.1, time: Date.now() - 9000, accuracy: 5 }] } });
+    assert.equal(invalidGps.status(), 400); assert.equal((await state(desktop)).wallet.points, finished.wallet.points);
+    assert.equal(await phone.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+    assert.deepEqual(errors, []);
+    fs.writeFileSync('outputs/e2e-report.json', JSON.stringify({ passed: true, verified: ['anonymous API protection','desktop route save','share-button flow and anonymous shared-route opening','explicit shade scenario','single simulated activity credit on replay','shared wallet and saved routes across browser contexts','mobile route planning and saving','mobile and desktop water reservation','same code accessible across sessions','failure release','single deduction on repeated confirmation','implausible GPS jump rejected without credit'], browserErrors: errors }, null, 2));
+    console.log('PASS: complete desktop/mobile PACE journey and transaction checks');
+  } finally { await browser.close(); }
+})().catch(e => { console.error(e); process.exitCode = 1; });
+
