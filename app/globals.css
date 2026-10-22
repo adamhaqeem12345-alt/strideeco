@@ -34,18 +34,19 @@
 ::selection{background:var(--yellow);color:var(--ink)}
 body{background:var(--aqua)}
 .app-shell{background:var(--aqua)}
-.sidebar{width:244px;padding:24px 18px;background:var(--ink);border-right:0;color:#edffff}
+.sidebar{width:244px;padding:24px 18px;background:var(--ink);border-right:0;color:#edffff;overflow-y:auto;overscroll-behavior-y:contain;scrollbar-width:thin}
 .app-main{margin-left:244px;width:calc(100% - 244px)}
 .brand{display:block;width:100%;padding:12px 10px;background:var(--aqua);border-radius:18px;text-align:center;box-shadow:0 4px 0 #ffffff16}
+.sidebar>.brand{margin-bottom:0}
 .brand>span:last-child{font-size:inherit;letter-spacing:normal;font-weight:inherit}
 .brand-lockup{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;min-width:0;line-height:1}
 .brand-wordmark{display:block;width:100%;height:auto;object-fit:contain;max-width:100%}
 .brand-tagline{font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--ink);white-space:nowrap}
-.sidebar-section-label{color:#b7e6e2;font-size:9px;letter-spacing:1.5px;margin:35px 10px 14px}
+.sidebar-section-label{color:#b7e6e2;font-size:9px;letter-spacing:1.5px;margin:24px 10px 14px}
 .desktop-nav{gap:8px}.desktop-nav button{color:#e4fffa;font-size:12px;border-radius:13px;padding:14px 13px;font-weight:600}
 .desktop-nav button:hover{background:#ffffff16}.desktop-nav button.active{background:var(--yellow);color:var(--ink);box-shadow:0 4px 0 #00000012}.desktop-nav button.active i{background:var(--coral)}
 .sidebar-water{background:var(--aqua);border:0;border-radius:18px;padding:20px 16px;color:var(--ink);margin-top:32px}.sidebar-water p,.sidebar-water strong,.sidebar-water small,.sidebar-water>button{color:var(--ink)}.sidebar-water .small-icon{background:var(--sky);color:var(--ink)}.sidebar-water>button{font-weight:700}.mini-progress{background:#0c343c1a}.mini-progress>span{background:var(--green)}
-.sidebar-bottom{color:#c9f3ef}.sidebar-bottom .pilot-pill{background:#ffffff12;color:#e4fffa;border:1px solid #ffffff30}.sidebar-bottom .pilot-pill i{background:var(--lime)}.sidebar-bottom>button,.sidebar-bottom>p{color:#c9f3ef}
+.sidebar-bottom{color:#c9f3ef;padding-top:24px}.sidebar-bottom .pilot-pill{background:#ffffff12;color:#e4fffa;border:1px solid #ffffff30}.sidebar-bottom .pilot-pill i{background:var(--lime)}.sidebar-bottom>button,.sidebar-bottom>p{color:#c9f3ef}
 .topbar{background:#f5fffd;border-bottom:1px solid #9adfdc;padding:0 32px}.location-breadcrumb{font-size:11px;color:var(--muted)}.location-breadcrumb strong{color:var(--ink)}.wallet-chip{background:var(--yellow);border:1px solid #dbb931;color:var(--ink);border-radius:12px}.wallet-chip strong{font-weight:800}.sign-in{color:var(--green);font-weight:700}
 .page-content{padding-top:32px}.page-heading h1{font-family:var(--font-sans);font-weight:800;font-size:35px;letter-spacing:-1.1px;line-height:1.15;color:var(--ink)}.eyebrow{color:var(--green-dark);font-weight:800;font-size:9px;letter-spacing:1.3px}.page-subtitle{font-size:12px;color:var(--muted)}
 .planner-panel,.card,.selected-route-summary{background:#ffffff;border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 26px #055a610a}.planner-panel{padding:24px 22px}.panel-title h2{font-size:18px;font-weight:800}.panel-title p{font-size:11px;color:var(--muted)}.small-icon{background:var(--lime);color:var(--ink);border-radius:12px}.small-icon.blue{background:var(--sky);color:var(--ink)}
