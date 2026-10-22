@@ -1,28 +1,16 @@
-import NextAuth from 'next-auth';
-import GitHub from 'next-auth/providers/github';
+import { auth, currentUser } from '@clerk/nextjs/server';
+import { cache } from 'react';
+import { authConfigured } from './lib/auth-config';
+import { resolveAccountIdentity } from './lib/account-identity';
+import { databaseClient } from './lib/database';
 
-export function authConfigured() {
-  return Boolean(process.env.AUTH_SECRET && process.env.AUTH_GITHUB_ID && process.env.AUTH_GITHUB_SECRET);
-}
+export { authConfigured } from './lib/auth-config';
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
-  trustHost: true,
-  session: { strategy: 'jwt' },
-  providers: [GitHub({ authorization: { params: { scope: 'read:user' } } })],
-  callbacks: {
-    jwt({ token, account }) {
-      if (account) token.sub = `${account.provider}:${account.providerAccountId}`;
-      return token;
-    },
-    session({ session, token }) {
-      if (session.user) session.user.id = token.sub ?? '';
-      return session;
-    },
-  },
-});
-
-export async function getUser() {
+// Request-scoped memoization only; never share identity between requests.
+export const getUser = cache(async () => {
   if (!authConfigured()) return null;
-  const session = await auth();
-  return session?.user?.id ? { userId: session.user.id } : null;
-}
+  const { userId, isAuthenticated } = await auth();
+  if (!isAuthenticated || !userId) return null;
+  const appUserId = await resolveAccountIdentity(databaseClient(), userId, currentUser);
+  return { userId: appUserId };
+});

@@ -12,7 +12,7 @@ if (url.startsWith('file:')) await mkdir(path.dirname(url.slice(5)), { recursive
 const client = createClient({ url, authToken: process.env.TURSO_AUTH_TOKEN });
 try {
   await client.execute('CREATE TABLE IF NOT EXISTS strideeco_migrations (name TEXT PRIMARY KEY, checksum TEXT NOT NULL, applied_at TEXT NOT NULL)');
-  for (const name of ['0000_condemned_firestar.sql', '0001_wallet_accounting.sql']) {
+  for (const name of ['0000_condemned_firestar.sql', '0001_wallet_accounting.sql', '0002_clerk_identities.sql']) {
     const sql = await readFile(new URL(`../drizzle/${name}`, import.meta.url), 'utf8');
     const checksum = createHash('sha256').update(sql).digest('hex');
     const tx = await client.transaction('write');

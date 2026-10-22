@@ -3,10 +3,9 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const base = process.env.STRIDEECO_TEST_URL || 'http://127.0.0.1:5173';
 (async () => {
-  if (!process.env.AUTH_SECRET) throw new Error('Run through scripts/verify-local.mjs with a temporary test database.');
-  const { encode } = await import('next-auth/jwt');
-  const token = await encode({ token: { sub: 'github:strideeco-test-runner', name: 'Test runner' }, secret: process.env.AUTH_SECRET, salt: 'authjs.session-token' });
-  const cookie = { name: 'authjs.session-token', value: token, url: base, httpOnly: true, sameSite: 'Lax' };
+  if (!process.env.STRIDEECO_TEST_EMAIL || !process.env.CLERK_SECRET_KEY?.startsWith('sk_test_') || !process.env.TURSO_DATABASE_URL?.startsWith('file:')) throw new Error('Use a development Clerk instance, an explicitly selected existing test user and an isolated local test database.');
+  const { clerk, clerkSetup, setupClerkTestingToken } = require('@clerk/testing/playwright');
+  await clerkSetup();
   const browser = await chromium.launch({ headless: true, ...(process.env.STRIDEECO_BROWSER_EXECUTABLE ? { executablePath: process.env.STRIDEECO_BROWSER_EXECUTABLE } : {}) });
   fs.mkdirSync('outputs', { recursive: true });
   try {
@@ -18,7 +17,8 @@ const base = process.env.STRIDEECO_TEST_URL || 'http://127.0.0.1:5173';
     assert.equal((await desktop.request.get(base + '/api/pilot')).status(), 401);
     const spoofed = await desktop.request.get(base + '/api/pilot', { headers: { 'oai-authenticated-user-id': 'spoofed', 'oai-authenticated-user-email': 'test@example.invalid' } });
     assert.equal(spoofed.status(), 401);
-    await desktop.addCookies([cookie]);
+    await setupClerkTestingToken({ page });
+    await clerk.signIn({ page, emailAddress: process.env.STRIDEECO_TEST_EMAIL });
     await page.reload({ waitUntil: 'networkidle' });
     await page.waitForSelector('.avatar', { timeout: 30000 });
     await page.waitForTimeout(1000);
@@ -51,10 +51,13 @@ const base = process.env.STRIDEECO_TEST_URL || 'http://127.0.0.1:5173';
     assert.ok(recordedActivity);
     const repeatedActivity = await desktop.request.post(base + '/api/pilot', { data: recordedActivity });
     assert.equal(repeatedActivity.status(), 200); assert.equal((await repeatedActivity.json()).wallet.points, credited.wallet.points);
-    // Independent browser context using the same test-only Auth.js identity.
+    // Independent browser context using the same explicitly selected Clerk test user.
     const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
-    await mobile.addCookies([cookie]);
-    const phone = await mobile.newPage(); await phone.goto(base, { waitUntil: 'networkidle' });
+    const phone = await mobile.newPage();
+    await setupClerkTestingToken({ page: phone });
+    await phone.goto(base, { waitUntil: 'networkidle' });
+    await clerk.signIn({ page: phone, emailAddress: process.env.STRIDEECO_TEST_EMAIL });
+    await phone.reload({ waitUntil: 'networkidle' });
     await phone.waitForSelector('.avatar');
     const onPhone = await state(mobile); assert.equal(onPhone.wallet.points, credited.wallet.points); assert.equal(onPhone.routes[0].id, saved.routes[0].id);
     await phone.locator('.mobile-nav').getByRole('button', { name: 'Rewards' }).click();
@@ -98,7 +101,7 @@ const base = process.env.STRIDEECO_TEST_URL || 'http://127.0.0.1:5173';
     assert.equal(invalidGps.status(), 400); assert.equal((await state(desktop)).wallet.points, finished.wallet.points);
     assert.equal(await phone.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     assert.deepEqual(errors, []);
-    fs.writeFileSync('outputs/e2e-report.json', JSON.stringify({ passed: true, verified: ['anonymous API protection','spoofed identity headers rejected','Auth.js signed-session identity','desktop route save','share-button flow and anonymous shared-route opening','explicit shade scenario','single simulated activity credit on replay','shared wallet and saved routes across browser contexts','mobile route planning and saving','mobile and desktop water reservation','same code accessible across sessions','failure release','single deduction on repeated confirmation','implausible GPS jump rejected without credit'], browserErrors: errors }, null, 2));
+    fs.writeFileSync('outputs/e2e-report.json', JSON.stringify({ passed: true, verified: ['anonymous API protection','spoofed identity headers rejected','Clerk development-session identity','desktop route save','share-button flow and anonymous shared-route opening','explicit shade scenario','single simulated activity credit on replay','shared wallet and saved routes across browser contexts','mobile route planning and saving','mobile and desktop water reservation','same code accessible across sessions','failure release','single deduction on repeated confirmation','implausible GPS jump rejected without credit'], browserErrors: errors }, null, 2));
     console.log('PASS: complete desktop/mobile PACE journey and transaction checks');
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });

@@ -1,6 +1,8 @@
 import { sql } from 'drizzle-orm';
 import { check, integer, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 
+export const authIdentities = sqliteTable('auth_identities', { clerkUserId: text('clerk_user_id').primaryKey(), appUserId: text('app_user_id').notNull().unique(), createdAt: text('created_at').notNull() });
+
 export const profiles = sqliteTable('profiles', { userId: text('user_id').primaryKey(), consent: integer('consent').notNull().default(0), createdAt: text('created_at').notNull() });
 export const wallets = sqliteTable('wallets', { userId: text('user_id').primaryKey(), points: integer('points').notNull().default(0), reserved: integer('reserved').notNull().default(0) }, t => [check('wallet_nonnegative', sql`${t.points} >= 0 AND ${t.reserved} >= 0 AND ${t.reserved} <= ${t.points}`)]);
 export const savedRoutes = sqliteTable('saved_routes', { id: text('id').primaryKey(), userId: text('user_id').notNull(), name: text('name').notNull(), nodeIds: text('node_ids').notNull(), settings: text('settings').notNull(), distance: integer('distance').notNull(), shared: integer('shared').notNull().default(0), createdAt: text('created_at').notNull() });

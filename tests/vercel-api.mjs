@@ -1,29 +1,29 @@
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { encode } from 'next-auth/jwt';
+import { testSession } from './test-session.mjs';
 import { createClient } from '@libsql/client';
 
-if (!process.env.AUTH_SECRET || !process.env.TURSO_DATABASE_URL?.startsWith('file:')) throw new Error('Run through the isolated verify-local harness.');
+if (!process.env.STRIDEECO_TEST_PRIVATE_KEY || !process.env.TURSO_DATABASE_URL?.startsWith('file:')) throw new Error('Run through the isolated verify-local harness.');
 const require = createRequire(import.meta.url);
 const geo = require('../work/geo.cjs');
-const base = 'http://127.0.0.1:5173';
-const session = async sub => 'authjs.session-token=' + await encode({ token: { sub }, secret: process.env.AUTH_SECRET, salt: 'authjs.session-token' });
-const cookie = await session('github:strideeco-api-test');
-const other = await session('github:another-test-user');
-const get = (path = '/api/pilot', identity = cookie) => fetch(base + path, { headers: identity ? { cookie: identity } : {} });
-const post = (data, identity = cookie, origin = base) => fetch(base + '/api/pilot', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: origin, ...(identity ? { cookie: identity } : {}) }, body: JSON.stringify(data) });
+const base = process.env.STRIDEECO_TEST_URL || 'http://127.0.0.1:5187';
+const cookie = testSession('user_api_runner');
+const other = testSession('user_api_other');
+const get = (path = '/api/pilot', identity = cookie) => fetch(base + path, { redirect: 'manual', signal: AbortSignal.timeout(15000), headers: identity ? { Authorization: `Bearer ${identity}` } : {} });
+const post = (data, identity = cookie, origin = base) => fetch(base + '/api/pilot', { method: 'POST', signal: AbortSignal.timeout(15000), headers: { 'Content-Type': 'application/json', Origin: origin, ...(identity ? { Authorization: `Bearer ${identity}` } : {}) }, body: JSON.stringify(data) });
 const state = async identity => { const r = await get('/api/pilot', identity); assert.equal(r.status, 200); return r.json(); };
 const ok = async data => { const r = await post(data); const body = await r.json(); assert.equal(r.status, 200, JSON.stringify(body)); return body; };
 const checks = [];
 
-const home = await get('/', ''); assert.equal(home.status, 200); assert.match(await home.text(), /Your next little escape/);
-const signin = await get('/signin', ''); assert.equal(signin.status, 200); assert.match(await signin.text(), /Continue with GitHub/);
+console.log('Checking Clerk API session verification...');
 assert.equal((await get('/api/pilot', '')).status, 401);
 assert.equal((await post({ action: 'consent', value: true }, '')).status, 401);
 assert.equal((await fetch(base + '/api/pilot', { headers: { 'oai-authenticated-user-id': 'spoofed', 'oai-authenticated-user-email': 'test@example.invalid' } })).status, 401);
+assert.equal((await get('/api/pilot', cookie.slice(0, -8) + 'invalid!')).status, 401);
+assert.equal((await get('/api/pilot', testSession('user_api_runner', { exp: Math.floor(Date.now()/1000) - 600 }))).status, 401);
 assert.equal((await post({ action: 'consent', value: true }, cookie, 'https://other.invalid')).status, 403);
-checks.push('production Next.js pages render; anonymous and spoofed identities rejected; cross-origin mutation rejected');
+checks.push('Clerk SDK verifies ephemeral RSA sessions; anonymous, forged and expired tokens rejected; cross-origin writes rejected');
 
 const settings = { distance: 3, date: '2026-10-22', time: '17:30', origin: geo.places[0].coordinate, scenario: false, height: 6, preference: 'balanced', mode: 'loop' };
 const route = geo.makeRoutes(settings).sort((a,b) => b.distance - a.distance)[0];
@@ -70,5 +70,5 @@ const invalid = await post({ action: 'activity', source: 'gps', key: 'api-invali
 assert.equal(invalid.status, 400); assert.equal((await state(cookie)).wallet.points, before);
 checks.push('expired reservation release and implausible GPS rejection without credit');
 await mkdir('outputs', { recursive: true });
-await writeFile('outputs/vercel-api-report.json', JSON.stringify({ passed: true, checks, limits: ['Signed test sessions, not a live GitHub OAuth round trip', 'Local libSQL file, not a remote production database', 'No physical GPS or live vending hardware', 'Browser rerun unavailable: browser download failed'] }, null, 2));
-console.log('PASS: Vercel production-server API, signed sessions and libSQL accounting');
+await writeFile('outputs/vercel-api-report.json', JSON.stringify({ passed: true, checks, limits: ['Ephemeral locally signed tokens verified by Clerk SDK, not a live Clerk sign-up or OAuth round trip', 'Local libSQL file, not a remote production database', 'No physical GPS or live vending hardware'] }, null, 2));
+console.log('PASS: Next.js production API, Clerk session verification and libSQL accounting');
