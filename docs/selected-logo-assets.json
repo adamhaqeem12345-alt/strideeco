@@ -1,0 +1,45 @@
+{
+  "source": "User-selected Playful Wordmark with StrideEco lettering and SE monogram",
+  "extraction": "Image generation with transparent background",
+  "derivativeExports": "Alpha trim, proportional resizing, PNG/ICO encoding and an opaque aqua Apple touch background",
+  "version": "se-wordmark-20261023",
+  "assets": {
+    "strideeco-wordmark.png": {
+      "width": 1810,
+      "height": 354,
+      "bytes": 478654,
+      "alpha": true,
+      "sha256": "082e1d1c6a4e1919cde09ea3d3c11b654ed8c9c05197807396f50db1b5b742ce"
+    },
+    "strideeco-monogram.png": {
+      "width": 512,
+      "height": 512,
+      "bytes": 121012,
+      "alpha": true,
+      "sha256": "0ddbd16eda77f9efe163923bb333675bd1c30503dc6bb4aae54b843fc65bbc3e"
+    },
+    "favicon.png": {
+      "width": 32,
+      "height": 32,
+      "bytes": 1830,
+      "alpha": true,
+      "sha256": "fbf9bd962f65ee942e19500ab965ff9faf394c335d45e1f9db2458f8fdf1627c"
+    },
+    "apple-touch-icon.png": {
+      "width": 180,
+      "height": 180,
+      "bytes": 17404,
+      "alpha": false,
+      "sha256": "cdb6b8f3d90293a91f7e8a5e16a6046f802b8de1ad4fe5a674859a603eeb7429"
+    },
+    "favicon.ico": {
+      "sizes": [
+        16,
+        32,
+        48
+      ],
+      "bytes": 5841,
+      "sha256": "45dccf86900365857ac6b4ea1bbf50b94dacb88abda078d984a9dddf824b5720"
+    }
+  }
+}

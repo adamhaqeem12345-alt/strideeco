@@ -49,7 +49,7 @@ async function noOverflow(page, label) {
   assert.ok(geometry.scrollWidth <= geometry.width, `${label} must fit the viewport.`);
 }
 async function logoLoaded(page, label) {
-  const logos = page.locator('img[src*="strideeco-logo.svg"]');
+  const logos = page.locator('img[src*="strideeco-wordmark.png"]');
   assert.ok(await logos.count() > 0, `${label} must include the supplied logo.`);
   let visible = 0;
   for (const logo of await logos.all()) {
@@ -161,9 +161,9 @@ async function responseFor(page, action, activate) {
     const { page, context } = surfaces[0]; activePage = page;
     stage = 'favicon metadata and actual asset loading';
     await page.goto(base, { waitUntil: 'domcontentloaded' });
-    for (const [filename, type, size] of [['strideeco-logo.svg', 'image/svg+xml', null], ['favicon.svg', 'image/svg+xml', null], ['favicon.png', 'image/png', 32], ['apple-touch-icon.png', 'image/png', 180]]) {
+    for (const [filename, type, size] of [['strideeco-wordmark.png', 'image/png', null], ['strideeco-monogram.png', 'image/png', 512], ['favicon.png', 'image/png', 32], ['apple-touch-icon.png', 'image/png', 180]]) {
       let source = `${base}/${filename}`;
-      if (filename !== 'strideeco-logo.svg') {
+      if (filename !== 'strideeco-wordmark.png') {
         const declared = page.locator(`link[href^="/${filename}"]`);
         assert.ok(await declared.count() > 0, `${filename} must be declared in metadata.`);
         source = new URL(await declared.first().getAttribute('href'), base).href;
@@ -175,10 +175,9 @@ async function responseFor(page, action, activate) {
       const image = await page.evaluate(async source => { const image = new Image(); image.src = source; await image.decode(); return { width: image.naturalWidth, height: image.naturalHeight }; }, source);
       assert.ok(image.width > 0 && image.height > 0);
       if (size) assert.deepEqual(image, { width: size, height: size });
-      else if (filename === 'favicon.svg') assert.equal(image.width, image.height);
       assets.push({ filename, requestPath: new URL(source).pathname + new URL(source).search, type, ...image });
     }
-    checks.push('Supplied logo and SVG/32px PNG/180px Apple icons fetch, decode and match metadata');
+    checks.push('Selected wordmark and SE 512px/32px PNG/180px Apple icons fetch, decode and match metadata');
     stage = 'authenticated voucher appearance';
     await clerk.signIn({ page, emailAddress: process.env.STRIDEECO_TEST_EMAIL });
     await page.reload({ waitUntil: 'domcontentloaded' }); await page.locator('.avatar').waitFor();

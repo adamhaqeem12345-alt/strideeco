@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   description: "Plan a walk through Elmina, explore shade scenarios and try a drinking-water reward.",
   icons: {
     icon: [
-      { url: '/favicon.svg?v=20261023', type: 'image/svg+xml' },
-      { url: '/favicon.png?v=20261023', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon.png?v=se-wordmark-20261023', type: 'image/png', sizes: '32x32' },
+      { url: '/strideeco-monogram.png?v=se-wordmark-20261023', type: 'image/png', sizes: '512x512' },
     ],
-    shortcut: '/favicon.png?v=20261023',
-    apple: [{ url: '/apple-touch-icon.png?v=20261023', type: 'image/png', sizes: '180x180' }],
+    shortcut: '/favicon.ico?v=se-wordmark-20261023',
+    apple: [{ url: '/apple-touch-icon.png?v=se-wordmark-20261023', type: 'image/png', sizes: '180x180' }],
   },
 };
 
