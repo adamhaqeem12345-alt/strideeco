@@ -1,0 +1,59 @@
+{
+  "target": "http://localhost:5191",
+  "source": "6bf30afc06a2b2a45e16ec59aef07750b8dd104a",
+  "tag": "local",
+  "passed": true,
+  "checks": [
+    {
+      "width": 320,
+      "height": 568,
+      "sunStripHours": 14,
+      "hourSelection": "09:00",
+      "mockMachineFilter": true,
+      "fourViewsFit": true,
+      "footerReachable": true,
+      "clerkFormsFit": true,
+      "anonymousApiStatus": 401
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "sunStripHours": 14,
+      "hourSelection": "09:00",
+      "mockMachineFilter": true,
+      "fourViewsFit": true,
+      "footerReachable": true,
+      "clerkFormsFit": true,
+      "anonymousApiStatus": 401
+    },
+    {
+      "width": 768,
+      "height": 700,
+      "sunStripHours": 14,
+      "hourSelection": "09:00",
+      "mockMachineFilter": true,
+      "fourViewsFit": true,
+      "footerReachable": true,
+      "clerkFormsFit": true,
+      "anonymousApiStatus": 401
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "sunStripHours": 14,
+      "hourSelection": "09:00",
+      "mockMachineFilter": true,
+      "fourViewsFit": true,
+      "footerReachable": true,
+      "clerkFormsFit": true,
+      "anonymousApiStatus": 401
+    }
+  ],
+  "browserErrors": [],
+  "accountWrites": 0,
+  "limits": [
+    "Read-only signed-out viewport checks; no account or database records created",
+    "Physical devices and authenticated voucher replay are not repeated for this design-only commit"
+  ],
+  "completedAt": "2026-10-23T11:42:00.687Z"
+}
