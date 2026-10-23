@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "verifiedAt": "2026-10-23T08:11:49.454Z",
+  "storeId": "store_HMVVpmw1SOClEEmv",
+  "resourceId": "01a167ca-da01-7256-b32b-655ea17ffd13",
+  "projectId": "prj_FvTRxoEPeOR71PGe4KGLslAaiWVN",
+  "teamId": "team_dkd2AminqynD5q6GdLALg75T",
+  "name": "strideeco-demo",
+  "plan": "starter",
+  "quotedMonthlyPrice": 0,
+  "overagesPlanSelected": false,
+  "region": "iad1",
+  "environments": [
+    "production",
+    "development"
+  ],
+  "configuredVariableNames": [
+    "TURSO_DATABASE_URL",
+    "TURSO_AUTH_TOKEN"
+  ],
+  "migrationRerun": "all already applied",
+  "migrations": [
+    {
+      "name": "0000_condemned_firestar.sql",
+      "checksum": "454b215fa685c38621093eff45445d4b12b0ca6e86c7a891e92aa03e0f9bb1ed",
+      "applied_at": "2026-10-23T08:10:13.533Z"
+    },
+    {
+      "name": "0001_wallet_accounting.sql",
+      "checksum": "d516db9c428a875bc97279407e1e55ee54020a127f9b87a53f0b97e68d24d677",
+      "applied_at": "2026-10-23T08:10:14.820Z"
+    },
+    {
+      "name": "0002_clerk_identities.sql",
+      "checksum": "de43ff5e085127f8939cddecff70519bc888f97cf276bb825822d2482d99ca2a",
+      "applied_at": "2026-10-23T08:10:16.108Z"
+    },
+    {
+      "name": "0003_machine_water_vouchers.sql",
+      "checksum": "3c7c7ccf90c9f33c14ff6e9328c4b593633bd706cce8a0b02298be4e6f4b069f",
+      "applied_at": "2026-10-23T08:10:17.369Z"
+    }
+  ],
+  "tables": [
+    "activities",
+    "auth_identities",
+    "point_events",
+    "profiles",
+    "redemptions",
+    "saved_routes",
+    "strideeco_migrations",
+    "wallets"
+  ],
+  "checksumMatches": true,
+  "localEnvironmentPreserved": true,
+  "limits": [
+    "Schema and configuration verification; hosted account flow is checked separately",
+    "No customer data queried or migrated; no wallet or activity seeded"
+  ]
+}

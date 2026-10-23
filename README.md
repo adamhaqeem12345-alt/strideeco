@@ -4,7 +4,7 @@ Plan a walk through Elmina, compare explicitly labelled building-shadow scenario
 
 ## Account loading and availability
 
-Auth navigation and form mounting now show loading indicators. Account data has loading, ready and unavailable states with retry, unknown balances stay unavailable, and failed refreshes preserve previously verified data while blocking writes. This does not resolve the still-unconfigured remote database: Vercel continues to require the team's Turso installation acceptance before provisioning. See [account-loading.md](docs/account-loading.md) for implementation, local evidence and the remaining installation blocker.
+Auth navigation and form mounting now show loading indicators on [strideeco.vercel.app](https://strideeco.vercel.app), initially published as READY deployment `dpl_Dh8jSEGHM2iYep92DeAwLnXvTSmX`, source `c11d229c546522a9b864a6752e4836c71ec3593f`. Account data has loading, ready and unavailable states with retry, unknown balances stay unavailable, and failed refreshes preserve previously verified data while blocking writes. Local checks and 14 staged/live checks pass, including real development-instance sign-in/sign-out and exact fixture cleanup. The dedicated free database is now provisioned and all four migrations verified; a fresh deployment and hosted persistence checks are pending. See [account-loading.md](docs/account-loading.md) and [remote-storage-verification.json](docs/remote-storage-verification.json).
 
 ## Brand refresh
 
@@ -51,7 +51,7 @@ A deployment on `*.vercel.app` can use the existing Clerk **development** instan
 
 ### Minimal remote persistence
 
-**Setup is intentionally pending at the user's request.** When resumed, use one dedicated **free** [Turso Cloud Vercel Marketplace resource](https://vercel.com/marketplace/tursocloud) connected only to the existing `strideeco` project (`prj_FvTRxoEPeOR71PGe4KGLslAaiWVN`, team `team_dkd2AminqynD5q6GdLALg75T`). Vercel CLI authentication and the project link already work. The server still reports no installed Turso integration, and native acceptance reports: "Term acceptance cannot be performed by an AI agent. Run this command directly in your terminal." Resume with this human-run interactive command:
+**Setup was previously deferred and is now blocked on the team's Turso installation.** The current account-data fix request resumes this work. Use one dedicated **free** [Turso Cloud Vercel Marketplace resource](https://vercel.com/marketplace/tursocloud) connected only to the existing `strideeco` project (`prj_FvTRxoEPeOR71PGe4KGLslAaiWVN`, team `team_dkd2AminqynD5q6GdLALg75T`). CLI authentication and the project link work. After reported human acceptance, a fresh authorized free installation attempt still returned `integration_terms_acceptance_required`, before creating a resource. Native acceptance reports: "Term acceptance cannot be performed by an AI agent. Run this command directly in your terminal." The human-run interactive command is:
 
 ```powershell
 npx vercel --scope adam-haqeems-projects integration accept-terms tursocloud

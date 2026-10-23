@@ -2,7 +2,13 @@
 
 Updated 2026-10-23. Implementation, local testing, hosted authentication and remote persistence are separate states. Dated snapshots below apply to their recorded releases.
 
-## Current footer correction
+## Current auth loading and availability correction
+
+The loading/failure-handling correction is live at [strideeco.vercel.app](https://strideeco.vercel.app), READY deployment `dpl_Dh8jSEGHM2iYep92DeAwLnXvTSmX`, source `c11d229c546522a9b864a6752e4836c71ec3593f`. Production build, TypeScript and 28 domain/ownership/configuration/migration/machine/voucher tests pass. The isolated local real-Clerk journey passes 19 loading, persistence and recovery checks. Staged and live runs each pass 14 desktop/mobile auth-navigation, delayed-widget and actual signed-in storage-unavailable checks; sign-out returns API `401` and clears private markers. Exact test-user cleanup is confirmed and browser errors are empty. See [account-loading.md](account-loading.md), `account-loading-browser-verification.json` and `account-loading-hosted-verification.json`.
+
+That initial UI release did not establish hosted persistence and handled its real `503` honestly. After a retained human receipt confirmed terms acceptance, a dedicated free database was provisioned and all four migrations/checksums/rerun verified; see `remote-storage-verification.json`. A new deployment and actual hosted persistence verification are pending before activation is confirmed.
+
+## Previous footer correction
 
 The sidebar footer fix is live at [strideeco.vercel.app](https://strideeco.vercel.app), READY deployment `dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX`, source `f8c439115d32067e08bd69e5745543efe80fdabb`. Vercel's build and TypeScript checks passed. Both staged and live checks, without injected styles, confirm every sidebar footer item is visible at 1366×768 and 768×700, reachable by independent sidebar scrolling at 1366×500, and mobile page footers remain unobscured across all four views at 390×844 and 320×568. No browser errors or account writes occurred. See `sidebar-footer-verification.json`. This is a CSS-only correction; the broader tests below retain their recorded source scope.
 

@@ -1,6 +1,20 @@
 # Account loading and availability
 
-The reported message appeared after successful Clerk authentication: resolving the application account then required the dedicated database that was still unconfigured on Vercel. Fresh checks found only the two Clerk variables, zero Turso installations and zero storage resources. A free installation attempt after the owner's reported terms acceptance still returned `integration_terms_acceptance_required`, before creating a database. No resource, migration or environment change resulted. The exact human-terminal receipt is needed to resolve that installation mismatch; do not repeat acceptance or provision duplicate resources blindly.
+## Database provisioned; activation verification pending
+
+After the retained human receipt confirmed successful terms acceptance, one dedicated free `strideeco-demo` Turso Starter database was created in `iad1`, connected only to the existing StrideEco project in production/development. Vercel now holds the two database variables; Clerk variables and the laptop's local environment were preserved. All four migrations applied, their stored checksums match, and a second run safely skipped each migration. No customer records or demo points were copied or seeded. See `remote-storage-verification.json`.
+
+The UI release recorded below was built before those database variables existed. A new deployment must activate the connection, and real hosted persistence must pass verification before being described as operational.
+
+## Published UI correction — 23 October 2026
+
+[strideeco.vercel.app](https://strideeco.vercel.app) serves READY deployment `dpl_Dh8jSEGHM2iYep92DeAwLnXvTSmX`, source `c11d229c546522a9b864a6752e4836c71ec3593f` on `fix/account-data-loading`. The production build was staged, checked and promoted; the public alias/source were independently verified. [Draft PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) preserves the changes without merging main.
+
+Both staged and live browser runs pass 14 checks at 1440×1000 and 390×844: all five auth entry points, delayed Clerk form loading, real development-instance sign-in, the actual unconfigured-storage `503`, disabled mutations, unknown balances, retry and UI sign-out with API `401` and cleared private markers. No application POSTs or browser errors occurred. Each run's exact temporary Clerk identity was deleted and cleanup verified. The live run completed at `2026-10-23T08:01:11.465Z` (16:01 MYT). See `account-loading-hosted-verification.json`.
+
+This verifies the initial published loading/failure-handling fix. Its observed storage-unavailable result applies to that deployment; the new database connection is being activated separately.
+
+The reported message appeared after successful Clerk authentication: resolving the application account then required the dedicated database that was unconfigured on Vercel. Initial checks found only the two Clerk variables, zero Turso installations and zero storage resources. An initial free installation attempt returned `integration_terms_acceptance_required` before resource creation. A later retained human-terminal receipt confirmed actual acceptance, allowing the dedicated resource described above to be provisioned. Do not repeat acceptance or create a duplicate database.
 
 ## Interface and API correction
 
@@ -22,4 +36,4 @@ $env:STRIDEECO_BUILD_DIR = 'work/next-account-loading-2'
 node scripts/verify-clerk.mjs --account-loading-only
 ```
 
-This opt-in mode uses the existing isolated fixture/database lifecycle. It does not repeat password signup or GitHub OAuth, and does not establish hosted persistence. Hosting results will be recorded after the staged build is verified and published.
+This opt-in mode uses the existing isolated fixture/database lifecycle. It does not repeat password signup or GitHub OAuth, and does not establish hosted persistence. Hosted evidence is recorded separately above.
