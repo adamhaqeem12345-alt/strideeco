@@ -2,7 +2,7 @@
 
 The design update is xinbinglim's original commit [`6bf30af`](https://github.com/adamhaqeem12345-alt/strideeco/commit/6bf30afc06a2b2a45e16ec59aef07750b8dd104a), already on GitHub `main`. This owner-reviewed release preserves that commit, its author and all three application files unchanged.
 
-The update increases interface typography, improves phone tap targets and narrow-screen layouts, adds selectable hourly sun-height bars, animates earned points and wallet feedback, keeps errors visible longer, and highlights voucher expiry in its last minute. Sun height remains a model angle, not measured heat or shade.
+The update increases interface typography, improves phone tap targets and narrow-screen layouts, adds selectable hourly sun-height bars, animates earned points and wallet feedback, keeps errors visible longer, and highlights voucher expiry in its last two minutes. Sun height remains a model angle, not measured heat or shade.
 
 Pre-release validation on the exact contributor code:
 
