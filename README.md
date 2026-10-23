@@ -17,6 +17,10 @@ npm ci
 
 If fast-forwarding is refused, preserve the local commits and reconcile the branches rather than resetting or force-pushing. Each developer configures their own ignored local environment; credentials and account data are not distributed through Git.
 
+## Selected logo
+
+The current logo is the owner-selected StrideEco wordmark with a path inside the S, teal lettering and green/yellow/coral Eco letters. The SE monogram supplies browser and Apple touch icons. See [selected-logo.md](docs/selected-logo.md) and [asset dimensions and hashes](docs/selected-logo-assets.json).
+
 ## Account loading and availability
 
 Account data and auth loading are live on [strideeco.vercel.app](https://strideeco.vercel.app), READY deployment `dpl_8Dy6uJeXc1F1zWQWRQwTSdPerYF6`, application source `d676bb0a3c56f69ce20bac8fdf7e78295202d6ec`. The dedicated free database is connected and all four migrations/checksums verified. Real hosted signup, saved/shared routes, labelled demo points, sign-out/password sign-in and fresh mobile sessions pass; the staged artifact also passes manual-code and independently decoded QR single-use/replay checks. Exact temporary identities and their application records were removed after each run. Navigation and Clerk forms show loading feedback; unavailable/retry states preserve verified data and block uncertain writes. See [account-loading.md](docs/account-loading.md) and [account-ready-hosted-verification.json](docs/account-ready-hosted-verification.json).
@@ -25,7 +29,7 @@ Account data and auth loading are live on [strideeco.vercel.app](https://stridee
 
 The footer correction was published at [strideeco.vercel.app](https://strideeco.vercel.app/) as READY deployment `dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX`, application source `f8c439115d32067e08bd69e5745543efe80fdabb`. Reduced sidebar spacing keeps the complete footer visible on shorter laptop/tablet windows; independent sidebar scrolling makes it reachable in very short windows. Staged and live browser checks passed for those cases and all four mobile views. See [sidebar-footer-verification.json](docs/sidebar-footer-verification.json).
 
-The initial owner-requested aqua, teal, green, yellow, coral and sky refresh was published as deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW`, source `d1b6ad60d47c463303acc674f95f5d38fb826191` from `feature/brand-refresh`. The supplied SVG wordmark appears in navigation/account pages, with its smiling water drop as the favicon. Darker text and controls keep the bright palette readable.
+The initial owner-requested aqua, teal, green, yellow, coral and sky refresh was published as deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW`, source `d1b6ad60d47c463303acc674f95f5d38fb826191` from `feature/brand-refresh`. That release used the supplied SVG wordmark and smiling water-drop favicon. The later selected-logo update replaces those active assets while retaining the palette and readable darker text and controls.
 
 Staged and live anonymous browser checks passed at 320, 390, 768 and 1440 pixels, including proportional logos, exact logo/icon SHA-256 matches, machine-type filtering, account forms and API 401 protection, with no page errors or account writes. Local checks separately passed the production build, TypeScript, 26 domain/ownership tests, contrast/focus checks and independent voucher QR decoding. The database was absent at that branding checkpoint; those anonymous checks do not establish hosted account persistence. The later storage activation work is recorded above. See [brand-refresh.md](docs/brand-refresh.md) and [the live verification report](docs/brand-hosted-verification.json).
 

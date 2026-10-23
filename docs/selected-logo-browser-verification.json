@@ -1,0 +1,1262 @@
+{
+  "target": "http://localhost:5192",
+  "tag": "local",
+  "assetVersion": "se-wordmark-20261023",
+  "passed": true,
+  "status": "passed",
+  "startedAt": "2026-10-23T12:51:05.634Z",
+  "checks": [
+    {
+      "width": 320,
+      "height": 568,
+      "plannerLogo": {
+        "left": 12,
+        "top": 25.171875,
+        "right": 127.890625,
+        "bottom": 47.828125,
+        "width": 115.890625,
+        "height": 22.65625,
+        "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+        "alt": "StrideEco",
+        "naturalWidth": 1810,
+        "naturalHeight": 354,
+        "declaredWidth": "1810",
+        "declaredHeight": "354",
+        "owner": {
+          "left": 12,
+          "top": 14.5,
+          "right": 127.890625,
+          "bottom": 58.5,
+          "width": 115.890625,
+          "height": 44
+        },
+        "homeCenterHit": true,
+        "clippingAncestors": []
+      },
+      "plannerFit": {
+        "width": 320,
+        "documentWidth": 320
+      },
+      "icons": [
+        {
+          "rel": "shortcut icon",
+          "href": "/favicon.ico?v=se-wordmark-20261023",
+          "type": null,
+          "sizes": null
+        },
+        {
+          "rel": "icon",
+          "href": "/favicon.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "32x32"
+        },
+        {
+          "rel": "icon",
+          "href": "/strideeco-monogram.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "512x512"
+        },
+        {
+          "rel": "apple-touch-icon",
+          "href": "/apple-touch-icon.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "180x180"
+        }
+      ],
+      "footers": [
+        {
+          "view": "Plan",
+          "footer": {
+            "left": 18,
+            "top": 380.625,
+            "right": 302,
+            "bottom": 485.609375,
+            "height": 104.984375
+          },
+          "nav": {
+            "left": 0,
+            "top": 496,
+            "right": 320,
+            "bottom": 568,
+            "height": 72
+          },
+          "children": [
+            {
+              "left": 18,
+              "top": 398.625,
+              "right": 233.515625,
+              "bottom": 417.609375,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 427.609375,
+              "right": 213.140625,
+              "bottom": 471.609375,
+              "height": 44,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 568,
+          "viewportWidth": 320
+        },
+        {
+          "view": "Activity",
+          "footer": {
+            "left": 18,
+            "top": 381.046875,
+            "right": 302,
+            "bottom": 486.03125,
+            "height": 104.984375
+          },
+          "nav": {
+            "left": 0,
+            "top": 496,
+            "right": 320,
+            "bottom": 568,
+            "height": 72
+          },
+          "children": [
+            {
+              "left": 18,
+              "top": 399.046875,
+              "right": 233.515625,
+              "bottom": 418.03125,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 428.03125,
+              "right": 213.140625,
+              "bottom": 472.03125,
+              "height": 44,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 568,
+          "viewportWidth": 320
+        },
+        {
+          "view": "Rewards",
+          "footer": {
+            "left": 18,
+            "top": 381.46875,
+            "right": 302,
+            "bottom": 486.453125,
+            "height": 104.984375
+          },
+          "nav": {
+            "left": 0,
+            "top": 496,
+            "right": 320,
+            "bottom": 568,
+            "height": 72
+          },
+          "children": [
+            {
+              "left": 18,
+              "top": 399.46875,
+              "right": 233.515625,
+              "bottom": 418.453125,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 428.453125,
+              "right": 213.140625,
+              "bottom": 472.453125,
+              "height": 44,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 568,
+          "viewportWidth": 320
+        },
+        {
+          "view": "Profile",
+          "footer": {
+            "left": 18,
+            "top": 380.9375,
+            "right": 302,
+            "bottom": 485.921875,
+            "height": 104.984375
+          },
+          "nav": {
+            "left": 0,
+            "top": 496,
+            "right": 320,
+            "bottom": 568,
+            "height": 72
+          },
+          "children": [
+            {
+              "left": 18,
+              "top": 398.9375,
+              "right": 233.515625,
+              "bottom": 417.921875,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 427.921875,
+              "right": 213.140625,
+              "bottom": 471.921875,
+              "height": 44,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 568,
+          "viewportWidth": 320
+        }
+      ],
+      "forms": [
+        {
+          "route": "sign-in",
+          "logo": {
+            "left": 30,
+            "top": 42,
+            "right": 290,
+            "bottom": 92.84375,
+            "width": 260,
+            "height": 50.84375,
+            "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+            "alt": "StrideEco",
+            "naturalWidth": 1810,
+            "naturalHeight": 354,
+            "declaredWidth": "1810",
+            "declaredHeight": "354",
+            "owner": {
+              "left": 22,
+              "top": 42,
+              "right": 298,
+              "bottom": 99.984375,
+              "width": 276,
+              "height": 57.984375
+            },
+            "homeCenterHit": true,
+            "clippingAncestors": []
+          },
+          "fit": {
+            "width": 320,
+            "documentWidth": 320
+          },
+          "formBox": {
+            "x": 22,
+            "y": 280.296875,
+            "width": 276,
+            "height": 511.890625
+          },
+          "primaryStyle": {
+            "background": "rgb(8, 124, 128)",
+            "color": "rgb(255, 255, 255)"
+          },
+          "visibleForm": true
+        },
+        {
+          "route": "sign-up",
+          "logo": {
+            "left": 30,
+            "top": 42,
+            "right": 290,
+            "bottom": 92.84375,
+            "width": 260,
+            "height": 50.84375,
+            "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+            "alt": "StrideEco",
+            "naturalWidth": 1810,
+            "naturalHeight": 354,
+            "declaredWidth": "1810",
+            "declaredHeight": "354",
+            "owner": {
+              "left": 22,
+              "top": 42,
+              "right": 298,
+              "bottom": 99.984375,
+              "width": 276,
+              "height": 57.984375
+            },
+            "homeCenterHit": true,
+            "clippingAncestors": []
+          },
+          "fit": {
+            "width": 320,
+            "documentWidth": 320
+          },
+          "formBox": {
+            "x": 22,
+            "y": 280.296875,
+            "width": 276,
+            "height": 683.859375
+          },
+          "primaryStyle": {
+            "background": "rgb(8, 124, 128)",
+            "color": "rgb(255, 255, 255)"
+          },
+          "visibleForm": true
+        }
+      ],
+      "anonymousApiStatus": 401
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "plannerLogo": {
+        "left": 17,
+        "top": 22.109375,
+        "right": 164.21875,
+        "bottom": 50.890625,
+        "width": 147.21875,
+        "height": 28.78125,
+        "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+        "alt": "StrideEco",
+        "naturalWidth": 1810,
+        "naturalHeight": 354,
+        "declaredWidth": "1810",
+        "declaredHeight": "354",
+        "owner": {
+          "left": 17,
+          "top": 14.5,
+          "right": 164.21875,
+          "bottom": 58.5,
+          "width": 147.21875,
+          "height": 44
+        },
+        "homeCenterHit": true,
+        "clippingAncestors": []
+      },
+      "plannerFit": {
+        "width": 390,
+        "documentWidth": 390
+      },
+      "icons": [
+        {
+          "rel": "shortcut icon",
+          "href": "/favicon.ico?v=se-wordmark-20261023",
+          "type": null,
+          "sizes": null
+        },
+        {
+          "rel": "icon",
+          "href": "/favicon.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "32x32"
+        },
+        {
+          "rel": "icon",
+          "href": "/strideeco-monogram.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "512x512"
+        },
+        {
+          "rel": "apple-touch-icon",
+          "href": "/apple-touch-icon.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "180x180"
+        }
+      ],
+      "footers": [
+        {
+          "view": "Plan",
+          "footer": {
+            "left": 18,
+            "top": 657.046875,
+            "right": 372,
+            "bottom": 762.03125,
+            "height": 104.984375
+          },
+          "nav": {
+            "left": 0,
+            "top": 772,
+            "right": 390,
+            "bottom": 844,
+            "height": 72
+          },
+          "children": [
+            {
+              "left": 18,
+              "top": 675.046875,
+              "right": 233.515625,
+              "bottom": 694.03125,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 704.03125,
+              "right": 213.140625,
+              "bottom": 748.03125,
+              "height": 44,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 844,
+          "viewportWidth": 390
+        },
+        {
+          "view": "Activity",
+          "footer": {
+            "left": 18,
+            "top": 657.40625,
+            "right": 372,
+            "bottom": 762.390625,
+            "height": 104.984375
+          },
+          "nav": {
+            "left": 0,
+            "top": 772,
+            "right": 390,
+            "bottom": 844,
+            "height": 72
+          },
+          "children": [
+            {
+              "left": 18,
+              "top": 675.40625,
+              "right": 233.515625,
+              "bottom": 694.390625,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 704.390625,
+              "right": 213.140625,
+              "bottom": 748.390625,
+              "height": 44,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 844,
+          "viewportWidth": 390
+        },
+        {
+          "view": "Rewards",
+          "footer": {
+            "left": 18,
+            "top": 656.96875,
+            "right": 372,
+            "bottom": 761.953125,
+            "height": 104.984375
+          },
+          "nav": {
+            "left": 0,
+            "top": 772,
+            "right": 390,
+            "bottom": 844,
+            "height": 72
+          },
+          "children": [
+            {
+              "left": 18,
+              "top": 674.96875,
+              "right": 233.515625,
+              "bottom": 693.953125,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 703.953125,
+              "right": 213.140625,
+              "bottom": 747.953125,
+              "height": 44,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 844,
+          "viewportWidth": 390
+        },
+        {
+          "view": "Profile",
+          "footer": {
+            "left": 18,
+            "top": 657.234375,
+            "right": 372,
+            "bottom": 762.21875,
+            "height": 104.984375
+          },
+          "nav": {
+            "left": 0,
+            "top": 772,
+            "right": 390,
+            "bottom": 844,
+            "height": 72
+          },
+          "children": [
+            {
+              "left": 18,
+              "top": 675.234375,
+              "right": 233.515625,
+              "bottom": 694.21875,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 704.21875,
+              "right": 213.140625,
+              "bottom": 748.21875,
+              "height": 44,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 844,
+          "viewportWidth": 390
+        }
+      ],
+      "forms": [
+        {
+          "route": "sign-in",
+          "logo": {
+            "left": 48,
+            "top": 42,
+            "right": 342,
+            "bottom": 99.5,
+            "width": 294,
+            "height": 57.5,
+            "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+            "alt": "StrideEco",
+            "naturalWidth": 1810,
+            "naturalHeight": 354,
+            "declaredWidth": "1810",
+            "declaredHeight": "354",
+            "owner": {
+              "left": 40,
+              "top": 42,
+              "right": 350,
+              "bottom": 106.640625,
+              "width": 310,
+              "height": 64.640625
+            },
+            "homeCenterHit": true,
+            "clippingAncestors": []
+          },
+          "fit": {
+            "width": 390,
+            "documentWidth": 390
+          },
+          "formBox": {
+            "x": 22,
+            "y": 286.953125,
+            "width": 346,
+            "height": 493.90625
+          },
+          "primaryStyle": {
+            "background": "rgb(8, 124, 128)",
+            "color": "rgb(255, 255, 255)"
+          },
+          "visibleForm": true
+        },
+        {
+          "route": "sign-up",
+          "logo": {
+            "left": 48,
+            "top": 42,
+            "right": 342,
+            "bottom": 99.5,
+            "width": 294,
+            "height": 57.5,
+            "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+            "alt": "StrideEco",
+            "naturalWidth": 1810,
+            "naturalHeight": 354,
+            "declaredWidth": "1810",
+            "declaredHeight": "354",
+            "owner": {
+              "left": 40,
+              "top": 42,
+              "right": 350,
+              "bottom": 106.640625,
+              "width": 310,
+              "height": 64.640625
+            },
+            "homeCenterHit": true,
+            "clippingAncestors": []
+          },
+          "fit": {
+            "width": 390,
+            "documentWidth": 390
+          },
+          "formBox": {
+            "x": 22,
+            "y": 286.953125,
+            "width": 346,
+            "height": 683.859375
+          },
+          "primaryStyle": {
+            "background": "rgb(8, 124, 128)",
+            "color": "rgb(255, 255, 255)"
+          },
+          "visibleForm": true
+        }
+      ],
+      "anonymousApiStatus": 401
+    },
+    {
+      "width": 768,
+      "height": 700,
+      "plannerLogo": {
+        "left": 31,
+        "top": 34,
+        "right": 199,
+        "bottom": 66.84375,
+        "width": 168,
+        "height": 32.84375,
+        "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+        "alt": "StrideEco",
+        "naturalWidth": 1810,
+        "naturalHeight": 354,
+        "declaredWidth": "1810",
+        "declaredHeight": "354",
+        "owner": {
+          "left": 23,
+          "top": 22,
+          "right": 207,
+          "bottom": 117.71875,
+          "width": 184,
+          "height": 95.71875
+        },
+        "homeCenterHit": true,
+        "clippingAncestors": []
+      },
+      "plannerFit": {
+        "width": 768,
+        "documentWidth": 768
+      },
+      "icons": [
+        {
+          "rel": "shortcut icon",
+          "href": "/favicon.ico?v=se-wordmark-20261023",
+          "type": null,
+          "sizes": null
+        },
+        {
+          "rel": "icon",
+          "href": "/favicon.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "32x32"
+        },
+        {
+          "rel": "icon",
+          "href": "/strideeco-monogram.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "512x512"
+        },
+        {
+          "rel": "apple-touch-icon",
+          "href": "/apple-touch-icon.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "180x180"
+        }
+      ],
+      "footers": [
+        {
+          "view": "Plan a route",
+          "footer": {
+            "left": 13,
+            "top": 538.140625,
+            "right": 197,
+            "bottom": 678.078125,
+            "height": 139.9375
+          },
+          "nav": null,
+          "children": [
+            {
+              "left": 13,
+              "top": 562.140625,
+              "right": 197,
+              "bottom": 583.125,
+              "height": 20.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 13,
+              "top": 601.125,
+              "right": 154.265625,
+              "bottom": 620.109375,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 13,
+              "top": 640.109375,
+              "right": 197,
+              "bottom": 678.078125,
+              "height": 37.96875,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 700,
+          "viewportWidth": 768
+        },
+        {
+          "view": "My activity",
+          "footer": {
+            "left": 13,
+            "top": 538.140625,
+            "right": 197,
+            "bottom": 678.078125,
+            "height": 139.9375
+          },
+          "nav": null,
+          "children": [
+            {
+              "left": 13,
+              "top": 562.140625,
+              "right": 197,
+              "bottom": 583.125,
+              "height": 20.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 13,
+              "top": 601.125,
+              "right": 154.265625,
+              "bottom": 620.109375,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 13,
+              "top": 640.109375,
+              "right": 197,
+              "bottom": 678.078125,
+              "height": 37.96875,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 700,
+          "viewportWidth": 768
+        },
+        {
+          "view": "Water rewards",
+          "footer": {
+            "left": 13,
+            "top": 538.140625,
+            "right": 197,
+            "bottom": 678.078125,
+            "height": 139.9375
+          },
+          "nav": null,
+          "children": [
+            {
+              "left": 13,
+              "top": 562.140625,
+              "right": 197,
+              "bottom": 583.125,
+              "height": 20.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 13,
+              "top": 601.125,
+              "right": 154.265625,
+              "bottom": 620.109375,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 13,
+              "top": 640.109375,
+              "right": 197,
+              "bottom": 678.078125,
+              "height": 37.96875,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 700,
+          "viewportWidth": 768
+        },
+        {
+          "view": "My profile",
+          "footer": {
+            "left": 13,
+            "top": 538.140625,
+            "right": 197,
+            "bottom": 678.078125,
+            "height": 139.9375
+          },
+          "nav": null,
+          "children": [
+            {
+              "left": 13,
+              "top": 562.140625,
+              "right": 197,
+              "bottom": 583.125,
+              "height": 20.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 13,
+              "top": 601.125,
+              "right": 154.265625,
+              "bottom": 620.109375,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 13,
+              "top": 640.109375,
+              "right": 197,
+              "bottom": 678.078125,
+              "height": 37.96875,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 700,
+          "viewportWidth": 768
+        }
+      ],
+      "forms": [
+        {
+          "route": "sign-in",
+          "logo": {
+            "left": 222,
+            "top": 64,
+            "right": 546,
+            "bottom": 127.359375,
+            "width": 324,
+            "height": 63.359375,
+            "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+            "alt": "StrideEco",
+            "naturalWidth": 1810,
+            "naturalHeight": 354,
+            "declaredWidth": "1810",
+            "declaredHeight": "354",
+            "owner": {
+              "left": 214,
+              "top": 64,
+              "right": 554,
+              "bottom": 134.5,
+              "width": 340,
+              "height": 70.5
+            },
+            "homeCenterHit": true,
+            "clippingAncestors": []
+          },
+          "fit": {
+            "width": 768,
+            "documentWidth": 768
+          },
+          "formBox": {
+            "x": 158,
+            "y": 291.65625,
+            "width": 452,
+            "height": 491.890625
+          },
+          "primaryStyle": {
+            "background": "rgb(8, 124, 128)",
+            "color": "rgb(255, 255, 255)"
+          },
+          "visibleForm": true
+        },
+        {
+          "route": "sign-up",
+          "logo": {
+            "left": 222,
+            "top": 64,
+            "right": 546,
+            "bottom": 127.359375,
+            "width": 324,
+            "height": 63.359375,
+            "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+            "alt": "StrideEco",
+            "naturalWidth": 1810,
+            "naturalHeight": 354,
+            "declaredWidth": "1810",
+            "declaredHeight": "354",
+            "owner": {
+              "left": 214,
+              "top": 64,
+              "right": 554,
+              "bottom": 134.5,
+              "width": 340,
+              "height": 70.5
+            },
+            "homeCenterHit": true,
+            "clippingAncestors": []
+          },
+          "fit": {
+            "width": 768,
+            "documentWidth": 768
+          },
+          "formBox": {
+            "x": 158,
+            "y": 291.65625,
+            "width": 452,
+            "height": 659.828125
+          },
+          "primaryStyle": {
+            "background": "rgb(8, 124, 128)",
+            "color": "rgb(255, 255, 255)"
+          },
+          "visibleForm": true
+        }
+      ],
+      "anonymousApiStatus": 401
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "plannerLogo": {
+        "left": 28,
+        "top": 36,
+        "right": 216,
+        "bottom": 72.765625,
+        "width": 188,
+        "height": 36.765625,
+        "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+        "alt": "StrideEco",
+        "naturalWidth": 1810,
+        "naturalHeight": 354,
+        "declaredWidth": "1810",
+        "declaredHeight": "354",
+        "owner": {
+          "left": 18,
+          "top": 24,
+          "right": 226,
+          "bottom": 107.203125,
+          "width": 208,
+          "height": 83.203125
+        },
+        "homeCenterHit": true,
+        "clippingAncestors": []
+      },
+      "plannerFit": {
+        "width": 1366,
+        "documentWidth": 1366
+      },
+      "icons": [
+        {
+          "rel": "shortcut icon",
+          "href": "/favicon.ico?v=se-wordmark-20261023",
+          "type": null,
+          "sizes": null
+        },
+        {
+          "rel": "icon",
+          "href": "/favicon.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "32x32"
+        },
+        {
+          "rel": "icon",
+          "href": "/strideeco-monogram.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "512x512"
+        },
+        {
+          "rel": "apple-touch-icon",
+          "href": "/apple-touch-icon.png?v=se-wordmark-20261023",
+          "type": "image/png",
+          "sizes": "180x180"
+        }
+      ],
+      "footers": [
+        {
+          "view": "Plan a route",
+          "footer": {
+            "left": 18,
+            "top": 623.046875,
+            "right": 226,
+            "bottom": 744,
+            "height": 120.953125
+          },
+          "nav": null,
+          "children": [
+            {
+              "left": 18,
+              "top": 647.046875,
+              "right": 226,
+              "bottom": 668.03125,
+              "height": 20.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 686.03125,
+              "right": 159.265625,
+              "bottom": 705.015625,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 725.015625,
+              "right": 226,
+              "bottom": 744,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 768,
+          "viewportWidth": 1366
+        },
+        {
+          "view": "My activity",
+          "footer": {
+            "left": 18,
+            "top": 623.046875,
+            "right": 226,
+            "bottom": 744,
+            "height": 120.953125
+          },
+          "nav": null,
+          "children": [
+            {
+              "left": 18,
+              "top": 647.046875,
+              "right": 226,
+              "bottom": 668.03125,
+              "height": 20.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 686.03125,
+              "right": 159.265625,
+              "bottom": 705.015625,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 725.015625,
+              "right": 226,
+              "bottom": 744,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 768,
+          "viewportWidth": 1366
+        },
+        {
+          "view": "Water rewards",
+          "footer": {
+            "left": 18,
+            "top": 623.046875,
+            "right": 226,
+            "bottom": 744,
+            "height": 120.953125
+          },
+          "nav": null,
+          "children": [
+            {
+              "left": 18,
+              "top": 647.046875,
+              "right": 226,
+              "bottom": 668.03125,
+              "height": 20.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 686.03125,
+              "right": 159.265625,
+              "bottom": 705.015625,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 725.015625,
+              "right": 226,
+              "bottom": 744,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 768,
+          "viewportWidth": 1366
+        },
+        {
+          "view": "My profile",
+          "footer": {
+            "left": 18,
+            "top": 623.046875,
+            "right": 226,
+            "bottom": 744,
+            "height": 120.953125
+          },
+          "nav": null,
+          "children": [
+            {
+              "left": 18,
+              "top": 647.046875,
+              "right": 226,
+              "bottom": 668.03125,
+              "height": 20.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 686.03125,
+              "right": 159.265625,
+              "bottom": 705.015625,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            },
+            {
+              "left": 18,
+              "top": 725.015625,
+              "right": 226,
+              "bottom": 744,
+              "height": 18.984375,
+              "centerHitOwnElement": true
+            }
+          ],
+          "viewportHeight": 768,
+          "viewportWidth": 1366
+        }
+      ],
+      "forms": [
+        {
+          "route": "sign-in",
+          "logo": {
+            "left": 521,
+            "top": 64,
+            "right": 845,
+            "bottom": 127.359375,
+            "width": 324,
+            "height": 63.359375,
+            "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+            "alt": "StrideEco",
+            "naturalWidth": 1810,
+            "naturalHeight": 354,
+            "declaredWidth": "1810",
+            "declaredHeight": "354",
+            "owner": {
+              "left": 513,
+              "top": 64,
+              "right": 853,
+              "bottom": 134.5,
+              "width": 340,
+              "height": 70.5
+            },
+            "homeCenterHit": true,
+            "clippingAncestors": []
+          },
+          "fit": {
+            "width": 1366,
+            "documentWidth": 1366
+          },
+          "formBox": {
+            "x": 457,
+            "y": 291.65625,
+            "width": 452,
+            "height": 491.890625
+          },
+          "primaryStyle": {
+            "background": "rgb(8, 124, 128)",
+            "color": "rgb(255, 255, 255)"
+          },
+          "visibleForm": true
+        },
+        {
+          "route": "sign-up",
+          "logo": {
+            "left": 521,
+            "top": 64,
+            "right": 845,
+            "bottom": 127.359375,
+            "width": 324,
+            "height": 63.359375,
+            "source": "http://localhost:5192/strideeco-wordmark.png?v=se-wordmark-20261023",
+            "alt": "StrideEco",
+            "naturalWidth": 1810,
+            "naturalHeight": 354,
+            "declaredWidth": "1810",
+            "declaredHeight": "354",
+            "owner": {
+              "left": 513,
+              "top": 64,
+              "right": 853,
+              "bottom": 134.5,
+              "width": 340,
+              "height": 70.5
+            },
+            "homeCenterHit": true,
+            "clippingAncestors": []
+          },
+          "fit": {
+            "width": 1366,
+            "documentWidth": 1366
+          },
+          "formBox": {
+            "x": 457,
+            "y": 291.65625,
+            "width": 452,
+            "height": 659.828125
+          },
+          "primaryStyle": {
+            "background": "rgb(8, 124, 128)",
+            "color": "rgb(255, 255, 255)"
+          },
+          "visibleForm": true
+        }
+      ],
+      "anonymousApiStatus": 401
+    }
+  ],
+  "assets": [
+    {
+      "filename": "strideeco-wordmark.png",
+      "mime": "image/png",
+      "bytes": 478654,
+      "sha256": "082e1d1c6a4e1919cde09ea3d3c11b654ed8c9c05197807396f50db1b5b742ce",
+      "width": 1810,
+      "height": 354
+    },
+    {
+      "filename": "strideeco-monogram.png",
+      "mime": "image/png",
+      "bytes": 121012,
+      "sha256": "0ddbd16eda77f9efe163923bb333675bd1c30503dc6bb4aae54b843fc65bbc3e",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "filename": "favicon.png",
+      "mime": "image/png",
+      "bytes": 1830,
+      "sha256": "fbf9bd962f65ee942e19500ab965ff9faf394c335d45e1f9db2458f8fdf1627c",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "filename": "favicon.ico",
+      "mime": "image/x-icon",
+      "bytes": 5841,
+      "sha256": "45dccf86900365857ac6b4ea1bbf50b94dacb88abda078d984a9dddf824b5720",
+      "sizes": [
+        16,
+        32,
+        48
+      ],
+      "decoded": {
+        "width": 48,
+        "height": 48
+      }
+    },
+    {
+      "filename": "apple-touch-icon.png",
+      "mime": "image/png",
+      "bytes": 17404,
+      "sha256": "cdb6b8f3d90293a91f7e8a5e16a6046f802b8de1ad4fe5a674859a603eeb7429",
+      "width": 180,
+      "height": 180
+    }
+  ],
+  "browserErrors": [],
+  "accountWriteAttempts": 0,
+  "limits": [
+    "Anonymous read-only UI and asset checks; no accounts, credentials, database access or records created",
+    "Physical handset and authenticated application journeys are outside this asset-only check"
+  ],
+  "completedAt": "2026-10-23T12:51:28.721Z"
+}
