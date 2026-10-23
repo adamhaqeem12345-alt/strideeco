@@ -9,7 +9,7 @@ if (!existsSync(path.join(root, 'node_modules/next'))) {
   console.error('Run the fresh-download setup commands in README.md before starting.');
   process.exit(1);
 }
-const url = 'http://127.0.0.1:5173/';
+const url = 'http://localhost:5173/';
 const openBrowser = () => {
   console.log(`StrideEco is ready: ${url}`);
   if (process.platform === 'win32') spawn('powershell.exe', ['-NoProfile', '-Command', `Start-Process '${url}'`], { windowsHide: true, stdio: 'ignore' });

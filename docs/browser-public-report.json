@@ -1,0 +1,21 @@
+{
+  "startedAt": "2026-10-22T15:59:43.020Z",
+  "target": "http://localhost:5187",
+  "checks": [
+    "desktop: public route planning, destination routing, explicit shade scenario and no horizontal overflow",
+    "desktop: save/share require sign-in; absent-key sign-in and sign-up pages stay usable",
+    "desktop: anonymous API protection, water-only simulator labels and signed-out reward gating",
+    "mobile: public route planning, destination routing, explicit shade scenario and no horizontal overflow",
+    "mobile: save/share require sign-in; absent-key sign-in and sign-up pages stay usable",
+    "mobile: anonymous API protection, water-only simulator labels and signed-out reward gating"
+  ],
+  "browserErrors": [],
+  "limits": [
+    "Clerk keys are deliberately absent: no live sign-in or sign-up is asserted",
+    "Signed-out responsive browser checks use desktop and mobile viewports, not physical devices",
+    "Authenticated persistence and simulated water accounting are covered by separate suites"
+  ],
+  "passed": true,
+  "status": "passed",
+  "completedAt": "2026-10-22T15:59:54.721Z"
+}

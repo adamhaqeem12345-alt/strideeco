@@ -1,0 +1,70 @@
+# StrideEco brand refresh
+
+The supplied logo and palette replace the earlier sage/cream identity. This is the owner's explicitly requested branding change.
+
+## Footer correction — 23 October 2026
+
+The live site now serves application source `f8c439115d32067e08bd69e5745543efe80fdabb`, READY deployment `dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX`. The fixed sidebar previously clipped its final line at 1366×768 and hid the About link and slogan at 768×700. Removing excess spacing keeps every footer item visible at both sizes; independent sidebar scrolling preserves access at 1366×500.
+
+Vercel's production build and TypeScript checks passed. Staged and public-domain browser checks passed without injected styles: the three sidebar sizes above, plus Plan, Activity, Rewards and Profile footers at 390×844 and 320×568. Footer items are fully visible and reachable; mobile footers stay above fixed navigation, with no horizontal overflow, browser errors or account writes. See [sidebar-footer-verification.json](sidebar-footer-verification.json). The broader branding results below apply to the initial branding release.
+
+## Initial branding release — 23 October 2026
+
+The initial branding release at [strideeco.vercel.app](https://strideeco.vercel.app/) was READY production deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW`, source `d1b6ad60d47c463303acc674f95f5d38fb826191`, branch `feature/brand-refresh`. The staged build passed its browser checks before promotion; the same checks passed again on the public domain at **02:02 MYT** (`2026-10-22T18:02:16.239Z`). Deployment metadata independently confirmed the source SHA. [Draft PR #3](https://github.com/adamhaqeem12345-alt/strideeco/pull/3) records the feature source; main is unchanged.
+
+The hosted checks covered 320, 390, 768 and 1440 pixel layouts, proportional logos, exact SHA-256 matches for all four logo/icon assets, machine filtering from six mock stops to two refills, account forms, expected primary/text colors and anonymous API 401 protection. Browser errors were empty. These were anonymous read-only checks with no signup, sign-in, test fixture or account-data mutation. See [brand-hosted-verification.json](brand-hosted-verification.json).
+
+The preceding water-voucher release was deployment `dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ`, source `41e1f23b2100bb2b4cf7b8a76ba292e709a0709a`. Its earlier authenticated hosted checks remain historical evidence. The brand release's authenticated QR and wallet checks ran locally with an isolated database.
+
+Remote database setup remains explicitly deferred: hosted earning, saved routes, shared wallet data and voucher consumption are unavailable. The live site retains the existing Clerk development instance and visible Development mode. Machine locations and dispensing remain mock; real GitHub OAuth and physical vending are unverified.
+
+## Palette
+
+| Role | Color |
+| --- | --- |
+| Aqua canvas | `#CFFFFD` |
+| Brand teal | `#34AFAB` |
+| Green accent | `#81FF7D` |
+| Yellow accent | `#FFE165` |
+| Coral accent | `#FE7F82` |
+| Sky accent | `#42C3FE` |
+| Text and navigation | `#0C343C` |
+| Primary action | `#087C80` |
+| Primary hover / focus | `#055A61` |
+| Secondary text | `#456A70` |
+
+The six bright colors were sampled from the owner's reference image. Darker text/action colors provide readable contrast; white is reserved for dark teal controls and navigation.
+
+## Supplied artwork
+
+`public/strideeco-logo.svg` preserves the supplied vector letters and textured artwork, with the unused canvas cropped. It is transparent and retains the bottle's white details. The original source file is unchanged. A shared Brand component places it in desktop navigation, the mobile header and account pages without distorting its aspect ratio.
+
+| Asset | Dimensions | Bytes |
+| --- | --- | ---: |
+| `strideeco-logo.svg` | 1049×211 | 133,973 |
+| `favicon.svg` | 256×256 | 11,677 |
+| `favicon.png` | 32×32 | 1,611 |
+| `apple-touch-icon.png` | 180×180 | 7,417 |
+
+The favicon uses the original smiling water-drop detail so the artwork remains recognizable at tab size. The SVG is 256×256, PNG is 32×32, and Apple touch icon is 180×180. The SVG assets contain no scripts, event handlers or external references. Favicon metadata uses a version query to refresh older cached icons.
+
+## Interface
+
+The refresh covers the main canvas, navigation, headings, controls, route cards, map styling and machine markers, activity, rewards/wallet, vouchers, dialogs, status messages and Clerk account screens. Machine colors retain letter labels, and the QR keeps a white quiet zone with dark teal modules.
+
+The route planner, authentication configuration, account ownership, point accounting, machine catalog and voucher lifecycle are unchanged. Existing persistence and physical-vending limitations remain documented in [water-vouchers.md](water-vouchers.md).
+
+## Verification
+
+Run the opt-in visual journey with a finished production build:
+
+```powershell
+$env:STRIDEECO_BUILD_DIR = 'work/next-brand-aqua-release'
+node scripts/verify-clerk.mjs --branding-only
+```
+
+It uses one temporary Clerk development fixture and an isolated local database, tests public desktop/mobile planner/rewards/account screens, actual logo/icon requests and dimensions, key text contrast, keyboard focus, responsive fit and a rendered voucher QR decoded independently. The runner verifies exact fixture deletion. It does not repeat signup/password/OAuth or assert remote database persistence.
+
+The 26 domain, ownership, migration, machine and voucher tests remain available through `npm test`. Dated verification reports record actual results; test existence alone does not establish a pass.
+
+Final local result: `work/next-brand-aqua-release` passes the production build and TypeScript checks, the 26 domain/ownership tests, and the opt-in branding journey. Screens at 320, 390, 768, 1024 and 1440 pixels fit without horizontal overflow. The key text samples are at least 4.99:1; desktop/mobile voucher QR pixels decode independently. Versioned icon requests load and decode at their declared sizes, keyboard focus is visible, browser errors are empty and exact fixture cleanup is confirmed. See `brand-browser-verification.json` and `brand-asset-verification.json`.

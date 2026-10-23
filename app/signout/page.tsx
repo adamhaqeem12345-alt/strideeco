@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import { signOut } from '../../auth';
+import { SignOutButton } from '@clerk/nextjs';
+import { authConfigured } from '../../lib/auth-config';
 
+export const dynamic = 'force-dynamic';
 export default function SignOut() {
-  return <main style={{ maxWidth: 480, margin: '12vh auto', padding: 28 }}>
-    <h1>Sign out of StrideEco?</h1>
-    <form action={async () => { 'use server'; await signOut({ redirectTo: '/' }); }}>
-      <button className="button primary" type="submit">Sign out</button>
-    </form>
-    <p><Link href="/">Keep exploring</Link></p>
+  return <main className="auth-page"><h1>Sign out of StrideEco?</h1>
+    {authConfigured() && <SignOutButton redirectUrl="/"><button className="button primary">Sign out</button></SignOutButton>}
+    <Link href="/">Back to route planning</Link>
   </main>;
 }

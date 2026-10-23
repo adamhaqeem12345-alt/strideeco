@@ -3,10 +3,14 @@ import { createClient, type Client, type InValue } from '@libsql/client';
 type Row = Record<string, unknown>;
 let client: Client | undefined;
 
+export class DatabaseConfigurationError extends Error {
+  constructor(message: string) { super(message); this.name = 'DatabaseConfigurationError'; }
+}
+
 export function databaseClient() {
   const url = process.env.TURSO_DATABASE_URL;
-  if (!url) throw new Error('Set TURSO_DATABASE_URL and apply npm run db:migrate before using account features.');
-  if (process.env.VERCEL && url.startsWith('file:')) throw new Error('Vercel requires a remote libSQL database, not a local file.');
+  if (!url) throw new DatabaseConfigurationError('Set TURSO_DATABASE_URL and apply npm run db:migrate before using account features.');
+  if (process.env.VERCEL && url.startsWith('file:')) throw new DatabaseConfigurationError('Vercel requires a remote libSQL database, not a local file.');
   client ??= createClient({ url, authToken: process.env.TURSO_AUTH_TOKEN });
   return client;
 }

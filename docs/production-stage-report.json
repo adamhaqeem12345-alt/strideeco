@@ -1,0 +1,24 @@
+{
+  "target": "https://strideeco-n1g1iht0w-adam-haqeems-projects.vercel.app",
+  "commit": "aa4d35f5bf51cbd0b11ceafe66336309f4036ed6",
+  "checks": [
+    {
+      "endpoint": "/",
+      "status": 200
+    },
+    {
+      "endpoint": "/sign-in",
+      "status": 200
+    },
+    {
+      "endpoint": "/sign-up",
+      "status": 200
+    },
+    {
+      "endpoint": "/api/pilot",
+      "status": 401
+    }
+  ],
+  "passed": true,
+  "completedAt": "2026-10-22T16:19:52.846Z"
+}

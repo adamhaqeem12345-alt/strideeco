@@ -1,0 +1,123 @@
+{
+  "target": "https://strideeco.vercel.app",
+  "sourceCommit": "c11d229c546522a9b864a6752e4836c71ec3593f",
+  "passed": true,
+  "status": "passed",
+  "startedAt": "2026-10-23T08:00:08.251Z",
+  "checks": [
+    {
+      "viewport": 1440,
+      "check": "header sign-in",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 1440,
+      "check": "header sign-up",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 1440,
+      "check": "profile sign-in",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 1440,
+      "check": "profile create account",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 1440,
+      "check": "saved routes sign-in",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 1440,
+      "check": "delayed Clerk SDK fallback and ready form",
+      "visibleIndicator": true,
+      "fits": true
+    },
+    {
+      "viewport": 390,
+      "check": "header sign-in",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 390,
+      "check": "header sign-up",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 390,
+      "check": "profile sign-in",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 390,
+      "check": "profile create account",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 390,
+      "check": "saved routes sign-in",
+      "pendingIndicator": true,
+      "readyFormFits": true
+    },
+    {
+      "viewport": 390,
+      "check": "delayed Clerk SDK fallback and ready form",
+      "visibleIndicator": true,
+      "fits": true
+    },
+    {
+      "viewport": 1440,
+      "check": "real Clerk session, unavailable storage, mutation gates and UI signout",
+      "signedInApiStatus": 503,
+      "signedInCode": "ACCOUNT_STORAGE_NOT_CONFIGURED",
+      "unknownBalance": true,
+      "persistentNotice": true,
+      "signedOutApiStatus": 401,
+      "privateAccountMarkersCleared": true,
+      "pilotPosts": 0
+    },
+    {
+      "viewport": 390,
+      "check": "real Clerk session, unavailable storage, mutation gates and UI signout",
+      "signedInApiStatus": 503,
+      "signedInCode": "ACCOUNT_STORAGE_NOT_CONFIGURED",
+      "unknownBalance": true,
+      "persistentNotice": true,
+      "signedOutApiStatus": 401,
+      "privateAccountMarkersCleared": true,
+      "pilotPosts": 0
+    }
+  ],
+  "browserErrors": [],
+  "cleanupConfirmed": true,
+  "limits": [
+    "Existing Clerk development instance and one exact temporary test identity",
+    "The caller independently verifies the supplied source SHA against deployment metadata",
+    "Account GETs are real; only transport delays are simulated; no pilot POSTs are allowed",
+    "Hosted account storage remains unconfigured; no routes, points or rewards are created",
+    "Official sign-in helper proves a real Clerk session; signup, password and OAuth are not repeated",
+    "Desktop/mobile are simulated browser viewports, not physical devices"
+  ],
+  "verificationPassed": true,
+  "completedAt": "2026-10-23T08:01:11.465Z",
+  "deployment": {
+    "id": "dpl_Dh8jSEGHM2iYep92DeAwLnXvTSmX",
+    "readyState": "READY",
+    "sourceCommit": "c11d229c546522a9b864a6752e4836c71ec3593f",
+    "publicAlias": "https://strideeco.vercel.app",
+    "promotion": "completed",
+    "metadataSourceVerified": true
+  }
+}

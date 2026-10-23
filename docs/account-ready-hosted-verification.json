@@ -1,0 +1,580 @@
+{
+  "passed": true,
+  "verifiedAt": "2026-10-23T08:37:24.668Z",
+  "deployment": {
+    "id": "dpl_8Dy6uJeXc1F1zWQWRQwTSdPerYF6",
+    "url": "https://strideeco-42fedpwuw-adam-haqeems-projects.vercel.app",
+    "alias": "https://strideeco.vercel.app",
+    "sourceCommit": "d676bb0a3c56f69ce20bac8fdf7e78295202d6ec",
+    "readyState": "READY",
+    "aliasAndSourceIndependentlyVerified": true
+  },
+  "stage": {
+    "target": "https://strideeco-42fedpwuw-adam-haqeems-projects.vercel.app",
+    "sourceCommit": "d676bb0a3c56f69ce20bac8fdf7e78295202d6ec",
+    "passed": true,
+    "status": "passed",
+    "startedAt": "2026-10-23T08:36:09.723Z",
+    "checks": [
+      {
+        "check": "UI signup/test OTP and real new account",
+        "apiStatus": 200,
+        "initialPoints": 0,
+        "initialReserved": 0
+      },
+      {
+        "check": "real saved/shared route and labelled demo activity",
+        "savedRoutes": 1,
+        "demoWalks": 2,
+        "earnedPoints": 142
+      },
+      {
+        "check": "real code voucher and independently decoded QR",
+        "machineType": "bottled-chilled",
+        "cost": 60,
+        "replayStatus": 409,
+        "deductedOnce": true
+      },
+      {
+        "check": "real qr voucher and independently decoded QR",
+        "machineType": "refill",
+        "cost": 60,
+        "replayStatus": 409,
+        "deductedOnce": true
+      },
+      {
+        "check": "UI signout401/private clearing and password signin persistence",
+        "restoredRoutes": 1,
+        "restoredPoints": 22
+      },
+      {
+        "check": "fresh390px mobile password signin and remote persistence",
+        "apiStatus": 200,
+        "unavailableNotice": false,
+        "fits": true
+      }
+    ],
+    "browserErrors": [],
+    "clerkCleanupConfirmed": true,
+    "appCleanupConfirmed": true,
+    "limits": [
+      "One exact new development test account and only its parameterized remote application records",
+      "All points are credited by real application requests from explicitly labelled demo walks; no wallet seeding",
+      "Machines, geolocation and dispensing are mock demonstrations; no live hardware or stock is verified",
+      "Source SHA is independently checked against deployment metadata by the caller",
+      "Staging verifies manual code and independently decoded QR, replay and accounting",
+      "Development email OTP/password flows; no real email delivery or GitHub OAuth"
+    ],
+    "signInStates": [
+      {
+        "surface": "desktop",
+        "phase": "identifier form ready",
+        "pathname": "/sign-in",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": true
+          }
+        ],
+        "codeVisible": false,
+        "passwordVisible": true,
+        "alertVisible": false
+      },
+      {
+        "surface": "desktop",
+        "phase": "submit password",
+        "pathname": "/sign-in",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": true
+          }
+        ],
+        "codeVisible": false,
+        "passwordVisible": true,
+        "alertVisible": false
+      },
+      {
+        "surface": "desktop",
+        "phase": "password result",
+        "pathname": "/",
+        "clerkLoaded": true,
+        "sessionActive": true,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [],
+        "codeVisible": false,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "desktop",
+        "phase": "same account session ready",
+        "pathname": "/",
+        "clerkLoaded": true,
+        "sessionActive": true,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [],
+        "codeVisible": false,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "identifier form ready",
+        "pathname": "/sign-in",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": true
+          }
+        ],
+        "codeVisible": false,
+        "passwordVisible": true,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "submit password",
+        "pathname": "/sign-in",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": true
+          }
+        ],
+        "codeVisible": false,
+        "passwordVisible": true,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "password result",
+        "pathname": "/sign-in/client-trust",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "needs_client_trust",
+        "secondFactorStrategies": [
+          "email_code"
+        ],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [
+          0
+        ],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": false
+          }
+        ],
+        "codeVisible": true,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "prepared development email verification",
+        "pathname": "/sign-in/client-trust",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "needs_client_trust",
+        "secondFactorStrategies": [
+          "email_code"
+        ],
+        "emailVerificationPrepared": true,
+        "verificationStatus": "unverified",
+        "codeLengths": [
+          0
+        ],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": false
+          }
+        ],
+        "codeVisible": true,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "six-digit development code filled",
+        "pathname": "/sign-in/client-trust",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "needs_client_trust",
+        "secondFactorStrategies": [
+          "email_code"
+        ],
+        "emailVerificationPrepared": true,
+        "verificationStatus": "unverified",
+        "codeLengths": [
+          6
+        ],
+        "allowedButtons": [],
+        "codeVisible": true,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "email verification request accepted",
+        "pathname": "/sign-in/client-trust",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [
+          6
+        ],
+        "allowedButtons": [],
+        "codeVisible": true,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "same account session ready",
+        "pathname": "/",
+        "clerkLoaded": true,
+        "sessionActive": true,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [],
+        "codeVisible": false,
+        "passwordVisible": false,
+        "alertVisible": false
+      }
+    ],
+    "mobileWallet": {
+      "amount": "22",
+      "label": "available points"
+    },
+    "verificationPassed": true,
+    "completedAt": "2026-10-23T08:37:24.668Z"
+  },
+  "live": {
+    "target": "https://strideeco.vercel.app",
+    "sourceCommit": "d676bb0a3c56f69ce20bac8fdf7e78295202d6ec",
+    "passed": true,
+    "status": "passed",
+    "startedAt": "2026-10-23T08:36:09.723Z",
+    "checks": [
+      {
+        "check": "UI signup/test OTP and real new account",
+        "apiStatus": 200,
+        "initialPoints": 0,
+        "initialReserved": 0
+      },
+      {
+        "check": "real saved/shared route and labelled demo activity",
+        "savedRoutes": 1,
+        "demoWalks": 1,
+        "earnedPoints": 71
+      },
+      {
+        "check": "UI signout401/private clearing and password signin persistence",
+        "restoredRoutes": 1,
+        "restoredPoints": 71
+      },
+      {
+        "check": "fresh390px mobile password signin and remote persistence",
+        "apiStatus": 200,
+        "unavailableNotice": false,
+        "fits": true
+      }
+    ],
+    "browserErrors": [],
+    "clerkCleanupConfirmed": true,
+    "appCleanupConfirmed": true,
+    "limits": [
+      "One exact new development test account and only its parameterized remote application records",
+      "All points are credited by real application requests from explicitly labelled demo walks; no wallet seeding",
+      "Machines, geolocation and dispensing are mock demonstrations; no live hardware or stock is verified",
+      "Source SHA is independently checked against deployment metadata by the caller",
+      "Live verifies persistence smoke; full vouchers are covered on staging",
+      "Development email OTP/password flows; no real email delivery or GitHub OAuth"
+    ],
+    "signInStates": [
+      {
+        "surface": "desktop",
+        "phase": "identifier form ready",
+        "pathname": "/sign-in",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": true
+          }
+        ],
+        "codeVisible": false,
+        "passwordVisible": true,
+        "alertVisible": false
+      },
+      {
+        "surface": "desktop",
+        "phase": "submit password",
+        "pathname": "/sign-in",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": true
+          }
+        ],
+        "codeVisible": false,
+        "passwordVisible": true,
+        "alertVisible": false
+      },
+      {
+        "surface": "desktop",
+        "phase": "password result",
+        "pathname": "/",
+        "clerkLoaded": true,
+        "sessionActive": true,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [],
+        "codeVisible": false,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "desktop",
+        "phase": "same account session ready",
+        "pathname": "/",
+        "clerkLoaded": true,
+        "sessionActive": true,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [],
+        "codeVisible": false,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "identifier form ready",
+        "pathname": "/sign-in",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": true
+          }
+        ],
+        "codeVisible": false,
+        "passwordVisible": true,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "submit password",
+        "pathname": "/sign-in",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": true
+          }
+        ],
+        "codeVisible": false,
+        "passwordVisible": true,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "password result",
+        "pathname": "/sign-in/client-trust",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "needs_client_trust",
+        "secondFactorStrategies": [
+          "email_code"
+        ],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [
+          0
+        ],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": false
+          }
+        ],
+        "codeVisible": true,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "prepared development email verification",
+        "pathname": "/sign-in/client-trust",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "needs_client_trust",
+        "secondFactorStrategies": [
+          "email_code"
+        ],
+        "emailVerificationPrepared": true,
+        "verificationStatus": "unverified",
+        "codeLengths": [
+          0
+        ],
+        "allowedButtons": [
+          {
+            "label": "Continue",
+            "disabled": false,
+            "inForm": false
+          }
+        ],
+        "codeVisible": true,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "six-digit development code filled",
+        "pathname": "/sign-in/client-trust",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "needs_client_trust",
+        "secondFactorStrategies": [
+          "email_code"
+        ],
+        "emailVerificationPrepared": true,
+        "verificationStatus": "unverified",
+        "codeLengths": [
+          6
+        ],
+        "allowedButtons": [],
+        "codeVisible": true,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "email verification request accepted",
+        "pathname": "/sign-in/client-trust",
+        "clerkLoaded": true,
+        "sessionActive": false,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [
+          6
+        ],
+        "allowedButtons": [],
+        "codeVisible": true,
+        "passwordVisible": false,
+        "alertVisible": false
+      },
+      {
+        "surface": "mobile",
+        "phase": "same account session ready",
+        "pathname": "/",
+        "clerkLoaded": true,
+        "sessionActive": true,
+        "signInStatus": "other",
+        "secondFactorStrategies": [],
+        "emailVerificationPrepared": false,
+        "verificationStatus": "other",
+        "codeLengths": [],
+        "allowedButtons": [],
+        "codeVisible": false,
+        "passwordVisible": false,
+        "alertVisible": false
+      }
+    ],
+    "mobileWallet": {
+      "amount": "71",
+      "label": "available points"
+    },
+    "verificationPassed": true,
+    "completedAt": "2026-10-23T08:36:58.144Z"
+  }
+}

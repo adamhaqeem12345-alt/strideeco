@@ -1,7 +1,6 @@
-import StrideApp from '../components/stride-app';
-import { getUser } from '../auth';
+import AccountApp from '../components/account-app';
+import { authConfigured } from '../lib/auth-config';
 export const dynamic = 'force-dynamic';
-export default async function Home() {
-  const user = await getUser();
-  return <StrideApp signedIn={Boolean(user)} signInPath="/signin" signOutPath="/signout" />;
+export default function Home() {
+  return <AccountApp authAvailable={authConfigured()} />;
 }

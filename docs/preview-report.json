@@ -1,0 +1,16 @@
+{
+  "target": "https://strideeco-p510kznza-adam-haqeems-projects.vercel.app",
+  "commit": "e27731a882ccb25fef7d2794aa827cd84a99bc9a",
+  "checks": [
+    "desktop: public planner, anonymous API 401, visible Clerk sign-in/sign-up, GitHub option, Development mode, no horizontal overflow or browser errors",
+    "mobile: public planner, anonymous API 401, visible Clerk sign-in/sign-up, GitHub option, Development mode, no horizontal overflow or browser errors"
+  ],
+  "limits": [
+    "Preview only; production remains unchanged",
+    "Development Clerk instance; no production Clerk instance",
+    "No remote database or hosted account-data persistence",
+    "Hosted authentication forms rendered; live hosted user sign-in and GitHub OAuth are not asserted"
+  ],
+  "passed": true,
+  "completedAt": "2026-10-22T16:11:14.293Z"
+}

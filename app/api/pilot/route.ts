@@ -1,10 +1,17 @@
-import { db } from '../../../lib/database';
+import { randomBytes } from 'node:crypto';
+import { db, DatabaseConfigurationError } from '../../../lib/database';
 import { getUser } from '../../../auth';
 import { coordinatesFor, length, metres, validWalk } from '../../../lib/geo';
 import { RULES, type RecordedPosition } from '../../../lib/pilot';
+import { getMachine } from '../../../lib/machines';
+import { normalizeVoucherCode, parseVoucherPayload } from '../../../lib/vouchers';
 
 export const runtime = 'nodejs';
 const response = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'private, no-store' } });
+const storageNotConfigured = () => response({ code: 'ACCOUNT_STORAGE_NOT_CONFIGURED', error: 'Saved progress and rewards are not available yet. You can still plan a walk.' }, 503);
+class VoucherError extends Error {
+  constructor(message: string, readonly status: number) { super(message); }
+}
 async function initialise(id: string) {
   const now = new Date().toISOString();
   await db().batch([
@@ -18,11 +25,19 @@ async function state(id: string) {
     db().prepare('SELECT points, reserved FROM wallets WHERE user_id=?').bind(id),
     db().prepare('SELECT * FROM saved_routes WHERE user_id=? ORDER BY created_at DESC LIMIT 30').bind(id),
     db().prepare('SELECT id, source, distance, duration, points, created_at FROM activities WHERE user_id=? ORDER BY created_at DESC LIMIT 30').bind(id),
-    db().prepare('SELECT id, cost, token, status, expires_at, created_at FROM redemptions WHERE user_id=? ORDER BY created_at DESC LIMIT 30').bind(id),
+    db().prepare('SELECT id, cost, token, status, expires_at, created_at, machine_id, machine_name, machine_type, reward_label, redeemed_at FROM redemptions WHERE user_id=? ORDER BY created_at DESC LIMIT 30').bind(id),
     db().prepare('SELECT id, delta, kind, created_at FROM point_events WHERE user_id=? ORDER BY created_at DESC LIMIT 30').bind(id),
     db().prepare('SELECT consent FROM profiles WHERE user_id=?').bind(id),
   ]);
   return { wallet: result[0].results[0], routes: result[1].results, activities: result[2].results, redemptions: result[3].results, events: result[4].results, consent: Boolean((result[5].results[0] as { consent?: number } | undefined)?.consent), rules: RULES };
+}
+async function requirePendingVoucher(voucher: Record<string, unknown>, userId: string, now: string) {
+  if (voucher.status === 'expired' || (voucher.status === 'pending' && String(voucher.expires_at) <= now)) {
+    // Expiry releases the existing reservation through the original trigger.
+    await db().prepare("UPDATE redemptions SET status='expired' WHERE id=? AND user_id=? AND status='pending' AND expires_at<=?").bind(String(voucher.id), userId, now).run();
+    throw new VoucherError('This water voucher has expired. Reserved points have been released.', 410);
+  }
+  if (voucher.status !== 'pending') throw new VoucherError('This water voucher has already been used or closed.', 409);
 }
 export async function GET(request: Request) {
   try {
@@ -35,7 +50,11 @@ export async function GET(request: Request) {
     if (!user) return response({ error: 'Sign in to save routes and access your wallet.' }, 401);
     await initialise(user.userId);
     return response(await state(user.userId));
-  } catch (error) { console.error('Pilot GET', error); return response({ error: 'Account data could not be loaded. Please try again.' }, 503); }
+  } catch (error) {
+    console.error('Pilot GET', error);
+    if (error instanceof DatabaseConfigurationError) return storageNotConfigured();
+    return response({ code: 'ACCOUNT_DATA_UNAVAILABLE', error: 'Your account data is temporarily unavailable. Try refreshing it.' }, 503);
+  }
 }
 export async function POST(request: Request) {
   try {
@@ -54,7 +73,12 @@ export async function POST(request: Request) {
     if (origin && origin !== destination.origin) return response({ error: 'Invalid request origin.' }, 403);
     const id = user.userId, now = new Date().toISOString();
     await initialise(id);
-    const body = await request.json() as Record<string, unknown>;
+    let body: Record<string, unknown>;
+    try {
+      const parsed: unknown = await request.json();
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return response({ error: 'Invalid request body.' }, 400);
+      body = parsed as Record<string, unknown>;
+    } catch { return response({ error: 'Invalid request body.' }, 400); }
     let extra: Record<string, unknown> = {};
     if (body.action === 'save-route') {
       const ids = body.nodeIds as string[];
@@ -108,23 +132,51 @@ export async function POST(request: Request) {
     } else if (body.action === 'reserve-water') {
       const redemptionId = String(body.key ?? '');
       if (!/^[\w-]{8,100}$/.test(redemptionId)) return response({ error: 'Invalid redemption identifier.' }, 400);
-      const existing = await db().prepare('SELECT id FROM redemptions WHERE id=? AND user_id=?').bind(redemptionId, id).first();
-      if (!existing) {
-        await db().prepare("INSERT INTO redemptions(id,user_id,cost,token,status,expires_at,created_at) VALUES(?,?,?,?,'pending',?,?)").bind(redemptionId, id, RULES.waterPoints, crypto.randomUUID().replaceAll('-', '').slice(0, 10).toUpperCase(), new Date(Date.now() + RULES.reservationMinutes * 60000).toISOString(), now).run();
-      }
+      const machine = typeof body.machineId === 'string' ? getMachine(body.machineId) : undefined;
+      if (!machine?.enabled) return response({ error: 'Choose an available mock water machine.' }, 400);
+      // One atomic statement checks the key before INSERT triggers run. A
+      // duplicate retry therefore cannot fail a fresh balance/monthly check or
+      // hold a write transaction across awaits while another request arrives.
+      await db().prepare("INSERT INTO redemptions(id,user_id,cost,token,status,expires_at,created_at,machine_id,machine_name,machine_type,reward_label) SELECT ?,?,?,?,'pending',?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM redemptions WHERE id=?)")
+        .bind(redemptionId, id, RULES.waterPoints, randomBytes(16).toString('hex').toUpperCase(), new Date(Date.now() + RULES.reservationMinutes * 60000).toISOString(), now, machine.id, machine.name, machine.type, machine.rewardLabel, redemptionId).run();
+      const existing = await db().prepare('SELECT user_id,machine_id,machine_type FROM redemptions WHERE id=?').bind(redemptionId).first();
+      if (!existing || existing.user_id !== id || existing.machine_id !== machine.id || existing.machine_type !== machine.type) throw new VoucherError('This request identifier is already assigned to another voucher.', 409);
       extra = { redemptionId };
-    } else if (body.action === 'resolve-water') {
-      const result = body.result === 'dispensed' ? 'confirmed' : 'failed';
-      const redemption = await db().prepare('SELECT id,status,token FROM redemptions WHERE id=? AND user_id=?').bind(String(body.id), id).first();
-      if (!redemption || redemption.token !== body.token) return response({ error: 'Redemption code not found.' }, 404);
-      await db().prepare("UPDATE redemptions SET status=? WHERE id=? AND user_id=? AND status='pending' AND expires_at>?").bind(result, String(body.id), id, now).run();
+    } else if (body.action === 'resolve-water' || body.action === 'consume-voucher') {
+      if (body.result !== 'dispensed' && body.result !== 'failed') return response({ error: 'Choose a simulated dispensing success or failure.' }, 400);
+      const machine = typeof body.machineId === 'string' ? getMachine(body.machineId) : undefined;
+      if (!machine?.enabled) return response({ error: 'Choose an available mock water machine.' }, 400);
+      const credential = body.action === 'consume-voucher' ? parseVoucherPayload(body.payload)
+        : typeof body.id === 'string' && /^[\w-]{8,100}$/.test(body.id) ? { id: body.id, token: normalizeVoucherCode(body.token) } : null;
+      if (!credential?.token) return response({ error: 'Enter a valid water voucher code or StrideEco QR payload.' }, 400);
+      const voucher = await db().prepare('SELECT id,status,expires_at,machine_id,machine_type FROM redemptions WHERE id=? AND user_id=? AND token=?').bind(credential.id, id, credential.token).first();
+      if (!voucher) return response({ error: 'Water voucher not found.' }, 404);
+      if (voucher.machine_id !== machine.id) return response({ error: 'This voucher is not assigned to the selected mock machine.' }, 409);
+      if (voucher.machine_type !== machine.type) return response({ error: 'The mock machine water type has changed. This voucher cannot be used here.', }, 409);
+      const consumedAt = new Date().toISOString();
+      await requirePendingVoucher(voucher, id, consumedAt);
+      // Code and QR entry share this atomic consume. Exactly one concurrent
+      // request can leave pending; the original triggers account for points.
+      const consumed = await db().prepare("UPDATE redemptions SET status=?,redeemed_at=? WHERE id=? AND user_id=? AND token=? AND machine_id=? AND machine_type=? AND status='pending' AND expires_at>? RETURNING id")
+        .bind(body.result === 'dispensed' ? 'confirmed' : 'failed', body.result === 'dispensed' ? consumedAt : null, credential.id, id, credential.token, machine.id, machine.type, consumedAt).first();
+      if (!consumed) {
+        const latest = await db().prepare('SELECT id,status,expires_at FROM redemptions WHERE id=? AND user_id=?').bind(credential.id, id).first();
+        if (latest) await requirePendingVoucher(latest, id, new Date().toISOString());
+        return response({ error: 'This water voucher has already been used or closed.' }, 409);
+      }
+      extra = { redemptionId: credential.id, simulated: true };
     } else return response({ error: 'Unknown action.' }, 400);
     return response({ ...(await state(id)), ...extra });
   } catch (error) {
+    if (error instanceof VoucherError) return response({ error: error.message }, error.status);
+    if (error instanceof DatabaseConfigurationError) {
+      console.error('Pilot POST', error);
+      return storageNotConfigured();
+    }
     const message = error instanceof Error ? error.message : String(error);
     if (message.includes('INSUFFICIENT_POINTS')) return response({ error: 'You need more available points for this water reward.' }, 409);
     if (message.includes('MONTHLY_LIMIT')) return response({ error: 'The illustrative limit is four water rewards per month.' }, 409);
     console.error('Pilot POST', error);
-    return response({ error: 'That action could not be confirmed. Refresh your wallet before trying again.' }, 500);
+    return response({ code: 'ACCOUNT_DATA_UNAVAILABLE', error: 'That action could not be confirmed. Refresh your account data before trying again.' }, 500);
   }
 }

@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "status": "passed",
+  "mode": "ui-auth-and-pace",
+  "suites": [
+    "browser-auth",
+    "browser-flow"
+  ],
+  "completedAt": "2026-10-22T16:03:22.695Z",
+  "cleanupConfirmed": true,
+  "buildDirectory": "work/next-clerk-pinned-ui",
+  "limits": [
+    "Development Clerk authentication and isolated local persistence only"
+  ]
+}

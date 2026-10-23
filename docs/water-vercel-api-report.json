@@ -1,0 +1,20 @@
+{
+  "startedAt": "2026-10-22T16:59:28.730Z",
+  "target": "http://localhost:5187",
+  "checks": [
+    "Clerk SDK verifies ephemeral RSA sessions; anonymous, forged, expired and future tokens rejected; spoofed identity/auth headers and cross-origin writes rejected",
+    "route persistence, account isolation and explicitly public route sharing",
+    "labelled demo activity credits once through the libSQL adapter",
+    "machine-bound cryptographic water vouchers; manual/QR share one credential; wrong machine/owner/token and unknown results rejected; reservation idempotency, overspend protection, failure release and replay refusal",
+    "parallel reservation retries issue one voucher; concurrent manual/QR consumption has exactly one winner and one point deduction; expired voucher returns410 and releases its reservation",
+    "expired reservation release and implausible GPS rejection without credit"
+  ],
+  "limits": [
+    "Ephemeral locally signed tokens verified by Clerk SDK, not a live Clerk sign-up or OAuth round trip",
+    "Local libSQL file, not a remote production database",
+    "No physical GPS or live vending hardware"
+  ],
+  "passed": true,
+  "status": "passed",
+  "completedAt": "2026-10-22T16:59:29.788Z"
+}

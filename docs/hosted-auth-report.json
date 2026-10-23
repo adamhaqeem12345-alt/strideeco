@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "status": "passed",
+  "startedAt": "2026-10-22T16:20:26.955Z",
+  "origin": "https://strideeco.vercel.app",
+  "limits": [
+    "Existing Clerk development instance with an official bot-bypass testing token",
+    "Test email OTP; no real email delivery or GitHub OAuth",
+    "Persistent account database is not configured; signed-in account API503 is expected",
+    "No PACE actions, wallet changes, saved routes, or redemption requests"
+  ],
+  "signupVerified": true,
+  "signedInAccountApiStatus": 503,
+  "accountMenuVerified": true,
+  "signoutVerified": true,
+  "signedOutAccountApiStatus": 401,
+  "signinVerified": true,
+  "githubOptionVisible": true,
+  "browserErrors": [],
+  "mobileFormsVerified": true,
+  "mobileHorizontalOverflow": false,
+  "completedAt": "2026-10-22T16:20:56.897Z",
+  "cleanupConfirmed": true
+}
