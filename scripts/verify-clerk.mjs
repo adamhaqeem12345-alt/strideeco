@@ -14,9 +14,10 @@ await mkdir('outputs', { recursive: true });
 const paceOnly = process.argv.includes('--pace-only');
 const vouchersOnly = process.argv.includes('--vouchers-only');
 const brandingOnly = process.argv.includes('--branding-only');
-if ([paceOnly, vouchersOnly, brandingOnly].filter(Boolean).length > 1) throw new Error('Choose one isolated browser verification mode.');
-const suites = brandingOnly ? ['browser-branding'] : vouchersOnly ? ['browser-vouchers'] : paceOnly ? ['browser-flow'] : ['browser-auth', 'browser-flow', 'browser-vouchers'];
-const reportNames = { 'browser-auth': 'clerk-browser-auth-report.json', 'browser-flow': 'e2e-report.json', 'browser-vouchers': 'voucher-browser-report.json', 'browser-branding': 'branding-browser-report.json' };
+const accountLoadingOnly = process.argv.includes('--account-loading-only');
+if ([paceOnly, vouchersOnly, brandingOnly, accountLoadingOnly].filter(Boolean).length > 1) throw new Error('Choose one isolated browser verification mode.');
+const suites = accountLoadingOnly ? ['browser-account-loading'] : brandingOnly ? ['browser-branding'] : vouchersOnly ? ['browser-vouchers'] : paceOnly ? ['browser-flow'] : ['browser-auth', 'browser-flow', 'browser-vouchers'];
+const reportNames = { 'browser-auth': 'clerk-browser-auth-report.json', 'browser-flow': 'e2e-report.json', 'browser-vouchers': 'voucher-browser-report.json', 'browser-branding': 'branding-browser-report.json', 'browser-account-loading': 'account-loading-browser-report.json' };
 const childReports = suites.map(suite => reportNames[suite]);
 for (const name of [...childReports, 'clerk-browser-run-report.json']) {
   await writeFile(path.join('outputs', name), JSON.stringify({ passed: false, status: 'pending', startedAt: new Date().toISOString() }, null, 2));
@@ -84,7 +85,7 @@ try {
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
   if (!ready) throw new Error('The isolated Clerk production server did not become ready.');
-  if (paceOnly || vouchersOnly || brandingOnly) {
+  if (paceOnly || vouchersOnly || brandingOnly || accountLoadingOnly) {
     const clerk = createClerkClient({ secretKey: env.CLERK_SECRET_KEY });
     await clerk.users.createUser({ emailAddress: [email], password: env.STRIDEECO_TEST_PASSWORD, username: `strideecotest${Date.now()}` });
   }
@@ -124,7 +125,7 @@ try {
     else if (report.status === 'pending') Object.assign(final, { passed: false, status: 'skipped' });
     await writeFile(filename, JSON.stringify(final, null, 2));
   }
-  await writeFile('outputs/clerk-browser-run-report.json', JSON.stringify({ passed: testsPassed && cleanupConfirmed, status: testsPassed && cleanupConfirmed ? 'passed' : 'failed', mode: brandingOnly ? 'branding-only' : vouchersOnly ? 'vouchers-only' : paceOnly ? 'pace-only' : 'ui-auth-pace-and-vouchers', suites, completedAt: new Date().toISOString(), cleanupConfirmed, buildDirectory: buildDir, limits: ['Development Clerk authentication and isolated local persistence only', 'All water machine locations and dispensing are mock demonstrations'] }, null, 2));
+  await writeFile('outputs/clerk-browser-run-report.json', JSON.stringify({ passed: testsPassed && cleanupConfirmed, status: testsPassed && cleanupConfirmed ? 'passed' : 'failed', mode: accountLoadingOnly ? 'account-loading-only' : brandingOnly ? 'branding-only' : vouchersOnly ? 'vouchers-only' : paceOnly ? 'pace-only' : 'ui-auth-pace-and-vouchers', suites, completedAt: new Date().toISOString(), cleanupConfirmed, buildDirectory: buildDir, limits: ['Development Clerk authentication and isolated local persistence only', 'All water machine locations and dispensing are mock demonstrations'] }, null, 2));
   if (!exited) await new Promise(resolve => {
     const timer = setTimeout(() => server.kill('SIGKILL'), 5000);
     server.once('exit', () => { clearTimeout(timer); resolve(); });

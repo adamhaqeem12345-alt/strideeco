@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "status": "passed",
+  "startedAt": "2026-10-23T07:43:07.603Z",
+  "checks": [
+    "desktop: delayed signed-in GET shows loading, unknown balance and blocked storage writes",
+    "desktop: a real authenticated200 replaces unknown state with persisted account values",
+    "ready desktop account saves a real route and credits a labelled demo through the isolated server",
+    "forced503 keeps last loaded routes/points, disables mutations, and real retry restores readiness without clearing data",
+    "desktop: header sign-in exposes pending navigation before a delayed real auth route becomes ready",
+    "desktop: header sign-up exposes pending navigation before a delayed real auth route becomes ready",
+    "desktop: profile sign-in exposes pending navigation before a delayed real auth route becomes ready",
+    "desktop: profile create account exposes pending navigation before a delayed real auth route becomes ready",
+    "desktop: saved routes sign-in exposes pending navigation before a delayed real auth route becomes ready",
+    "desktop: a delayed external Clerk runtime shows the SDK fallback then a usable sign-in form",
+    "mobile: delayed signed-in GET shows loading, unknown balance and blocked storage writes",
+    "mobile: a real authenticated200 replaces unknown state with persisted account values",
+    "mobile initial503 shows no fabricated zero balance; retry loads the same saved route and points as desktop",
+    "mobile: header sign-in exposes pending navigation before a delayed real auth route becomes ready",
+    "mobile: header sign-up exposes pending navigation before a delayed real auth route becomes ready",
+    "mobile: profile sign-in exposes pending navigation before a delayed real auth route becomes ready",
+    "mobile: profile create account exposes pending navigation before a delayed real auth route becomes ready",
+    "mobile: saved routes sign-in exposes pending navigation before a delayed real auth route becomes ready",
+    "mobile: a delayed external Clerk runtime shows the SDK fallback then a usable sign-in form"
+  ],
+  "browserErrors": [],
+  "limits": [
+    "One temporary Clerk development user and the runner’s isolated local database",
+    "API200 responses and saved data are real; only explicit503 outages and transport delays are simulated",
+    "Authentication forms are inspected without repeating signup, password submission or GitHub OAuth",
+    "Desktop/mobile viewports are browser simulations, not physical-device tests"
+  ],
+  "completedAt": "2026-10-23T07:44:02.136Z",
+  "cleanupConfirmed": true,
+  "buildDirectory": "work/next-account-loading-2"
+}

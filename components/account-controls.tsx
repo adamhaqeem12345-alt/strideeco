@@ -1,11 +1,12 @@
 'use client';
 import { SignOutButton, UserButton } from '@clerk/nextjs';
 import { LogIn } from 'lucide-react';
+import AuthLink from './auth-link';
 
 export function AccountControls({ signedIn }: { signedIn: boolean }) {
   return signedIn ? <div className="avatar" aria-label="Your account"><UserButton /></div> : <>
-    <a className="sign-in" href="/sign-in"><LogIn size={15} />Sign in</a>
-    <a className="sign-in" href="/sign-up">Sign up</a>
+    <AuthLink className="sign-in" href="/sign-in" pendingLabel="Opening sign-in…"><LogIn size={15} />Sign in</AuthLink>
+    <AuthLink className="sign-in" href="/sign-up" pendingLabel="Opening account creation…">Sign up</AuthLink>
   </>;
 }
 
@@ -14,7 +15,7 @@ export function ProfileControls({ signedIn }: { signedIn: boolean }) {
     <UserButton />
     <SignOutButton redirectUrl="/"><button className="button secondary">Sign out</button></SignOutButton>
   </div> : <div className="account-profile-actions">
-    <a className="button primary" href="/sign-up">Create account</a>
-    <a className="button secondary" href="/sign-in">Sign in</a>
+    <AuthLink className="button primary" href="/sign-up" pendingLabel="Opening account creation…">Create account</AuthLink>
+    <AuthLink className="button secondary" href="/sign-in" pendingLabel="Opening sign-in…">Sign in</AuthLink>
   </div>;
 }

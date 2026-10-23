@@ -1,5 +1,5 @@
 import { randomBytes } from 'node:crypto';
-import { db } from '../../../lib/database';
+import { db, DatabaseConfigurationError } from '../../../lib/database';
 import { getUser } from '../../../auth';
 import { coordinatesFor, length, metres, validWalk } from '../../../lib/geo';
 import { RULES, type RecordedPosition } from '../../../lib/pilot';
@@ -8,6 +8,7 @@ import { normalizeVoucherCode, parseVoucherPayload } from '../../../lib/vouchers
 
 export const runtime = 'nodejs';
 const response = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'private, no-store' } });
+const storageNotConfigured = () => response({ code: 'ACCOUNT_STORAGE_NOT_CONFIGURED', error: 'Saved progress and rewards are not available yet. You can still plan a walk.' }, 503);
 class VoucherError extends Error {
   constructor(message: string, readonly status: number) { super(message); }
 }
@@ -49,7 +50,11 @@ export async function GET(request: Request) {
     if (!user) return response({ error: 'Sign in to save routes and access your wallet.' }, 401);
     await initialise(user.userId);
     return response(await state(user.userId));
-  } catch (error) { console.error('Pilot GET', error); return response({ error: 'Account data could not be loaded. Please try again.' }, 503); }
+  } catch (error) {
+    console.error('Pilot GET', error);
+    if (error instanceof DatabaseConfigurationError) return storageNotConfigured();
+    return response({ code: 'ACCOUNT_DATA_UNAVAILABLE', error: 'Your account data is temporarily unavailable. Try refreshing it.' }, 503);
+  }
 }
 export async function POST(request: Request) {
   try {
@@ -164,10 +169,14 @@ export async function POST(request: Request) {
     return response({ ...(await state(id)), ...extra });
   } catch (error) {
     if (error instanceof VoucherError) return response({ error: error.message }, error.status);
+    if (error instanceof DatabaseConfigurationError) {
+      console.error('Pilot POST', error);
+      return storageNotConfigured();
+    }
     const message = error instanceof Error ? error.message : String(error);
     if (message.includes('INSUFFICIENT_POINTS')) return response({ error: 'You need more available points for this water reward.' }, 409);
     if (message.includes('MONTHLY_LIMIT')) return response({ error: 'The illustrative limit is four water rewards per month.' }, 409);
     console.error('Pilot POST', error);
-    return response({ error: 'That action could not be confirmed. Refresh your wallet before trying again.' }, 500);
+    return response({ code: 'ACCOUNT_DATA_UNAVAILABLE', error: 'That action could not be confirmed. Refresh your account data before trying again.' }, 500);
   }
 }

@@ -124,3 +124,38 @@ test('failed mock dispensing releases once; expired codes return410 and cannot s
   assert.equal(final.redemptions.find(row => row.id === expired.id).status, 'expired');
   assert.equal(final.events.length, 0);
 });
+
+test('missing account storage returns explicit503 without a fabricated wallet or signed-out authentication bypass', async t => {
+  const { api, post, db } = await fixture(t);
+  delete process.env.TURSO_DATABASE_URL;
+  assert.throws(() => api.databaseClient(), error => error.name === 'DatabaseConfigurationError');
+  const result = await api.userContext.run('owner', () => api.GET(new Request('http://localhost:5187/api/pilot')));
+  assert.equal(result.status, 503);
+  const body = await result.json();
+  assert.equal(body.code, 'ACCOUNT_STORAGE_NOT_CONFIGURED');
+  assert.equal('wallet' in body, false);
+  const mutation = await post({ action: 'consent', value: true });
+  assert.equal(mutation.status, 503);
+  assert.equal((await mutation.json()).code, 'ACCOUNT_STORAGE_NOT_CONFIGURED');
+  assert.equal((await post({ action: 'consent', value: true }, null)).status, 401);
+  assert.equal((await api.userContext.run(null, () => api.GET(new Request('http://localhost:5187/api/pilot')))).status, 401);
+  assert.deepEqual((await db.execute("SELECT points,reserved FROM wallets WHERE user_id='owner'")).rows[0], { points: 180, reserved: 0 });
+});
+
+test('hosted file storage is refused before any account mutation with the same safe503 code', async t => {
+  const { api, post, db } = await fixture(t);
+  const previousVercel = process.env.VERCEL;
+  process.env.VERCEL = '1';
+  try {
+    assert.throws(() => api.databaseClient(), error => error.name === 'DatabaseConfigurationError');
+    const result = await api.userContext.run('owner', () => api.GET(new Request('http://localhost:5187/api/pilot')));
+    assert.equal(result.status, 503);
+    assert.equal((await result.json()).code, 'ACCOUNT_STORAGE_NOT_CONFIGURED');
+    const mutation = await post({ action: 'consent', value: true });
+    assert.equal(mutation.status, 503);
+    assert.equal((await mutation.json()).code, 'ACCOUNT_STORAGE_NOT_CONFIGURED');
+    assert.deepEqual((await db.execute("SELECT points,reserved FROM wallets WHERE user_id='owner'")).rows[0], { points: 180, reserved: 0 });
+  } finally {
+    if (previousVercel === undefined) delete process.env.VERCEL; else process.env.VERCEL = previousVercel;
+  }
+});

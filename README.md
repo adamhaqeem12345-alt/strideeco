@@ -2,6 +2,10 @@
 
 Plan a walk through Elmina, compare explicitly labelled building-shadow scenarios, record an activity and try a simulated drinking-water reward. The PACE interface supports planning, saving, sharing, wallet access and water redemption on phone and desktop layouts; account features also need configured authentication and an application database.
 
+## Account loading and availability
+
+Auth navigation and form mounting now show loading indicators. Account data has loading, ready and unavailable states with retry, unknown balances stay unavailable, and failed refreshes preserve previously verified data while blocking writes. This does not resolve the still-unconfigured remote database: Vercel continues to require the team's Turso installation acceptance before provisioning. See [account-loading.md](docs/account-loading.md) for implementation, local evidence and the remaining installation blocker.
+
 ## Brand refresh
 
 The latest footer correction is live at [strideeco.vercel.app](https://strideeco.vercel.app/): READY deployment `dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX`, application source `f8c439115d32067e08bd69e5745543efe80fdabb`. Reduced sidebar spacing keeps the complete footer visible on shorter laptop/tablet windows; independent sidebar scrolling makes it reachable in very short windows. Staged and live browser checks passed for those cases and all four mobile views. See [sidebar-footer-verification.json](docs/sidebar-footer-verification.json).
