@@ -2,6 +2,21 @@
 
 Plan a walk through Elmina, compare explicitly labelled building-shadow scenarios, record an activity and try a simulated drinking-water reward. The PACE interface supports planning, saving, sharing, wallet access and water redemption on phone and desktop layouts; account features also need configured authentication and an application database.
 
+## Shared source of truth
+
+Use [GitHub `main`](https://github.com/adamhaqeem12345-alt/strideeco/tree/main) for the shared app. [PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) consolidates the verified authentication, points, mock machine/voucher map, branding, footer and account-data changes into `main`. The earlier feature branches preserve development history.
+
+For a collaborator's clone whose `origin` points to this GitHub repository, first commit or stash local edits, then update:
+
+```sh
+git fetch origin
+git switch main
+git pull --ff-only origin main
+npm ci
+```
+
+If fast-forwarding is refused, preserve the local commits and reconcile the branches rather than resetting or force-pushing. Each developer configures their own ignored local environment; credentials and account data are not distributed through Git.
+
 ## Account loading and availability
 
 Account data and auth loading are live on [strideeco.vercel.app](https://strideeco.vercel.app), READY deployment `dpl_8Dy6uJeXc1F1zWQWRQwTSdPerYF6`, application source `d676bb0a3c56f69ce20bac8fdf7e78295202d6ec`. The dedicated free database is connected and all four migrations/checksums verified. Real hosted signup, saved/shared routes, labelled demo points, sign-out/password sign-in and fresh mobile sessions pass; the staged artifact also passes manual-code and independently decoded QR single-use/replay checks. Exact temporary identities and their application records were removed after each run. Navigation and Clerk forms show loading feedback; unavailable/retry states preserve verified data and block uncertain writes. See [account-loading.md](docs/account-loading.md) and [account-ready-hosted-verification.json](docs/account-ready-hosted-verification.json).
@@ -16,7 +31,7 @@ Staged and live anonymous browser checks passed at 320, 390, 768 and 1440 pixels
 
 ## Water vouchers and machine map
 
-The water-only flow adds six clearly labelled mock Elmina machine locations, nearest compatible machine suggestions, type filters and machine-bound vouchers. Each voucher has one code and one downloadable QR for the same single use; the authenticated simulator supports both methods. The current DB-enabled staged deployment verifies real reservation/accounting, both redemption methods and opposite-method replay rejection. The same immutable release is live with desktop/mobile persistence verified. See [water-vouchers.md](docs/water-vouchers.md). The original feature release was `dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ`, source `41e1f23b2100bb2b4cf7b8a76ba292e709a0709a`; its map/auth-only hosted results remain historical. [Draft PR #2](https://github.com/adamhaqeem12345-alt/strideeco/pull/2) preserves that work; main is unchanged.
+The water-only flow adds six clearly labelled mock Elmina machine locations, nearest compatible machine suggestions, type filters and machine-bound vouchers. Each voucher has one code and one downloadable QR for the same single use; the authenticated simulator supports both methods. The current DB-enabled staged deployment verifies real reservation/accounting, both redemption methods and opposite-method replay rejection. The same immutable release is live with desktop/mobile persistence verified. See [water-vouchers.md](docs/water-vouchers.md). The original feature release was `dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ`, source `41e1f23b2100bb2b4cf7b8a76ba292e709a0709a`; its map/auth-only hosted results remain historical. Earlier water feature work is preserved in [PR #2](https://github.com/adamhaqeem12345-alt/strideeco/pull/2) and included in the consolidated release through PR #4.
 
 ## Integration status
 
@@ -34,7 +49,7 @@ The development instance's `force_organization_selection` is verified `false`, a
 
 ## Deploy to Vercel
 
-The latest account-data/loading release was staged, checked and promoted from `fix/account-data-loading` at the user's request. [Draft PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) preserves it; [draft PR #3](https://github.com/adamhaqeem12345-alt/strideeco/pull/3) preserves the earlier branding work, and GitHub **main** remains unchanged. The earlier authentication work remains in [draft PR #1](https://github.com/adamhaqeem12345-alt/strideeco/pull/1). Use the repository root, **Next.js**, the default `.next` output and the included `vercel.json`. Standard commands are `npm ci` and `npm run build`. `.vercelignore` excludes tests, work files, environment files and local databases from CLI uploads.
+The account-data/loading release was staged, checked and promoted from `fix/account-data-loading` at the user's request. [PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) consolidates that release and its earlier authentication, water and branding ancestry into GitHub **main**, the shared source of truth. Earlier PRs preserve the development history. Use the repository root, **Next.js**, the default `.next` output and the included `vercel.json`. Standard commands are `npm ci` and `npm run build`. `.vercelignore` excludes tests, work files, environment files and local databases from CLI uploads.
 
 **The public route planner deploys without credentials.** Persistent account features require these environment variables:
 

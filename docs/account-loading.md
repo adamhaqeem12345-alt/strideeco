@@ -2,7 +2,7 @@
 
 ## Published database connection — 23 October 2026
 
-[strideeco.vercel.app](https://strideeco.vercel.app) serves READY deployment `dpl_8Dy6uJeXc1F1zWQWRQwTSdPerYF6`, application source `d676bb0a3c56f69ce20bac8fdf7e78295202d6ec` on `fix/account-data-loading`. Deployment metadata and the public alias were independently verified. [Draft PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) preserves the changes without merging main.
+[strideeco.vercel.app](https://strideeco.vercel.app) serves READY deployment `dpl_8Dy6uJeXc1F1zWQWRQwTSdPerYF6`, application source `d676bb0a3c56f69ce20bac8fdf7e78295202d6ec`, originally published from `fix/account-data-loading`. Deployment metadata and the public alias were independently verified. [PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) integrates this release and its earlier feature ancestry into `main`, the shared source of truth. Later repository-workflow documentation changes do not change the deployed runtime.
 
 The reported account-data error followed successful Clerk authentication: Vercel had no application database. After the retained human receipt confirmed personal terms acceptance, the dedicated free `strideeco-demo` Turso Starter database was provisioned in `iad1`, connected only to the existing project in production/development. All four migrations, stored checksums and an unchanged rerun pass. Existing Clerk configuration and the laptop's local environment were preserved. No customer records or wallet balances were copied or seeded. See `remote-storage-verification.json`.
 
