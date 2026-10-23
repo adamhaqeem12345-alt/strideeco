@@ -1,20 +1,20 @@
-# Account loading and availability
+# Account data and auth loading
 
-## Database provisioned; activation verification pending
+## Published database connection — 23 October 2026
 
-After the retained human receipt confirmed successful terms acceptance, one dedicated free `strideeco-demo` Turso Starter database was created in `iad1`, connected only to the existing StrideEco project in production/development. Vercel now holds the two database variables; Clerk variables and the laptop's local environment were preserved. All four migrations applied, their stored checksums match, and a second run safely skipped each migration. No customer records or demo points were copied or seeded. See `remote-storage-verification.json`.
+[strideeco.vercel.app](https://strideeco.vercel.app) serves READY deployment `dpl_8Dy6uJeXc1F1zWQWRQwTSdPerYF6`, application source `d676bb0a3c56f69ce20bac8fdf7e78295202d6ec` on `fix/account-data-loading`. Deployment metadata and the public alias were independently verified. [Draft PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) preserves the changes without merging main.
 
-The UI release recorded below was built before those database variables existed. A new deployment must activate the connection, and real hosted persistence must pass verification before being described as operational.
+The reported account-data error followed successful Clerk authentication: Vercel had no application database. After the retained human receipt confirmed personal terms acceptance, the dedicated free `strideeco-demo` Turso Starter database was provisioned in `iad1`, connected only to the existing project in production/development. All four migrations, stored checksums and an unchanged rerun pass. Existing Clerk configuration and the laptop's local environment were preserved. No customer records or wallet balances were copied or seeded. See `remote-storage-verification.json`.
 
-## Published UI correction — 23 October 2026
+The staged deployment passes visible signup/test OTP, real account API `200` with zero initial points, route saving/sharing and two labelled demo walks earning 142 points. A chilled-water voucher uses manual entry and a refill voucher uses the independently decoded QR. Each deducts 60 points once, releases its reservation and rejects an opposite-method replay with `409`. Known-position nearest/type matching is checked. Sign-out returns `401`, password sign-in restores the records, and a fresh 390 px mobile session restores the same 22-point balance after the explicit new-device email verification.
 
-[strideeco.vercel.app](https://strideeco.vercel.app) serves READY deployment `dpl_Dh8jSEGHM2iYep92DeAwLnXvTSmX`, source `c11d229c546522a9b864a6752e4836c71ec3593f` on `fix/account-data-loading`. The production build was staged, checked and promoted; the public alias/source were independently verified. [Draft PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) preserves the changes without merging main.
+The public alias independently passes signup, real account API `200`, route saving/sharing, one labelled demo walk earning 71 points, sign-out/password sign-in and fresh mobile persistence. Both hosted runs have no browser errors and confirm deletion of the exact temporary Clerk identity and only its application records. The live run completed at `2026-10-23T08:36:58.144Z`. See `account-ready-hosted-verification.json`.
 
-Both staged and live browser runs pass 14 checks at 1440×1000 and 390×844: all five auth entry points, delayed Clerk form loading, real development-instance sign-in, the actual unconfigured-storage `503`, disabled mutations, unknown balances, retry and UI sign-out with API `401` and cleared private markers. No application POSTs or browser errors occurred. Each run's exact temporary Clerk identity was deleted and cleanup verified. The live run completed at `2026-10-23T08:01:11.465Z` (16:01 MYT). See `account-loading-hosted-verification.json`.
+Authentication still uses the existing Clerk development instance and test email OTP; real email delivery and GitHub OAuth are untested. Machine locations and dispensing remain explicitly mock.
 
-This verifies the initial published loading/failure-handling fix. Its observed storage-unavailable result applies to that deployment; the new database connection is being activated separately.
+## Earlier loading/failure-handling release
 
-The reported message appeared after successful Clerk authentication: resolving the application account then required the dedicated database that was unconfigured on Vercel. Initial checks found only the two Clerk variables, zero Turso installations and zero storage resources. An initial free installation attempt returned `integration_terms_acceptance_required` before resource creation. A later retained human-terminal receipt confirmed actual acceptance, allowing the dedicated resource described above to be provisioned. Do not repeat acceptance or create a duplicate database.
+The first UI correction was published as `dpl_Dh8jSEGHM2iYep92DeAwLnXvTSmX`, source `c11d229c546522a9b864a6752e4836c71ec3593f`, before the database variables existed. Its staged/live runs each passed 14 checks covering five auth entry points, delayed Clerk forms, actual storage-unavailable `503`, unknown balances, disabled writes, retry and sign-out with cleared private state. No application POSTs or browser errors occurred; exact temporary-user cleanup was confirmed. That historical result is retained in `account-loading-hosted-verification.json`; it does not describe the current connected release.
 
 ## Interface and API correction
 
@@ -23,7 +23,7 @@ The reported message appeared after successful Clerk authentication: resolving t
 - A persistent notice offers retry. Failed background refreshes no longer generate repeated error toasts or live announcements. Saving, activity submission, consent changes and voucher simulation are blocked until account data is ready.
 - Missing storage configuration returns a safe `503` and `ACCOUNT_STORAGE_NOT_CONFIGURED`. Other account failures use `ACCOUNT_DATA_UNAVAILABLE`; unconfirmed writes instruct the client to refresh before retrying. The server still enforces identity ownership and atomic accounting.
 
-These changes improve loading and failure handling. They do not replace persistent storage with browser data, seed a wallet, or make unavailable hosted earning/redemption operational.
+These states handle temporary storage failures while the connected database supplies persistent account data. Wallet balances are derived from server accounting; no wallet is seeded by this fix.
 
 ## Local verification
 

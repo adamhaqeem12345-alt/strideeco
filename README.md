@@ -4,29 +4,29 @@ Plan a walk through Elmina, compare explicitly labelled building-shadow scenario
 
 ## Account loading and availability
 
-Auth navigation and form mounting now show loading indicators on [strideeco.vercel.app](https://strideeco.vercel.app), initially published as READY deployment `dpl_Dh8jSEGHM2iYep92DeAwLnXvTSmX`, source `c11d229c546522a9b864a6752e4836c71ec3593f`. Account data has loading, ready and unavailable states with retry, unknown balances stay unavailable, and failed refreshes preserve previously verified data while blocking writes. Local checks and 14 staged/live checks pass, including real development-instance sign-in/sign-out and exact fixture cleanup. The dedicated free database is now provisioned and all four migrations verified; a fresh deployment and hosted persistence checks are pending. See [account-loading.md](docs/account-loading.md) and [remote-storage-verification.json](docs/remote-storage-verification.json).
+Account data and auth loading are live on [strideeco.vercel.app](https://strideeco.vercel.app), READY deployment `dpl_8Dy6uJeXc1F1zWQWRQwTSdPerYF6`, application source `d676bb0a3c56f69ce20bac8fdf7e78295202d6ec`. The dedicated free database is connected and all four migrations/checksums verified. Real hosted signup, saved/shared routes, labelled demo points, sign-out/password sign-in and fresh mobile sessions pass; the staged artifact also passes manual-code and independently decoded QR single-use/replay checks. Exact temporary identities and their application records were removed after each run. Navigation and Clerk forms show loading feedback; unavailable/retry states preserve verified data and block uncertain writes. See [account-loading.md](docs/account-loading.md) and [account-ready-hosted-verification.json](docs/account-ready-hosted-verification.json).
 
 ## Brand refresh
 
-The latest footer correction is live at [strideeco.vercel.app](https://strideeco.vercel.app/): READY deployment `dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX`, application source `f8c439115d32067e08bd69e5745543efe80fdabb`. Reduced sidebar spacing keeps the complete footer visible on shorter laptop/tablet windows; independent sidebar scrolling makes it reachable in very short windows. Staged and live browser checks passed for those cases and all four mobile views. See [sidebar-footer-verification.json](docs/sidebar-footer-verification.json).
+The footer correction was published at [strideeco.vercel.app](https://strideeco.vercel.app/) as READY deployment `dpl_FxqVmhRma8cwZBPW3dVtLYcuZNeX`, application source `f8c439115d32067e08bd69e5745543efe80fdabb`. Reduced sidebar spacing keeps the complete footer visible on shorter laptop/tablet windows; independent sidebar scrolling makes it reachable in very short windows. Staged and live browser checks passed for those cases and all four mobile views. See [sidebar-footer-verification.json](docs/sidebar-footer-verification.json).
 
 The initial owner-requested aqua, teal, green, yellow, coral and sky refresh was published as deployment `dpl_F7oFLPEiSigYreePiV6xec8DnNKW`, source `d1b6ad60d47c463303acc674f95f5d38fb826191` from `feature/brand-refresh`. The supplied SVG wordmark appears in navigation/account pages, with its smiling water drop as the favicon. Darker text and controls keep the bright palette readable.
 
-Staged and live anonymous browser checks passed at 320, 390, 768 and 1440 pixels, including proportional logos, exact logo/icon SHA-256 matches, machine-type filtering, account forms and API 401 protection, with no page errors or account writes. Local checks separately passed the production build, TypeScript, 26 domain/ownership tests, contrast/focus checks and independent voucher QR decoding. Hosted account persistence remains deferred with the remote database. See [brand-refresh.md](docs/brand-refresh.md) and [the live verification report](docs/brand-hosted-verification.json).
+Staged and live anonymous browser checks passed at 320, 390, 768 and 1440 pixels, including proportional logos, exact logo/icon SHA-256 matches, machine-type filtering, account forms and API 401 protection, with no page errors or account writes. Local checks separately passed the production build, TypeScript, 26 domain/ownership tests, contrast/focus checks and independent voucher QR decoding. The database was absent at that branding checkpoint; those anonymous checks do not establish hosted account persistence. The later storage activation work is recorded above. See [brand-refresh.md](docs/brand-refresh.md) and [the live verification report](docs/brand-hosted-verification.json).
 
 ## Water vouchers and machine map
 
-The water-only flow adds six clearly labelled mock Elmina machine locations, nearest compatible machine suggestions, type filters and machine-bound vouchers. Each voucher has one code and one downloadable QR for the same single use; the authenticated simulator supports both entry methods. See [water-vouchers.md](docs/water-vouchers.md) for accounting, migration and verification details. Its earlier production release was `dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ`, source `41e1f23b2100bb2b4cf7b8a76ba292e709a0709a`; the current brand release above retains that functionality. The earlier hosted desktop/mobile map/filter and real development-instance UI signup/signin/signout checks passed, with fixture deletion confirmed. The brand release's hosted checks were anonymous. Live earning, shared wallet data and voucher redemption still require the deferred dedicated remote database. The full authenticated flow passes locally with all four migrations; normal laptop development is available at `http://localhost:5173`. [Draft PR #2](https://github.com/adamhaqeem12345-alt/strideeco/pull/2) preserves the earlier feature work; main is unchanged.
+The water-only flow adds six clearly labelled mock Elmina machine locations, nearest compatible machine suggestions, type filters and machine-bound vouchers. Each voucher has one code and one downloadable QR for the same single use; the authenticated simulator supports both methods. The current DB-enabled staged deployment verifies real reservation/accounting, both redemption methods and opposite-method replay rejection. The same immutable release is live with desktop/mobile persistence verified. See [water-vouchers.md](docs/water-vouchers.md). The original feature release was `dpl_BXqkriDNSDyhgHyUc1WAks7ZqntQ`, source `41e1f23b2100bb2b4cf7b8a76ba292e709a0709a`; its map/auth-only hosted results remain historical. [Draft PR #2](https://github.com/adamhaqeem12345-alt/strideeco/pull/2) preserves that work; main is unchanged.
 
 ## Integration status
 
 The earlier authentication release implemented Clerk sign-in/sign-up, account controls, sign-out and server-side account ownership. Its fifteen domain/identity tests, TypeScript and webpack build passed. The same `work/next-clerk-pinned-ui` artifact passed the isolated Clerk API suite, signed-out desktop/mobile checks, real development-instance UI sign-up/sign-in/sign-out, and the authenticated desktop/mobile PACE journey. Browser test users were removed and cleanup verified. These tests used isolated local databases; that checkpoint had three migrations, followed by the fourth migration for machine-bound water vouchers.
 
-The [Clerk preview](https://strideeco-p510kznza-adam-haqeems-projects.vercel.app) is READY at application commit `e27731a882ccb25fef7d2794aa827cd84a99bc9a`. Vercel's standard Linux/Turbopack build passed. Desktop/mobile hosted checks confirm public planning, Clerk sign-in/sign-up forms, the GitHub option, the visible Development mode label and anonymous API rejection. A complete authenticated hosted PACE journey has not been verified.
+An earlier [Clerk preview](https://strideeco-p510kznza-adam-haqeems-projects.vercel.app) was READY at application commit `e27731a882ccb25fef7d2794aa827cd84a99bc9a`. Vercel's standard Linux/Turbopack build passed. Desktop/mobile hosted checks confirmed public planning, Clerk sign-in/sign-up forms, the GitHub option, the visible Development mode label and anonymous API rejection. That preview did not verify a complete authenticated hosted PACE journey.
 
 Clerk authentication is now live on [strideeco.vercel.app](https://strideeco.vercel.app/sign-in), explicitly published at the user's request. The earlier production deployment `dpl_Dt9TT6b5zPzn99f9j6SN9Rn54GHP` was READY at application commit `aa4d35f5bf51cbd0b11ceafe66336309f4036ed6`. Real hosted UI signup, test-email verification, password sign-in, account menu and sign-out passed; mobile sign-in/sign-up forms passed with no overflow. The exact temporary user was deleted and cleanup confirmed.
 
-The live site uses the existing Clerk **development** instance and displays Development mode. No production Clerk instance, remote database, database variables or remote migrations are configured; database setup remains deferred. Hosted saved routes, activities, wallet points and redemptions remain unavailable, with signed-in account-data requests returning 503. See `docs/verification.md` for evidence and limits.
+The live site uses the existing Clerk **development** instance and displays Development mode. The dedicated Turso database and production/development database variables are configured, with all four remote migrations verified. Hosted account API `200`, saved routes, activities and wallet persistence now pass on desktop and a fresh mobile session; mock vouchers are verified on the same staged artifact. No production Clerk instance or owned domain is configured. See `docs/verification.md` for evidence and limits.
 
 Reuse the existing **StrideEco** Clerk application `app_3L3PLlwOzzZZaMzKCu3yv7KjSLe` and development instance `ins_3L3PLmdtUHei2quxSicUcO1ninw`. A fresh `clerk doctor --json` check confirms the saved login, correct application/instance link and local development keys; its remaining warning is that production is not configured. Do not create a replacement application or repeat login unless a safe status check proves the saved session unusable. This checkout uses `CLERK_CONFIG_DIR=C:/Users/User/Documents/Codex/2026-10-07/new-chat-2/work/clerk-cli`.
 
@@ -34,7 +34,7 @@ The development instance's `force_organization_selection` is verified `false`, a
 
 ## Deploy to Vercel
 
-The current brand release was staged, checked and promoted from `feature/brand-refresh` at the user's request. [Draft PR #3](https://github.com/adamhaqeem12345-alt/strideeco/pull/3) retains the release source; GitHub **main** remains unchanged. The earlier authentication work remains in [draft PR #1](https://github.com/adamhaqeem12345-alt/strideeco/pull/1). Use the repository root, **Next.js**, the default `.next` output and the included `vercel.json`. The standard commands are `npm ci` and `npm run build`. `.vercelignore` excludes tests, work files, environment files and local databases from CLI deployment uploads. No Cloudflare account or Sites runtime is required by the active app.
+The latest account-data/loading release was staged, checked and promoted from `fix/account-data-loading` at the user's request. [Draft PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) preserves it; [draft PR #3](https://github.com/adamhaqeem12345-alt/strideeco/pull/3) preserves the earlier branding work, and GitHub **main** remains unchanged. The earlier authentication work remains in [draft PR #1](https://github.com/adamhaqeem12345-alt/strideeco/pull/1). Use the repository root, **Next.js**, the default `.next` output and the included `vercel.json`. Standard commands are `npm ci` and `npm run build`. `.vercelignore` excludes tests, work files, environment files and local databases from CLI uploads.
 
 **The public route planner deploys without credentials.** Persistent account features require these environment variables:
 
@@ -51,21 +51,11 @@ A deployment on `*.vercel.app` can use the existing Clerk **development** instan
 
 ### Minimal remote persistence
 
-**Setup was previously deferred and is now blocked on the team's Turso installation.** The current account-data fix request resumes this work. Use one dedicated **free** [Turso Cloud Vercel Marketplace resource](https://vercel.com/marketplace/tursocloud) connected only to the existing `strideeco` project (`prj_FvTRxoEPeOR71PGe4KGLslAaiWVN`, team `team_dkd2AminqynD5q6GdLALg75T`). CLI authentication and the project link work. After reported human acceptance, a fresh authorized free installation attempt still returned `integration_terms_acceptance_required`, before creating a resource. Native acceptance reports: "Term acceptance cannot be performed by an AI agent. Run this command directly in your terminal." The human-run interactive command is:
+**Provisioning is complete.** After verified human terms acceptance, one dedicated **free** [Turso Cloud Vercel Marketplace resource](https://vercel.com/marketplace/tursocloud), `strideeco-demo` on the Starter plan in `iad1`, was connected only to the existing `strideeco` project (`prj_FvTRxoEPeOR71PGe4KGLslAaiWVN`, team `team_dkd2AminqynD5q6GdLALg75T`) in production and development. The integration supplies `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`; their values remain private. All four migrations, stored checksums and an unchanged rerun are verified. The laptop's local environment was preserved. See [remote-storage-verification.json](docs/remote-storage-verification.json).
 
-```powershell
-npx vercel --scope adam-haqeems-projects integration accept-terms tursocloud
-```
+Do not repeat terms acceptance or provisioning, create a duplicate resource, reuse another project's database, or enable paid options/overages. Clerk stores identities; the existing dedicated database stores StrideEco routes, activities, wallets and redemptions. Hosted activation and the public alias are verified; see the current release above.
 
-After acceptance is confirmed server-side, verify the `starter` plan remains free, then provision and connect only the dedicated resource:
-
-```powershell
-npx vercel --scope adam-haqeems-projects integration add tursocloud --name strideeco-demo --plan starter --metadata region=iad1 --environment production --environment development --no-env-pull
-```
-
-Leave paid options and overages disabled; do not reuse another project's database or repeat provisioning after a resource has already been created. The integration supplies `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`. Verify their names without printing values and transfer target credentials privately for migration. Clerk stores identities; it does not store StrideEco routes, activities, wallets or redemptions.
-
-After configuring the target database environment securely, apply the migrations from a trusted terminal:
+For future migration runs, configure the existing target database environment securely and use a trusted terminal:
 
 ```sh
 npm ci
@@ -127,7 +117,7 @@ npm test
 npm run build
 ```
 
-`npm test` runs 26 routing, accounting, identity, machine, voucher and migration tests. The nine identity-ownership tests cover legacy data preservation, rejected unverified/editable claims, canonical numeric provider IDs, stable existing mappings, concurrent duplicate/competing claims, duplicate ownership, ambiguous legacy matches and mismatched server identities.
+`npm test` runs 28 routing, accounting, identity, machine, voucher and migration tests. The nine identity-ownership tests cover legacy data preservation, rejected unverified/editable claims, canonical numeric provider IDs, stable existing mappings, concurrent duplicate/competing claims, duplicate ownership, ambiguous legacy matches and mismatched server identities.
 
 After a build, `node scripts/verify-local.mjs` runs the isolated API/database harness with a temporary database and ephemeral RSA-signed sessions verified by Clerk's SDK. The corrected harness passes against `work/next-clerk-pinned-ui`, including token/header rejection, account isolation, sharing, replay-safe credits and reservation accounting; `outputs/vercel-api-report.json` records this run. It exercises session verification and data rules, not a real Clerk sign-in round trip. No production bypass endpoint is provided.
 
@@ -144,7 +134,7 @@ The runner refuses production keys, starts a separate server at `http://localhos
 
 In `finally`, the runner queries only the exact generated email and deletes that one Clerk development user if uniquely matched, then stops its server. Ambiguous identity or unconfirmed cleanup fails the run. Existing users are not selected or deleted; temporary local database files remain local. Reports are `outputs/clerk-browser-auth-report.json` and `outputs/e2e-report.json`. Do not run the child browser tests with a guessed user's email or upload their fixture variables to Vercel.
 
-See `docs/verification.md` for current results. Remote persistence, a complete live Clerk browser round trip, physical handset GPS and actual vending hardware each require their own evidence.
+See `docs/verification.md` for checkpoint-specific results. Hosted account persistence now passes on desktop and a fresh mobile session. These browser checks do not establish physical handset GPS, real GitHub OAuth or actual vending hardware.
 
 ## Source branches and main code
 
