@@ -2,6 +2,10 @@
 
 Plan a walk through Elmina, compare explicitly labelled building-shadow scenarios, record an activity and try a simulated drinking-water reward. The PACE interface supports planning, saving, sharing, wallet access and water redemption on phone and desktop layouts; account features also need configured authentication and an application database.
 
+## Supporting appendices
+
+Read the [four supporting PDFs (A1-A4)](docs/appendices/README.md): research and evidence, technical design, pilot measurement, and financial assumptions/costs. A4 is the financial appendix referenced in the presentation.
+
 ## Shared source of truth
 
 Use [GitHub `main`](https://github.com/adamhaqeem12345-alt/strideeco/tree/main) for the shared app. [PR #4](https://github.com/adamhaqeem12345-alt/strideeco/pull/4) consolidates the verified authentication, points, mock machine/voucher map, branding, footer and account-data changes into `main`. The earlier feature branches preserve development history.
