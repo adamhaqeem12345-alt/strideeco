@@ -109,3 +109,17 @@ input,select,textarea{font-size:16px!important}
 .save-share{width:100%}
 .date-time{grid-template-columns:1fr}
 }
+
+/* Let the wordmark share the phone header with a readable account balance. */
+@media(max-width:740px){
+.topbar{gap:12px}
+.mobile-brand{flex:1 1 100px;width:auto;max-width:155px;min-width:0}
+.brand-lockup-mobile,.brand-lockup-mobile .brand-wordmark{width:100%}
+.topbar-actions{flex:0 0 auto;gap:8px;min-width:0;max-width:calc(100% - 90px)}
+.topbar-actions>.sign-in{flex-shrink:0;white-space:nowrap}
+.wallet-chip{flex:0 1 auto;min-width:0;max-width:132px;gap:5px;white-space:nowrap}
+.wallet-chip strong{min-width:0;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.wallet-chip>span{flex-shrink:0}
+.topbar-actions>.avatar{flex-shrink:0;width:44px;height:44px}
+.topbar-actions .cl-userButtonTrigger{min-width:44px;min-height:44px;justify-content:center}
+}
