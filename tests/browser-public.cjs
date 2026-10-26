@@ -34,6 +34,7 @@ const report = extra => fs.writeFileSync(reportPath, JSON.stringify({ startedAt,
       await page.getByRole('heading', { name: 'Your next little escape.', exact: true }).waitFor();
       assert.ok(await page.locator('.route-option').count() > 0);
       assert.ok((await page.locator('.route-shade').first().innerText()).includes('unavailable'));
+      await page.locator('summary').filter({ hasText: 'Shade & sun settings' }).click();
       await page.getByRole('checkbox', { name: 'Enable assumed-height shade scenario' }).check();
       await page.getByLabel('Assumed building height').selectOption('9');
       assert.ok((await page.locator('.route-shade').first().innerText()).includes('scenario'));

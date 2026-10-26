@@ -1,0 +1,42 @@
+.journey{margin:0 0 26px;border:1px solid var(--border);border-radius:18px;background:#f5fffd;overflow:hidden}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:9px;gap:8px}
+.step{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:8px;border-radius:12px;color:var(--muted);font-size:14px;font-weight:700;min-width:0}
+.step:hover{background:#e1f8f4}.step:focus-visible{outline:2px solid var(--green-dark);outline-offset:-2px}
+.current{background:#fff;border:1px solid #69c6c5;color:var(--ink);box-shadow:0 3px 10px #0c343c08}
+.letter{display:grid;place-items:center;flex-shrink:0;width:30px;height:30px;border-radius:50%;color:var(--ink);background:var(--lime);font-weight:800}
+.letter[data-step=act]{background:var(--yellow)}.letter[data-step=collect]{background:var(--coral)}.letter[data-step=exchange]{background:var(--sky)}
+.nextStep{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--border);padding:14px 18px}
+.nextStep p{font-size:13px;line-height:1.6;color:var(--muted)}.nextStep p strong{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--green-dark);margin-bottom:2px}
+.nextStep>button{flex-shrink:0}
+.shadeOptions{margin:20px 0 18px;padding:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.shadeOptions>summary{display:flex;align-items:center;gap:8px;list-style:none;cursor:pointer;min-height:52px;padding:12px 0;font-size:13px;font-weight:700;color:var(--green-dark)}
+.shadeOptions>summary::-webkit-details-marker{display:none}
+.shadeOptions>summary::after{content:'+';margin-left:auto;font-size:22px;font-weight:400}
+.shadeOptions[open]>summary::after{content:'−'}
+.shadeOptions>summary>span{margin-left:auto;font-size:11px;font-weight:500;color:var(--muted)}
+.shadeOptions[open]>summary{border-bottom:1px solid var(--border);margin-bottom:14px}
+.shadeOptions .shadeHint{font-size:12px;line-height:1.6;color:var(--muted);margin:0 0 14px}
+.pointsProgress{border:1px solid #9adfdc;border-radius:14px;padding:17px;background:#f5fffd;color:var(--ink);margin:18px 0}
+.progressTop{display:flex;align-items:center;justify-content:space-between;gap:12px}.progressTop strong{font-size:16px;font-weight:800;line-height:1.4}.progressTop>svg{flex-shrink:0;color:var(--green-dark)}
+.progressTrack{height:9px;border-radius:20px;background:#d9f1e8;overflow:hidden;margin:12px 0}
+.progressTrack>span{height:100%;display:block;border-radius:20px;background:var(--green);transition:width .25s}
+.pointsProgress p{font-size:13px;line-height:1.65;margin-top:10px;color:var(--ink)}.pointsProgress small{display:block;font-size:11px;line-height:1.6;margin-top:9px;color:var(--muted)}
+.collectLayout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr);gap:24px;align-items:start}
+.collectCard{padding:30px}.collectCard>h2{font-size:26px;font-weight:800;margin:14px 0 10px;line-height:1.2}
+.collectCard>p{font-size:14px;line-height:1.7;color:var(--muted)}
+.earned{display:flex;align-items:baseline;gap:10px;margin:18px 0;color:var(--green-dark)}.earned strong{font-size:50px;font-weight:800;line-height:1}.earned span{font-size:13px}
+.collectActions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.collectActions>button{flex:1}
+.collectHistory{margin-top:18px}.collectHistory>div{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}.collectHistory>div:last-child{border:0}
+.collectHistory strong{font-size:13px}.collectHistory small{display:block;font-size:12px;line-height:1.6;color:var(--muted);margin-top:3px}.collectHistory>div>span{font-size:14px;font-weight:700;white-space:nowrap;color:var(--green-dark)}
+.townshipLink{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:12px;padding:8px 0;color:var(--green-dark);font-size:13px;font-weight:700;text-align:left}
+.footerLinks{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:8px 18px}
+@media(max-width:1000px){.collectLayout{grid-template-columns:1fr}}
+@media(max-width:740px){
+.pageHeading h1{font-size:clamp(27px,7.5vw,32px)}
+.pageHeading :global(.saved-button){font-size:0;min-width:52px;min-height:44px;margin-top:26px;gap:5px;padding:8px}
+.journey{margin-bottom:22px;border-radius:15px}.steps{padding:6px;gap:3px}.step{gap:5px;padding:8px 2px;font-size:12px;min-height:44px}.letter{display:none}
+.nextStep{padding:11px 13px;align-items:center;gap:10px}.nextStep p{flex:1;font-size:12px}.nextStep p strong{display:none}.nextStep>button{max-width:50%;min-height:44px;padding:8px 10px;font-size:12px;white-space:normal}
+.pointsProgress{padding:15px}.progressTop strong{font-size:16px}.collectCard{padding:22px}.collectCard>h2{font-size:24px}.collectActions{flex-direction:column}.collectActions>button{width:100%;min-height:44px}
+.footerLinks{justify-content:center;gap:0 15px}.shadeOptions>summary>span{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.progressTrack>span{transition:none}}

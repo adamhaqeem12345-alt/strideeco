@@ -1,14 +1,16 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Plus, Minus, LocateFixed, MapPin, Layers, ArrowUpRight } from 'lucide-react';
+import { Plus, Minus, LocateFixed, MapPin, Layers, ArrowUpRight, Sun, Snowflake, Droplets } from 'lucide-react';
 import { mapData, project, unproject, walkways, type Coordinate, type RouteOption, type XY } from '../lib/geo';
 import { machineTypes, type Machine, type MachineType } from '../lib/machines';
+import styles from './route-map.module.css';
 
 const path = (coords: Coordinate[]) => coords.map(p => project(p).join(',')).join(' ');
 const xyPath = (coords: XY[]) => coords.map(p => p.join(',')).join(' ');
 const NO_MACHINES: Machine[] = [];
 const machineColors: Record<MachineType, string> = { 'bottled-ambient': '#81ff7d', 'bottled-chilled': '#42c3fe', refill: '#fe7f82' };
-const machineLetters: Record<MachineType, string> = { 'bottled-ambient': 'A', 'bottled-chilled': 'C', refill: 'R' };
+const machineIcons = { 'bottled-ambient': Sun, 'bottled-chilled': Snowflake, refill: Droplets };
+const machineLabels: Record<MachineType, string> = { 'bottled-ambient': 'Ambient', 'bottled-chilled': 'Chilled', refill: 'Refill' };
 
 type Props = {
   routes?: RouteOption[]; route?: RouteOption; shadows?: XY[][]; picking?: string | null;
@@ -62,7 +64,8 @@ export default function RouteMap({ routes = [], route, shadows = [], picking, on
     if (matrix) { const p = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse()); return [p.x, p.y]; }
     return [bounds.cx + (event.clientX - rect.left - rect.width / 2) / rect.width * viewWidth, bounds.cy + (event.clientY - rect.top - rect.height / 2) / rect.height * viewHeight];
   };
-  return <div className={`route-map ${compact ? 'compact-map' : ''} ${picking ? 'is-picking' : ''}`}>
+  return <div className={`route-map ${compact ? 'compact-map' : ''} ${picking ? 'is-picking' : ''} ${machinePins.length ? styles.withMachineKey : ''}`}>
+    <div className={styles.viewport}>
     <svg ref={svg} className="map-canvas" viewBox={viewBox} role={machinePins.length ? 'group' : 'img'} aria-label={`Interactive map of OpenStreetMap walking paths around Elmina Central Park and Urban Park${machinePins.length ? ' with illustrative mock water machine locations' : ''}`} onPointerDown={e => {
       if (e.pointerType === 'mouse' && !picking) { drag.current = { x: e.clientX, y: e.clientY, pan, moved: false }; e.currentTarget.setPointerCapture(e.pointerId); }
     }} onPointerMove={e => { if (!drag.current) return; const dx = e.clientX - drag.current.x, dy = e.clientY - drag.current.y; if (Math.hypot(dx, dy) > 3) drag.current.moved = true; const rect = e.currentTarget.getBoundingClientRect(); setPan([drag.current.pan[0] - dx / rect.width * viewWidth, drag.current.pan[1] - dy / rect.height * viewHeight]); }} onPointerUp={e => { if (picking && onPick) onPick(unproject(position(e))); drag.current = null; }} onPointerCancel={() => { drag.current = null; }}>
@@ -91,6 +94,7 @@ export default function RouteMap({ routes = [], route, shadows = [], picking, on
       {machinePins.map(machine => {
         const selected = machine.id === selectedMachineId;
         const label = machineTypes.find(type => type.id === machine.type)!.label;
+        const Icon = machineIcons[machine.type];
         return <g key={machine.id} className="machine-map-pin" data-machine-id={machine.id} data-machine-type={machine.type} data-selected={selected}
           transform={`translate(${project(machine.coordinate).join(',')}) scale(${markerScale})`}
           role={onSelectMachine ? 'button' : 'img'} tabIndex={onSelectMachine ? 0 : undefined}
@@ -102,16 +106,24 @@ export default function RouteMap({ routes = [], route, shadows = [], picking, on
           <circle className="machine-pin-halo" r="22" fill="transparent" stroke={selected ? '#087c80' : 'transparent'} strokeWidth="2" strokeDasharray={selected ? '3 3' : undefined}/>
           <circle r="16" fill="white" stroke="#0c343c" strokeWidth={selected ? 3 : 2}/>
           <circle r="12" fill={machineColors[machine.type]}/>
-          <text y="4" textAnchor="middle" fontSize="12" fontFamily="Arial, sans-serif" fontWeight="700" fill="#0c343c" pointerEvents="none">{machineLetters[machine.type]}</text>
+          <Icon x="-10" y="-10" width="20" height="20" color="#0c343c" strokeWidth="2" aria-hidden="true" focusable="false" pointerEvents="none"/>
         </g>;
       })}
     </svg>
     <div className="map-area-label"><MapPin size={14}/><span>City of Elmina</span><span className="map-label-dot"/>Public map data</div>
-    {machinePins.length > 0 && <div className="map-machine-note" role="note"><strong>{machinePins.length} mock water stops</strong>{viewportSize.width >= 400 && viewportSize.height >= 400 && <span>Illustrative locations · A ambient · C chilled · R refill</span>}</div>}
+    {machinePins.length > 0 && <div className="map-machine-note" role="note"><strong>{machinePins.length} mock water stops</strong><span>Illustrative locations</span></div>}
     {picking && <div className="map-pick-hint"><MapPin size={16}/>Tap a mapped path to choose your {picking}</div>}
     <div className="map-controls"><button aria-label="Zoom in" onClick={() => setZoom(z => Math.min(4, z * 1.35))}><Plus size={18}/></button><button aria-label="Zoom out" onClick={() => setZoom(z => Math.max(.5, z / 1.35))}><Minus size={18}/></button><span/><button aria-label={machineOverview ? 'Fit mock water stops on map' : 'Fit route on map'} onClick={() => { setZoom(1); setPan([0, 0]); }}><LocateFixed size={18}/></button></div>
     <button className={`map-layers ${!context ? 'selected' : ''}`} aria-label="Toggle neighbourhood context" aria-pressed={!context} onClick={() => setContext(v => !v)}><Layers size={17}/><span>Layers</span></button>
     <div className="map-north"><ArrowUpRight size={18}/><span>N</span></div>
     <a className="map-attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>
+    </div>
+    {machinePins.length > 0 && <div className={styles.machineKey} role="group" aria-label="Map key for mock water machine types">
+      <strong>Mock water types</strong>
+      <ul>{machineTypes.map(type => {
+        const Icon = machineIcons[type.id];
+        return <li key={type.id} title={type.label}><span className={styles.keyIcon} style={{ backgroundColor: machineColors[type.id] }}><Icon size={15} strokeWidth={2} aria-hidden="true"/></span><span>{machineLabels[type.id]}</span></li>;
+      })}</ul>
+    </div>}
   </div>;
 }
