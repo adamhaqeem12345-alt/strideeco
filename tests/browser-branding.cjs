@@ -184,7 +184,7 @@ async function responseFor(page, action, activate) {
     await page.getByRole('button', { name: /The scenic alternative/ }).click();
     await page.locator('.desktop-nav').getByRole('button', { name: 'My activity', exact: true }).click();
     const activity = await responseFor(page, 'activity', () => page.getByRole('button', { name: 'Try a demo walk', exact: true }).click());
-    assert.equal(activity.status(), 200); await page.getByRole('heading', { name: 'Look at you go.', exact: true }).waitFor();
+    assert.equal(activity.status(), 200); await page.getByRole('heading', { name: 'Every step adds up.', exact: true }).waitFor();
     await page.locator('.desktop-nav').getByRole('button', { name: 'Water rewards', exact: true }).click();
     const reserved = await responseFor(page, 'reserve-water', () => page.getByRole('button', { name: 'Redeem drinking water', exact: true }).click());
     assert.equal(reserved.status(), 200);

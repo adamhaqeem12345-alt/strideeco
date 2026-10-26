@@ -105,7 +105,7 @@ async function signedInAvailability(browser, surface, viewport) {
       await page.getByRole('button', { name: /The scenic alternative/ }).click();
       await page.locator('.desktop-nav').getByRole('button', { name: 'My activity', exact: true }).click();
       const credited = await mutationResponse(page, 'activity', () => page.getByRole('button', { name: 'Try a demo walk', exact: true }).click());
-      await page.getByRole('heading', { name: 'Look at you go.', exact: true }).waitFor();
+      await page.getByRole('heading', { name: 'Every step adds up.', exact: true }).waitFor();
       assert.ok(credited.wallet.points > before.wallet.points);
       assert.equal(credited.activities[0].source, 'demo');
       checks.push('ready desktop account saves a real route and credits a labelled demo through the isolated server');

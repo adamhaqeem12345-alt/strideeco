@@ -12,6 +12,8 @@ import { testPublishableKey, testSecretKey } from '../tests/test-session.mjs';
 // No real Clerk app is created and no production authentication bypass exists.
 const port = 5187;
 const publicOnly = process.argv.includes('--public-only');
+const prototype = process.argv.includes('--prototype');
+if (publicOnly && prototype) throw new Error('Choose either --public-only or --prototype.');
 await access(path.join(process.env.STRIDEECO_BUILD_DIR || '.next', 'BUILD_ID')).catch(() => {
   throw new Error('Build the application first, and set STRIDEECO_BUILD_DIR to that production build directory.');
 });
@@ -61,7 +63,7 @@ try {
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
   if (!ready) throw new Error('Local production server did not become ready.');
-  const test = publicOnly ? 'tests/browser-public.cjs' : 'tests/vercel-api.mjs';
+  const test = publicOnly ? 'tests/browser-public.cjs' : prototype ? 'tests/browser-prototype.cjs' : 'tests/vercel-api.mjs';
   process.exitCode = await new Promise((resolve, reject) => {
     const testProcess = spawn(process.execPath, [test], { env, stdio: 'inherit' });
     testProcess.once('error', reject);

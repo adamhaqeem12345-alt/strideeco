@@ -96,7 +96,7 @@ async function markerCentersHitTheirOwnPin(directory, surface) {
       if (await another.isVisible()) await another.click();
       const credited = await actionResponse(page, 'activity', () => page.getByRole('button', { name: 'Try a demo walk', exact: true }).click());
       assert.equal(credited.status(), 200);
-      await page.getByRole('heading', { name: 'Look at you go.', exact: true }).waitFor();
+      await page.getByRole('heading', { name: 'Every step adds up.', exact: true }).waitFor();
       const after = await apiState(desktop);
       assert.ok(after.wallet.points > funded.wallet.points);
       assert.equal(after.activities[0].source, 'demo');
