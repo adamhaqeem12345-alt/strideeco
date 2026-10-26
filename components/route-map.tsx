@@ -17,10 +17,10 @@ type Props = {
   onPick?: (point: Coordinate) => void; live?: Coordinate[]; compact?: boolean;
   machines?: readonly Machine[]; selectedMachineId?: string | null;
   onSelectMachine?: (machine: Machine) => void; machineOverview?: boolean;
-  referencePoint?: Coordinate;
+  referencePoint?: Coordinate; tourTarget?: string;
 };
 export default function RouteMap({ routes = [], route, shadows = [], picking, onPick, live = [], compact,
-  machines = NO_MACHINES, selectedMachineId, onSelectMachine, machineOverview = false, referencePoint }: Props) {
+  machines = NO_MACHINES, selectedMachineId, onSelectMachine, machineOverview = false, referencePoint, tourTarget }: Props) {
   const svg = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(1), [pan, setPan] = useState<XY>([0, 0]), [context, setContext] = useState(true);
   const [viewportSize, setViewportSize] = useState({ width: 800, height: 800 / 1.2 });
@@ -64,7 +64,7 @@ export default function RouteMap({ routes = [], route, shadows = [], picking, on
     if (matrix) { const p = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse()); return [p.x, p.y]; }
     return [bounds.cx + (event.clientX - rect.left - rect.width / 2) / rect.width * viewWidth, bounds.cy + (event.clientY - rect.top - rect.height / 2) / rect.height * viewHeight];
   };
-  return <div className={`route-map ${compact ? 'compact-map' : ''} ${picking ? 'is-picking' : ''} ${machinePins.length ? styles.withMachineKey : ''}`}>
+  return <div className={`route-map ${compact ? 'compact-map' : ''} ${picking ? 'is-picking' : ''} ${machinePins.length ? styles.withMachineKey : ''}`} data-tour={tourTarget}>
     <div className={styles.viewport}>
     <svg ref={svg} className="map-canvas" viewBox={viewBox} role={machinePins.length ? 'group' : 'img'} aria-label={`Interactive map of OpenStreetMap walking paths around Elmina Central Park and Urban Park${machinePins.length ? ' with illustrative mock water machine locations' : ''}`} onPointerDown={e => {
       if (e.pointerType === 'mouse' && !picking) { drag.current = { x: e.clientX, y: e.clientY, pan, moved: false }; e.currentTarget.setPointerCapture(e.pointerId); }

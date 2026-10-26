@@ -22,6 +22,7 @@ const report = extra => fs.writeFileSync(reportPath, JSON.stringify({ startedAt,
       ['mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
     ]) {
       const context = await browser.newContext(options);
+      await context.addInitScript(() => { try { localStorage.setItem('strideeco:onboarding:v1', 'skipped'); } catch {} });
       const page = await context.newPage();
       const writes = [];
       page.on('pageerror', error => browserErrors.push(`${name}: ${error.message}`));

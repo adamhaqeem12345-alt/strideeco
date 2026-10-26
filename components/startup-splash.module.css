@@ -1,0 +1,94 @@
+.guard,
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overscroll-behavior: contain;
+  touch-action: none;
+}
+
+.guard {
+  outline: none;
+}
+
+.splash {
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow: hidden;
+  background: var(--sky, #42c3fe);
+  color: var(--ink, #0c343c);
+  cursor: progress;
+  opacity: 1;
+  transition: opacity 180ms ease-out;
+}
+
+.exiting {
+  opacity: 0;
+}
+
+.disc {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(660px, 86vw, 78svh);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 24px 70px #0c343c14;
+}
+
+.logo {
+  display: block;
+  width: 79%;
+  height: auto;
+  margin: 0;
+  object-fit: contain;
+}
+
+.progress {
+  position: absolute;
+  right: 34%;
+  bottom: 26%;
+  left: 34%;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #34afab26;
+}
+
+.progress > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green, #087c80);
+  animation: openingPulse 1.15s ease-in-out infinite;
+}
+
+.status {
+  position: absolute;
+  right: 16px;
+  bottom: 16%;
+  left: 16px;
+  margin: 0;
+  color: var(--muted, #456a70);
+  font: 500 clamp(12px, 1.05vw, 15px) / 1.5 var(--font-sans, 'Segoe UI', sans-serif);
+  text-align: center;
+}
+
+@keyframes openingPulse {
+  0%, 100% { opacity: .45; transform: scaleX(.42); }
+  50% { opacity: 1; transform: scaleX(.9); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash {
+    transition: none;
+  }
+
+  .progress > span {
+    animation: none;
+    transform: none;
+  }
+}

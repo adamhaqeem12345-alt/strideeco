@@ -8,7 +8,7 @@ Read the [four supporting PDFs (A1-A4)](docs/appendices/README.md): research and
 
 ## Prototype walkthrough
 
-Follow Plan, Act, Collect and Exchange in the on-screen PACE guide. Collect connects completed activities to points and water rewards; optional shade controls can be expanded in the planner. Mock machine icons identify ambient, chilled and refill stops. The footer and profile link to a clearly labelled sample township-insights preview. See [walkthrough details and boundaries](docs/prototype-walkthrough.md).
+The homepage opens on the map after a brief branded loading screen. First-time signed-out visitors can opt into a dimmed quick tour or skip it; signed-in users go straight to the planner. Reopen the guide with Show me around in the footer or profile. Collect connects completed activities to points and water rewards, optional shade controls keep planning compact, and mock machine icons identify water types. The footer and profile also link to clearly labelled sample township insights. See [walkthrough details and boundaries](docs/prototype-walkthrough.md).
 
 ## Shared source of truth
 
