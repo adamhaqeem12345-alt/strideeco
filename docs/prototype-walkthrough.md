@@ -1,6 +1,10 @@
 # Prototype walkthrough improvements
 
-The resident journey now has an explicit Plan, Act, Collect and Exchange guide. Each step is a navigation button; the highlighted step describes the current screen, not a claim that earlier steps were completed. Finishing an accepted GPS or labelled demo activity opens Collect automatically. Collect explains saved points and links to the existing mock water-reward flow.
+The homepage opens directly on route planning and the map, without a permanent PACE guide panel. A first-time signed-out visitor can choose an optional quick tour or skip it. The tour dims the page and highlights the map, planning controls, activity controls, collected progress and mock rewards. The browser remembers skip/completion choices; **Show me around** in the footer and profile reopens it. Signed-in users are never offered the tour automatically.
+
+A brief StrideEco splash uses the existing wordmark, a white disc and the sky-blue brand colour while the app and authentication status initialize. Reduced-motion preferences are respected. A bounded timeout releases the splash if initialization is slow; automatic onboarding still waits for authentication status to be known, so a signed-in user is not mistaken for a new guest.
+
+Finishing an accepted GPS or labelled demo activity opens Collect automatically. Collect explains saved points and links to the existing mock water-reward flow.
 
 The planner keeps date, time and route selection visible while placing the detailed sun chart and assumed-height scenario inside **Shade & sun settings**. Closing that section preserves the current settings; a **Scenario on** label makes an enabled scenario visible while collapsed.
 
@@ -13,7 +17,7 @@ Mock water stops use ambient, chilled and refill icons with a persistent labelle
 ## Verification
 
 - Production build and TypeScript checks.
-- Anonymous production-rendered browser checks at phone, tablet and desktop widths, including PACE navigation, collapsed settings, machine filtering and sample labels.
+- Anonymous production-rendered browser checks at phone, tablet and desktop widths, including first-visit opt-in/skip, returning and signed-in entry, optional tour navigation, collapsed settings, machine filtering and sample labels.
 - Isolated actual-component journey with a temporary local database and SDK-verified synthetic session: saved route, demo points, automatic Collect, simulated QR redemption and a fresh mobile session.
 - Progress checks around the reward threshold, reserved balance and unknown account states.
 

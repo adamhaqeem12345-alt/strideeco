@@ -6,7 +6,7 @@ function ConnectedApp() {
   const { isLoaded, isSignedIn, userId } = useAuth();
   // Reset private in-memory UI whenever the active Clerk account changes.
   return <StrideApp key={userId ?? 'guest'} signedIn={isLoaded && Boolean(isSignedIn)}
-    authAvailable signInPath="/sign-in" signOutPath="/signout" />;
+    authAvailable authReady={isLoaded} signInPath="/sign-in" signOutPath="/signout" />;
 }
 
 export default function AccountApp({ authAvailable }: { authAvailable: boolean }) {

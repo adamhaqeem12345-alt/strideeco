@@ -1,0 +1,57 @@
+.layer { position: fixed; inset: 0; z-index: 1000; overflow: hidden; isolation: isolate; color: #0c343c; overscroll-behavior: none; }
+.layer, .layer *, .layer *::before, .layer *::after { box-sizing: border-box; }
+.dimmer { position: absolute; inset: 0; background: #0c343c88; }
+.spotlight { position: absolute; border: 3px solid #ffe165; border-radius: 15px; background: transparent; box-shadow: 0 0 0 9999px #0c343c88, inset 0 0 0 1px #0c343c25; pointer-events: none; }
+.coachmark { position: absolute; z-index: 1; width: min(368px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; overscroll-behavior: contain; padding: 24px; border: 1px solid #a7dcd6; border-radius: 21px; background: #fff; color: #0c343c; box-shadow: 0 16px 60px #001f3050; font-family: var(--font-sans, 'Trebuchet MS', 'Segoe UI', Arial, sans-serif); }
+.coachmark *, .coachmark *::before, .coachmark *::after { box-sizing: border-box; }
+.offer { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.coachmark h2 { margin: 14px 0 10px; color: #0c343c; font-size: 25px; font-weight: 800; letter-spacing: -.7px; line-height: 1.22; }
+.coachmark h2:focus { outline: none; }
+.close { position: absolute; top: 9px; right: 9px; display: grid; place-items: center; width: 36px; height: 36px; padding: 6px; border: 0; border-radius: 10px; background: transparent; color: #456a70; cursor: pointer; }
+.close:hover { background: #eafffc; color: #055a61; }
+.coachmark button:focus-visible { outline: 3px solid #055a61; outline-offset: 3px; }
+.badge { display: inline-flex; align-items: center; min-height: 25px; margin-right: 24px; padding: 5px 10px; border: 1px solid #dfc45e; border-radius: 999px; background: #ffe165; color: #0c343c; font-size: 11px; font-weight: 800; line-height: 1.3; }
+.stepMeta { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-right: 24px; color: #456a70; font-size: 11px; line-height: 1.5; }
+.stepMeta strong { color: #055a61; font-size: 11px; font-weight: 800; }
+.progress { display: flex; gap: 5px; margin: 11px 0 18px; }
+.progress span { flex: 1; height: 4px; border-radius: 5px; background: #dcece7; }
+.progress span[data-reached='true'] { background: #087c80; }
+.icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin-top: 18px; border: 1px solid #aadfd3; border-radius: 14px; background: #e0fff0; color: #055a61; }
+.description { margin: 0; color: #456a70; font-size: 13px; line-height: 1.7; }
+.note { display: flex; align-items: flex-start; gap: 8px; margin-top: 17px; padding: 12px; border: 1px solid #d8e9df; border-radius: 11px; background: #f4fcf7; color: #456a70; }
+.note > svg { flex-shrink: 0; margin-top: 2px; color: #055a61; }
+.note p { margin: 0; font-size: 11px; line-height: 1.65; }
+.waiting { margin: 10px 0 0; color: #055a61; font-size: 11px; line-height: 1.5; }
+.actions { display: flex; gap: 10px; margin-top: 21px; }
+.primary, .secondary { display: inline-flex; align-items: center; justify-content: center; gap: 7px; flex: 1; min-height: 44px; min-width: 0; padding: 10px 12px; border: 1px solid transparent; border-radius: 11px; font: inherit; font-size: 12px; font-weight: 700; line-height: 1.4; text-align: center; cursor: pointer; }
+.primary { flex-grow: 1.3; border-color: #087c80; background: #087c80; color: #fff; }
+.primary:hover { background: #055a61; border-color: #055a61; }
+.secondary { border-color: #9adfdc; background: #fff; color: #055a61; }
+.secondary:hover:not(:disabled) { background: #eafffc; }
+.secondary:disabled { opacity: .45; cursor: not-allowed; }
+.skip { display: block; min-height: 36px; margin: 6px auto -7px; padding: 9px 14px; border: 0; border-radius: 8px; background: transparent; color: #456a70; font: inherit; font-size: 11px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.skip:hover { color: #055a61; background: #f4fcf7; }
+@media (max-width: 740px) {
+  .coachmark { padding: 21px; border-radius: 18px; }
+  .coachmark h2 { font-size: 23px; }
+  .description { font-size: 12px; }
+  .icon { width: 42px; height: 42px; margin-top: 15px; border-radius: 12px; }
+  .close { top: 5px; right: 5px; width: 44px; height: 44px; }
+  .stepMeta { padding-right: 25px; }
+  .note { margin-top: 14px; padding: 10px; }
+  .actions { margin-top: 17px; gap: 8px; }
+  .primary, .secondary { padding: 10px 9px; }
+  .skip { min-height: 44px; margin-bottom: -10px; }
+}
+@media (max-height: 620px) {
+  .coachmark { padding: 17px; }
+  .icon { display: none; }
+  .coachmark h2 { margin-top: 13px; font-size: 22px; }
+  .description { font-size: 12px; }
+  .note { margin-top: 12px; }
+  .actions { margin-top: 14px; }
+  .progress { margin-bottom: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .layer *, .layer *::before, .layer *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

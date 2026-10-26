@@ -58,9 +58,13 @@ async function run() {
         import PointsProgress from './components/points-progress';
         const root = createRoot(document.getElementById('fixture'));
         let revision = 0;
-        window.__renderPrototype = signedIn => flushSync(() => root.render(<StrideApp key={++revision} signedIn={signedIn} authAvailable={false} signInPath="/sign-in" signOutPath="/signout"/>));
+        let currentProps = { signedIn: false, authReady: true };
+        const drawApp = () => root.render(<StrideApp key={revision} {...currentProps} authAvailable={false} signInPath="/sign-in" signOutPath="/signout"/>);
+        window.__renderPrototype = (signedIn, authReady = true) => { currentProps = { signedIn, authReady }; revision++; flushSync(drawApp); };
+        window.__updatePrototypeReady = authReady => { currentProps.authReady = authReady; flushSync(drawApp); };
         window.__renderProgress = props => flushSync(() => root.render(<PointsProgress key={++revision} {...props}/>));
-        window.__renderPrototype(false);`
+        const initial = new URLSearchParams(window.location.search);
+        window.__renderPrototype(initial.has('signed-in'), !initial.has('auth-pending'));`
     },
     plugins: [{ name: 'scratch-next-adapters', setup(builder) {
       builder.onResolve({ filter: /account-controls$/ }, args => args.importer.replace(/\\/g, '/').endsWith('/components/stride-app.tsx')
@@ -85,20 +89,41 @@ async function run() {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
     const page = await context.newPage();
     page.on('pageerror', error => report.browserErrors.push(error.message));
+    const apiPosts = [];
+    page.on('request', request => {
+      if (new URL(request.url()).pathname === '/api/pilot' && request.method() === 'POST') apiPosts.push(request.postDataJSON()?.action);
+    });
+    await page.addInitScript(() => {
+      window.__tourGpsCalls = 0;
+      Object.defineProperty(navigator, 'geolocation', { configurable: true, value: {
+        watchPosition() { window.__tourGpsCalls++; return 1; },
+        getCurrentPosition() { window.__tourGpsCalls++; },
+        clearWatch() {}
+      } });
+    });
     await context.route(base + '/api/pilot**', route => route.continue({ headers: { ...route.request().headers(), authorization: `Bearer ${token}` } }));
     await context.route(base + '/__prototype-fixture.js', route => route.fulfill({ contentType: 'application/javascript', body: javascript }));
-    await context.route(base + '/__prototype-fixture', route => route.fulfill({ contentType: 'text/html', body: '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>' + appCss + '\n' + fixtureCss + '</style></head><body><div id="fixture"></div><script src="/__prototype-fixture.js"></script></body></html>' }));
+    await context.route(url => url.origin === base && url.pathname === '/__prototype-fixture', route => route.fulfill({ contentType: 'text/html', body: '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>' + appCss + '\n' + fixtureCss + '</style></head><body><div id="fixture"></div><script src="/__prototype-fixture.js"></script></body></html>' }));
     await page.goto(base + '/__prototype-fixture', { waitUntil: 'domcontentloaded' });
-    const pace = () => page.getByRole('navigation', { name: 'PACE journey', exact: true });
-    const activeStep = async name => {
-      await pace().getByRole('button', { name, exact: true }).waitFor();
-      await page.waitForFunction(({ name }) => [...document.querySelectorAll('nav[aria-label="PACE journey"] button')].some(button => button.getAttribute('aria-label') === name && button.getAttribute('aria-current') === 'step'), { name });
-      assert.equal(await pace().locator('[aria-current="step"]').count(), 1);
+    const appReady = async () => {
+      await page.locator('.app-shell[aria-busy="false"]').waitFor({ state: 'visible', timeout: 7500 });
+      await page.locator('[data-startup-splash]').waitFor({ state: 'hidden', timeout: 7500 });
+    };
+    const activeView = async name => {
+      await page.locator('main.view-' + name).waitFor({ state: 'visible' });
+      assert.equal(await page.getByRole('navigation', { name: 'PACE journey', exact: true }).count(), 0, 'The inline PACE panel is removed.');
+    };
+    const go = async view => {
+      const mobile = page.viewportSize().width <= 740;
+      const labels = mobile ? { plan: 'Plan', activity: 'Activity', rewards: 'Rewards', profile: 'Profile' }
+        : { plan: 'Plan a route', activity: 'My activity', rewards: 'Water rewards', profile: 'My profile' };
+      await page.locator(mobile ? '.mobile-nav' : '.desktop-nav').getByRole('button', { name: labels[view], exact: true }).click();
+      await activeView(view);
     };
     const fit = async label => assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, label + ' has no horizontal overflow');
     const renderApp = async signedIn => {
       await page.evaluate(value => window.__renderPrototype(value), signedIn);
-      await activeStep('Plan');
+      await appReady(); await activeView('plan');
       if (signedIn) await page.waitForFunction(() => !document.querySelector('[data-account-status]'));
     };
     const state = async () => page.evaluate(async () => {
@@ -112,10 +137,46 @@ async function run() {
       assert.equal(response.status(), 200, `The real local ${action} action must succeed.`);
       return response.json();
     };
+    const offer = () => page.locator('[data-onboarding="offer"]');
+    const tour = () => page.locator('[data-onboarding="tour"]');
+    const tourStep = async number => page.locator(`[data-onboarding="tour"][data-onboarding-step="${number}"]`).waitFor({ state: 'visible' });
+    const replayTour = async () => {
+      await page.getByRole('button', { name: 'Show me around', exact: true }).first().click();
+      await tourStep(1);
+    };
+    const finishTour = async () => {
+      const targets = ['route-map', 'route-controls', 'activity-start', 'collect-progress', 'water-rewards'];
+      for (let index = 0; index < targets.length; index++) {
+        await tourStep(index + 1);
+        await page.locator(`[data-tour="${targets[index]}"]`).first().waitFor({ state: 'visible' });
+        await tour().getByRole('button', { name: index === 4 ? 'Finish guide' : 'Next', exact: true }).click();
+      }
+      await tour().waitFor({ state: 'hidden' }); await activeView('plan');
+    };
+
+    await page.locator('[data-startup-splash]').waitFor({ state: 'visible' }); await appReady();
+    await offer().waitFor({ state: 'visible' });
+    await offer().getByRole('heading', { name: 'Want a quick look around?', exact: true }).waitFor();
+    await offer().getByRole('button', { name: 'Skip for now', exact: true }).click();
+    await offer().waitFor({ state: 'hidden' }); await activeView('plan');
+    assert.equal(await page.evaluate(() => localStorage.getItem('strideeco:onboarding:v1')), 'skipped');
+    await page.reload({ waitUntil: 'domcontentloaded' }); await appReady();
+    assert.equal(await offer().count(), 0, 'Skipping the first-guest offer persists across reload.');
+    await activeView('plan');
+    await replayTour();
+    await tour().getByRole('button', { name: 'Next', exact: true }).click(); await tourStep(2);
+    await tour().getByRole('button', { name: 'Back', exact: true }).click(); await tourStep(1);
+    await page.keyboard.press('Escape'); await tour().waitFor({ state: 'hidden' }); await activeView('plan');
+    await replayTour(); await tour().getByRole('button', { name: 'Skip guide', exact: true }).click();
+    await tour().waitFor({ state: 'hidden' }); await activeView('plan');
+    await replayTour(); await finishTour();
+    assert.equal(await page.evaluate(() => localStorage.getItem('strideeco:onboarding:v1')), 'completed');
+    assert.deepEqual(apiPosts, []); assert.equal(await page.evaluate(() => window.__tourGpsCalls), 0);
+    check('First guest sees the branded startup splash and opt-in offer; Skip persists across reload; manual replay supports Next/Back/Escape/Skip/Finish and all five targets; every exit returns to Plan without API writes or GPS');
 
     for (const width of [320, 1440]) {
       await page.setViewportSize({ width, height: 1000 }); await renderApp(false);
-      assert.deepEqual(await pace().getByRole('button').evaluateAll(buttons => buttons.map(button => button.getAttribute('aria-label'))), ['Plan', 'Act', 'Collect', 'Exchange']);
+      assert.equal(await offer().count(), 0, 'Completed guidance is not offered again.');
       const summary = page.locator('summary').filter({ hasText: 'Shade & sun settings' });
       const details = summary.locator('..');
       assert.equal(await details.evaluate(element => element.open), false, 'Advanced settings start collapsed.');
@@ -125,13 +186,9 @@ async function run() {
       assert.match(await page.locator('.route-shade').first().innerText(), /scenario/);
       await summary.click(); assert.equal(await details.evaluate(element => element.open), false);
       await summary.click(); assert.equal(await page.getByLabel('Assumed building height', { exact: true }).inputValue(), '9');
-      await summary.click();
-      await pace().getByRole('button', { name: 'Collect', exact: true }).click(); await activeStep('Collect');
-      await page.getByRole('heading', { name: 'Every step adds up.', exact: true }).first().waitFor();
+      await summary.click(); await go('rewards');
       assert.equal(await page.getByRole('progressbar', { name: 'Points toward a water reward' }).count(), 0, 'Signed-out visitors do not receive fabricated account progress.');
-      await pace().getByRole('button', { name: 'Exchange', exact: true }).click(); await activeStep('Exchange');
-      const directory = page.getByRole('region', { name: 'Mock township water machines', exact: true });
-      await directory.waitFor();
+      const directory = page.getByRole('region', { name: 'Mock township water machines', exact: true }); await directory.waitFor();
       assert.equal(await directory.locator('.machine-map-pin').count(), 6);
       for (const value of ['bottled-ambient', 'bottled-chilled', 'refill']) {
         await page.getByLabel('Water machine type', { exact: true }).selectOption(value);
@@ -142,29 +199,48 @@ async function run() {
         assert.equal(await pin.getAttribute('aria-pressed'), 'true');
         await pins.first().focus(); await pins.first().press('Space');
         assert.equal(await pins.first().getAttribute('aria-pressed'), 'true');
-        const geometry = await pin.evaluate(element => { const box = element.getBoundingClientRect(); return { width: box.width, height: box.height }; });
-        assert.ok(geometry.width >= 43 && geometry.height >= 43, 'Machine markers retain approximately44px targets.');
+        const box = await pin.boundingBox(); assert.ok(box.width >= 43 && box.height >= 43, 'Machine markers retain approximately44px targets.');
       }
       await page.getByRole('button', { name: 'View sample township insights', exact: true }).first().click();
       await page.getByText('Sample data', { exact: true }).first().waitFor();
-      assert.match(await page.locator('main').innerText(), /sample|illustrative/i);
-      await fit(`${width}px sample insights`);
-      check(`${width}px: accessible PACE navigation, collapsed shade settings retaining values, all machine filters/keyboard selections/targets, explicitly labelled sample insights and viewport fit`);
+      assert.match(await page.locator('main').innerText(), /sample|illustrative/i); await fit(`${width}px sample insights`);
+      check(`${width}px: ordinary navigation without the inline PACE panel, collapsed shade settings retaining values, all machine filters/keyboard selections/targets, explicitly labelled sample insights and viewport fit`);
     }
 
-    await page.setViewportSize({ width: 1440, height: 1000 }); await renderApp(true);
-    const before = await state();
-    assert.deepEqual(before.wallet, { points: 0, reserved: 0 }, 'Run this journey against a fresh local database before API accounting tests.');
+    // Clear only this isolated browser fixture's preferences so an earlier
+    // Skip cannot mask the signed-in readiness regression.
+    await page.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    // A fresh document also resets the module's tab-local storage fallback.
+    await page.goto(base + '/__prototype-fixture?signed-in&auth-pending', { waitUntil: 'domcontentloaded' });
+    await page.locator('[data-startup-splash]').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('.app-shell').getAttribute('aria-busy'), 'true');
+    await page.waitForTimeout(200); assert.equal(await offer().count(), 0);
+    await page.evaluate(() => window.__updatePrototypeReady(true)); await appReady(); await activeView('plan');
+    assert.equal(await offer().count(), 0, 'Signed-in visitors go directly to the map after auth readiness.');
+    await replayTour(); await tour().getByRole('button', { name: 'Close guide', exact: true }).click();
+    await tour().waitFor({ state: 'hidden' }); await activeView('plan');
+    await replayTour(); await finishTour();
+    assert.deepEqual(apiPosts, []); assert.equal(await page.evaluate(() => window.__tourGpsCalls), 0);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.evaluate(() => window.__renderPrototype(true, false));
+    const reducedSplash = page.locator('[data-startup-splash]'); await reducedSplash.waitFor({ state: 'visible' });
+    assert.equal(await reducedSplash.evaluate(element => element.getAnimations({ subtree: true }).some(animation => animation.playState === 'running' && animation.effect?.getTiming().iterations === Infinity)), false, 'Reduced-motion startup has no looping animation.');
+    await page.evaluate(() => window.__updatePrototypeReady(true)); await appReady(); await activeView('plan');
+    assert.equal(await offer().count(), 0); await page.emulateMedia({ reducedMotion: 'no-preference' });
+    check('Auth readiness holds the branded splash without onboarding; signed-in visitors then reach the map directly, can replay/close/finish guidance, and reduced-motion startup exits within the bound');
+
+    await renderApp(true); const before = await state();
+    assert.deepEqual(before.wallet, { points: 0, reserved: 0 }, 'Run against a fresh local database before accounting tests.');
     assert.equal(before.routes.length, 0); assert.equal(before.activities.length, 0); assert.equal(before.redemptions.length, 0);
     await page.getByRole('button', { name: /The scenic alternative/ }).click();
     await mutation('save-route', () => page.getByRole('button', { name: 'Save', exact: true }).click());
-    await page.getByRole('button', { name: 'Continue to activity', exact: true }).first().click(); await activeStep('Act');
+    await page.getByRole('button', { name: 'Let’s get moving', exact: true }).click(); await activeView('activity');
     const credited = await mutation('activity', () => page.getByRole('button', { name: 'Try a demo walk', exact: true }).click());
-    await activeStep('Collect');
-    await page.getByRole('heading', { name: 'Every step adds up.', exact: true }).first().waitFor();
+    await activeView('collect'); await page.getByRole('heading', { name: 'Every step adds up.', exact: true }).first().waitFor();
     assert.equal(credited.activities.length, 1); assert.equal(credited.activities[0].source, 'demo');
     assert.equal(credited.wallet.points, 71); assert.equal(credited.wallet.reserved, 0);
-    await page.getByRole('button', { name: 'Choose a water stop', exact: true }).first().click(); await activeStep('Exchange');
+    await page.getByRole('button', { name: 'Choose a water stop', exact: true }).first().click(); await activeView('rewards');
     await page.getByLabel('Water machine type', { exact: true }).selectOption('bottled-chilled');
     await page.locator('.machine-map-pin[data-machine-id="mock-central-chilled"]').click();
     const reserved = await mutation('reserve-water', () => page.getByRole('button', { name: 'Redeem drinking water', exact: true }).click());
@@ -176,50 +252,37 @@ async function run() {
     assert.equal(used.redemptions.filter(item => item.status === 'confirmed').length, 1);
     await page.getByRole('button', { name: 'Close redemption', exact: true }).click();
     await page.locator('.redemption-row').filter({ hasText: 'Used once' }).waitFor();
-    check('Actual StrideApp Plan→Act→automatic Collect→Exchange controls save a route, credit one labelled demo, reserve60 and scan one voucher through the real SDK-verified local API; wallet71→11');
-    await page.setViewportSize({ width: 390, height: 844 }); await renderApp(true);
-    await pace().getByRole('button', { name: 'Collect', exact: true }).click(); await activeStep('Collect');
+    check('Actual ordinary planner→activity→automatic Collect→water-rewards controls save a route, credit one labelled demo, reserve60 and scan one voucher through the real SDK-verified local API; wallet71→11');
+    await page.setViewportSize({ width: 390, height: 844 }); await renderApp(true); await go('rewards');
     const progress = page.getByRole('progressbar', { name: 'Points toward a water reward', exact: true });
     await progress.waitFor(); assert.equal(await progress.getAttribute('aria-valuenow'), '11');
-    assert.match(await page.getByText(/Walk another 2\.45 km/).first().innerText(), /49 points/);
-    await fit('390px persisted Collect view');
-    check('Fresh mobile component mount reloads the real local saved route/wallet and displays the remaining2.45km/49points after redemption');
+    assert.match(await page.getByText(/Walk another 2\.45 km/).first().innerText(), /49 points/); await fit('390px persisted Rewards view');
+    check('Fresh mobile component mount reloads real local saved data/wallet and displays the remaining2.45km/49points after redemption');
 
-    // Navigation must not silently reset a live or paused recording. No fake
-    // location sample is finished/submitted as an activity.
+    // Never submit or credit the fake location as a GPS activity.
     const gpsSubmissions = [];
     page.on('request', request => {
       if (new URL(request.url()).pathname === '/api/pilot' && request.method() === 'POST') {
-        const body = request.postDataJSON();
-        if (body?.action === 'activity' && body.source === 'gps') gpsSubmissions.push(true);
+        const body = request.postDataJSON(); if (body?.action === 'activity' && body.source === 'gps') gpsSubmissions.push(true);
       }
     });
     await page.evaluate(() => Object.defineProperty(navigator, 'geolocation', { configurable: true, value: {
-      watchPosition(success) {
-        setTimeout(() => success({ coords: { latitude: 3.1784, longitude: 101.516, accuracy: 5 }, timestamp: Date.now() }), 0);
-        return 1;
-      },
-      clearWatch() {}
+      watchPosition(success) { setTimeout(() => success({ coords: { latitude: 3.1784, longitude: 101.516, accuracy: 5 }, timestamp: Date.now() }), 0); return 1; }, clearWatch() {}
     } }));
-    await renderApp(true);
-    await pace().getByRole('button', { name: 'Act', exact: true }).click();
+    await renderApp(true); await go('activity');
     await page.getByRole('button', { name: 'Start with location', exact: true }).click();
     await page.locator('.gps-status').filter({ hasText: 'Recording' }).waitFor();
-    await pace().getByRole('button', { name: 'Plan', exact: true }).click();
-    await page.getByRole('button', { name: 'Let’s get moving', exact: true }).click();
+    await go('plan'); await page.getByRole('button', { name: 'Let’s get moving', exact: true }).click();
     await page.getByRole('button', { name: 'Pause', exact: true }).waitFor();
     assert.equal(await page.getByRole('button', { name: 'Start with location', exact: true }).count(), 0);
     await page.getByRole('button', { name: 'Pause', exact: true }).click();
     await page.getByRole('button', { name: 'Resume', exact: true }).waitFor();
-    await pace().getByRole('button', { name: 'Plan', exact: true }).click();
-    await page.getByRole('button', { name: 'Let’s get moving', exact: true }).click();
+    await go('plan'); await page.getByRole('button', { name: 'Let’s get moving', exact: true }).click();
     await page.getByRole('button', { name: 'Resume', exact: true }).waitFor();
     assert.equal(await page.getByRole('button', { name: 'Pause', exact: true }).count(), 0);
-    const afterNavigation = await state();
-    assert.deepEqual(afterNavigation.wallet, { points: 11, reserved: 0 });
-    assert.equal(afterNavigation.activities.length, 1);
-    assert.deepEqual(gpsSubmissions, []);
-    check('A local fake location starts recording; Plan→planner CTA preserves both recording/Pause and paused/Resume states without submitting or crediting GPS activity');
+    const afterNavigation = await state(); assert.deepEqual(afterNavigation.wallet, { points: 11, reserved: 0 });
+    assert.equal(afterNavigation.activities.length, 1); assert.deepEqual(gpsSubmissions, []);
+    check('Fake location starts recording; ordinary main-navigation Plan→planner CTA preserves recording/Pause and paused/Resume without submitting or crediting GPS activity');
 
     const progressCases = [
       { available: 0, text: 'Walk another 3 km', now: '0' },
